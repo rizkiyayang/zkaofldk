@@ -1,0 +1,1735 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Setup PC – Link Shopee</title>
+    <link rel="icon" type="image/x-icon" href="img/icon.jpg" />
+
+    <meta
+      name="description"
+      content="Setup PC + aksesoris. Klik untuk langsung ke Shopee."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Nunito:wght@600;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Network hints for faster external fetch -->
+    <link rel="dns-prefetch" href="https://s.shopee.co.id" />
+    <link rel="preconnect" href="https://s.shopee.co.id" crossorigin />
+    <link rel="dns-prefetch" href="https://images.unsplash.com" />
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
+    <style>
+      :root {
+        --bg1: #fff3f8; /* pink pastel */
+        --bg2: #f2fbff; /* biru muda */
+        --card: #ffffff;
+        --text: #273043;
+        --muted: #6c7890;
+        --cta: #ff6b6b; /* cute coral */
+        --cta-dark: #ff5252;
+        --ring: rgba(255, 107, 107, 0.3);
+        --radius: 22px;
+        --shadow:
+          0 12px 40px rgba(255, 105, 180, 0.15), 0 8px 24px rgba(0, 0, 0, 0.06);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family:
+          Poppins,
+          system-ui,
+          -apple-system,
+          Segoe UI,
+          Roboto,
+          Arial;
+        color: var(--text);
+        background:
+          radial-gradient(900px 500px at 10% -10%, var(--bg1), transparent),
+          radial-gradient(900px 600px at 90% -20%, var(--bg2), transparent),
+          linear-gradient(180deg, #fff, #fff7fb 60%, #f8fdff);
+        min-height: 100dvh;
+        padding: 22px;
+      }
+      .wrap {
+        max-width: 960px;
+        margin: 0 auto;
+      }
+
+      /* Header cute */
+      .hero {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        background: var(--card);
+        border-radius: var(--radius);
+        padding: 18px 18px;
+        box-shadow:
+          0 12px 40px rgba(255, 105, 180, 0.12),
+          0 6px 20px rgba(36, 46, 63, 0.06);
+        border: 1px solid #ffe5f1;
+      }
+      .pfp {
+        width: 100%;
+        max-width: 240px; /* adjust as needed */
+        height: auto;
+        border-radius: 22px;
+        overflow: hidden;
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+      }
+      .pfp svg {
+        width: 34px;
+        height: 34px;
+        color: #ff6b6b;
+      }
+      .pfp img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        display: block;
+      }
+      h1 {
+        font-family: Nunito, Poppins, sans-serif;
+        font-size: clamp(20px, 3.5vw, 30px);
+        margin: 0 0 4px;
+        letter-spacing: 0.3px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .nick {
+        background: #ffe6ef;
+        color: #ff4b6d;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 700;
+      }
+      .handles {
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .handles a {
+        color: #ff4b6d;
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      .header-main {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .title-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .nick {
+        background: #ffe6ef;
+        color: #ff4b6d;
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 800;
+        transform: translateY(-2px);
+        letter-spacing: 0.2px;
+      }
+      h1 {
+        font-family: Nunito, Poppins, sans-serif;
+        font-size: clamp(22px, 3.6vw, 32px);
+        margin: 0;
+        letter-spacing: 0.2px;
+        font-weight: 800;
+        color: #242e3f;
+      }
+
+      .socials {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 8px;
+      }
+      .body[role="link"] {
+        cursor: pointer;
+      }
+
+      .skeleton {
+        background: linear-gradient(
+          110deg,
+          #fbe9f3 8%,
+          #fff4f8 18%,
+          #fbe9f3 33%
+        );
+        background-size: 200% 100%;
+        animation: shimmer 1.2s linear infinite;
+      }
+      @keyframes shimmer {
+        to {
+          background-position-x: -200%;
+        }
+      }
+      .sbtn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        height: 40px;
+        padding: 0 14px;
+        border-radius: 999px;
+        font-weight: 800;
+        font-size: 12px;
+        text-decoration: none;
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+        transition:
+          transform 0.15s ease,
+          box-shadow 0.15s ease,
+          filter 0.15s ease;
+      }
+      .sbtn .ico {
+        width: 16px;
+        height: 16px;
+      }
+      .sbtn:hover {
+        transform: translateY(-1px) scale(1.02);
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.07);
+      }
+      .sbtn:focus-visible {
+        outline: 3px solid rgba(255, 107, 107, 0.35);
+        outline-offset: 2px;
+      }
+      .sbtn.ig {
+        background: #ff6b6b;
+        color: #fff;
+        border-color: transparent;
+      }
+      .sbtn.ig:hover {
+        filter: brightness(1.03);
+      }
+      .sbtn.tt {
+        background: rgba(53, 84, 255, 0.08);
+        color: #3554ff;
+        border-color: rgba(53, 84, 255, 0.2);
+      }
+      .sbtn.tt:hover {
+        filter: brightness(1.03);
+      }
+      @media (max-width: 360px) {
+        .socials {
+          gap: 8px;
+        }
+        .sbtn {
+          flex: 1 1 100%;
+          justify-content: center;
+        }
+      }
+
+      /* Desktop refinements for hero */
+      @media (min-width: 960px) {
+        .hero {
+          display: grid;
+          grid-template-columns: 180px 1fr; /* avatar column smaller */
+          align-items: center;
+          padding: 20px 24px; /* less padding */
+          gap: 16px; /* tighter gap */
+        }
+        .pfp {
+          width: 140px;
+          height: 140px;
+          border-radius: 18px;
+          overflow: hidden;
+        }
+        .pfp img {
+          height: 100%;
+          object-fit: cover;
+        }
+        .title-row {
+          gap: 14px;
+        }
+        .socials {
+          margin-top: 6px;
+        }
+        h1 {
+          font-size: clamp(26px, 2.2vw, 36px);
+          line-height: 1.15;
+        }
+      }
+
+      /* Setup photo + Spec container */
+      .setup-box {
+        margin-top: 16px;
+        background: var(--card);
+        border-radius: var(--radius);
+        padding: 14px;
+        box-shadow: var(--shadow);
+        border: 1px solid #ffe5f1;
+      }
+      .setup-photo {
+        width: 100%;
+        aspect-ratio: 16/9;
+        border-radius: 16px;
+        object-fit: cover;
+        display: block;
+        background: linear-gradient(135deg, #ffe6f2, #e8f7ff);
+      }
+      .setup-caption {
+        margin: 10px 2px 0;
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .spec-box {
+        margin-top: 14px;
+        background: var(--card);
+        border-radius: var(--radius);
+        padding: 16px;
+        box-shadow: var(--shadow);
+        border: 1px solid #ffe5f1;
+      }
+      .spec-box h2 {
+        margin: 0 0 10px;
+        font-size: 18px;
+        font-weight: 800;
+        color: #ff4b6d;
+      }
+      .spec-box ul {
+        margin: 0;
+        padding-left: 20px;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      /* Grid */
+      .grid {
+        margin-top: 16px;
+        display: grid;
+        gap: 14px;
+        grid-template-columns: 1fr;
+      }
+      @media (min-width: 640px) {
+        .grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (min-width: 960px) {
+        .grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      /* Card */
+      .card {
+        background: var(--card);
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        border: 1px solid #ffe5f1;
+        position: relative;
+      }
+      .imgbox {
+        aspect-ratio: 16/10;
+        background: linear-gradient(135deg, #ffe6f2, #e8f7ff);
+        display: block;
+        position: relative;
+        cursor: pointer;
+      }
+      .imgbox img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .badge {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: #fff;
+        color: #ff5b86;
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 700;
+        border: 1px solid #ffd6e9;
+      }
+      .body {
+        padding: 14px;
+      }
+      .title {
+        font-size: 16px;
+        font-weight: 700;
+        margin: 0 0 4px;
+      }
+      .desc {
+        margin: 0 0 12px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .cta {
+        display: flex;
+        gap: 10px;
+      }
+      .btn {
+        appearance: none;
+        border: none;
+        padding: 12px 14px;
+        border-radius: 14px;
+        font-weight: 800;
+        letter-spacing: 0.2px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+      .btn.shopee {
+        background: var(--cta);
+        color: #fff;
+        box-shadow: 0 10px 30px var(--ring);
+      }
+      .btn.shopee:hover {
+        background: var(--cta-dark);
+      }
+      .btn.ghost {
+        background: #fff1f6;
+        color: #ff4b6d;
+      }
+      .btn .ico {
+        width: 18px;
+        height: 18px;
+      }
+      .card a {
+        text-decoration: none;
+      }
+
+      /* Floating cues */
+      .spark {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        font-size: 18px;
+      }
+
+      /* Footer note */
+      .foot {
+        margin: 16px auto 0;
+        text-align: center;
+        color: #7b8398;
+        font-size: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <!-- Header dengan nama panggilan + handle IG/TikTok -->
+      <section class="hero">
+        <div class="pfp">
+          <!-- Ganti src dengan foto kamu; bisa file lokal ./img/avatar.jpg atau URL -->
+          <img
+            src="https://www.belajarwibu.com/cameliaz/img/avatar.jpg"
+            alt="Foto profil"
+            width="60"
+            height="60"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div class="header-main">
+          <div class="title-row">
+            <span class="nick">Cokelat Manis</span>
+            <h1>My Daily Streaming Setup ♡</h1>
+          </div>
+          <div class="socials">
+            <a
+              class="sbtn ig"
+              href="https://instagram.com/zkaofldk"
+              target="_blank"
+              rel="noopener"
+              aria-label="Instagram @zkaofldk"
+            >
+              <svg
+                class="ico"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+              >
+                <rect x="3" y="3" width="18" height="18" rx="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle cx="17.5" cy="6.5" r="1.2" />
+              </svg>
+              <span>@zkaofldk</span>
+            </a>
+            <a
+              class="sbtn tt"
+              href="https://www.tiktok.com/@zkaofldk"
+              target="_blank"
+              rel="noopener"
+              aria-label="TikTok @zkaofldk"
+            >
+              <svg
+                class="ico"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+              >
+                <path d="M14 3v9.5a4.5 4.5 0 1 1-4-4.47" />
+                <path d="M14 6a6 6 0 0 0 6 6" />
+              </svg>
+              <span>@zkaofldk</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Top Picks -->
+      <!-- <section class="spec-box">
+        <h2>Top Picks ⭐</h2>
+        <ul>
+          <li>
+            <strong>CPU:</strong> Intel Core i3‑13100F — paling kepake buat live
+            harian.
+          </li>
+          <li>
+            <strong>GPU:</strong> RX 5700 Red Devil — performa stabil buat
+            gaming + streaming.
+          </li>
+          <li>
+            <strong>Monitor:</strong> KTC 24” 180Hz — mata lebih nyaman, gerakan
+            smooth.
+          </li>
+        </ul>
+      </section> -->
+
+      <!-- Foto setup -->
+      <section class="setup-box">
+        <img
+          class="setup-photo skeleton"
+          src="https://www.belajarwibu.com/cameliaz/img/IMG_6456.jpeg"
+          alt="Foto setup PC"
+        />
+        <div class="setup-caption">Foto setup September 2025.</div>
+      </section>
+
+      <!-- Spesifikasi PC: satu kontainer -->
+      <section class="spec-box">
+        <h2>Spesifikasi PC</h2>
+        <ul>
+          <li>
+            <strong>CPU:</strong> Intel Core i3-13100F Gen 13 (4 core / 8
+            thread, performa tinggi, setara AMD Ryzen 5 5500).
+          </li>
+          <li>
+            <strong>GPU:</strong> RX 5700 Red Devil 8GB (setara RTX 2060 Super).
+          </li>
+          <li><strong>RAM:</strong> 16GB DDR4 3200MHz.</li>
+          <li><strong>Storage:</strong> NVMe 512GB.</li>
+          <li><strong>PSU:</strong> Aerocool Lux 550W Bronze RGB.</li>
+        </ul>
+      </section>
+
+      <!-- Grid produk: gambar + nama + tombol ke Shopee -->
+      <section class="grid" id="list">
+        <article class="card" data-url="https://s.shopee.co.id/1g9VMcTsoM">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://www.belajarwibu.com/cameliaz/img/cpu.jpg"
+              alt="CPU Intel i3-13100F"
+              width="1600"
+              height="1000"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="badge">CPU ⭐ Favorit</span>
+            <span class="spark">✨</span>
+          </div>
+          <div class="body" role="link" onclick="openCard(this)">
+            <h3 class="title">Intel Core i3‑13100F (Gen 13)</h3>
+            <p class="desc">Buat roblox sambil live tiktok lancar jaya</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://s.shopee.co.id/1g9VMcTsoM"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="https://s.shopee.co.id/8UzpVSMiGo">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://www.belajarwibu.com/cameliaz/img/gpu.jpg"
+              alt="GPU RX 5700 Red Devil 8GB"
+              width="1600"
+              height="1000"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="badge">GPU</span>
+            <span class="spark">💖</span>
+          </div>
+          <div class="body" role="link" onclick="openCard(this)">
+            <h3 class="title">RX 5700 Red Devil 8GB</h3>
+            <p class="desc">
+              Render roblox kenceng dan murah tapi setara RTX 2060 Super.
+            </p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://s.shopee.co.id/8UzpVSMiGo"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="https://s.shopee.co.id/11HNz7aKW">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://www.belajarwibu.com/cameliaz/img/ram.jpg"
+              alt="RAM 16GB DDR4 3200"
+              width="1600"
+              height="1000"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="badge">RAM</span>
+            <span class="spark">🌸</span>
+          </div>
+          <div class="body" role="link" onclick="openCard(this)">
+            <h3 class="title">RAM 16GB DDR4 3200 (2×8GB)</h3>
+            <p class="desc">
+              Ga lag waktu buka roblox sambil atur tiktok studio.
+            </p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://s.shopee.co.id/11HNz7aKW"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="https://s.shopee.co.id/3qDzx9Srs8">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://www.belajarwibu.com/cameliaz/img/ssd.jpg"
+              alt="SSD NVMe 512GB"
+              width="1600"
+              height="1000"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="badge">Storage</span>
+            <span class="spark">⭐</span>
+          </div>
+          <div class="body" role="link" onclick="openCard(this)">
+            <h3 class="title">SSD NVMe 512GB</h3>
+            <p class="desc">Ngidupinnya cepet, buka game juga cepet.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://s.shopee.co.id/3qDzx9Srs8"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="https://s.shopee.co.id/7Kns7jdkZN">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://www.belajarwibu.com/cameliaz/img/psu.jpg"
+              alt="PSU Aerocool Lux 550W"
+              width="1600"
+              height="1000"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="badge">PSU</span>
+            <span class="spark">✨</span>
+          </div>
+          <div class="body" role="link" onclick="openCard(this)">
+            <h3 class="title">Aerocool Lux 550W Bronze RGB</h3>
+            <p class="desc">Biar listriknya aman dan ga rusak.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://s.shopee.co.id/7Kns7jdkZN"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="https://s.shopee.co.id/6prbWt4R6G">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://www.belajarwibu.com/cameliaz/img/mouse.jpg"
+              alt="Mouse"
+              width="1600"
+              height="1000"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="badge">Mouse</span>
+            <span class="spark">🎀</span>
+          </div>
+          <div class="body" role="link" onclick="openCard(this)">
+            <h3 class="title">Mouse ROBOT M102 Wired 1200DPI</h3>
+            <p class="desc">Ringan & murah.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://s.shopee.co.id/6prbWt4R6G"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="https://s.shopee.co.id/8fJFkUSGLg">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://www.belajarwibu.com/cameliaz/img/keyboard.jpg"
+              alt="Keyboard"
+              width="1600"
+              height="1000"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="badge">Keyboard</span>
+            <span class="spark">⌨️</span>
+          </div>
+          <div class="body" role="link" onclick="openCard(this)">
+            <h3 class="title">Keyboard</h3>
+            <p class="desc">Enak buat main & ngetik.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://s.shopee.co.id/8fJFkUSGLg"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="https://s.shopee.co.id/3LHjP2WFt0">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://www.belajarwibu.com/cameliaz/img/keycaps.jpg"
+              alt="Keyboard"
+              width="1600"
+              height="1000"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="badge">Keycaps</span>
+            <span class="spark">⌨️</span>
+          </div>
+          <div class="body" role="link" onclick="openCard(this)">
+            <h3 class="title">Tombol Keyboard</h3>
+            <p class="desc">PINK LUCU.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://s.shopee.co.id/3LHjP2WFt0"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="https://s.shopee.co.id/9zodJKu1Hm">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://www.belajarwibu.com/cameliaz/img/monitor.jpg"
+              alt="Monitor 24 inci"
+              width="1600"
+              height="1000"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="badge">Monitor</span>
+            <span class="spark">🌟</span>
+          </div>
+          <div class="body" role="link" onclick="openCard(this)">
+            <h3 class="title">Monitor KTC 24 inch FHD 180HZ IPS</h3>
+            <p class="desc">Mulus bangettttt.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://s.shopee.co.id/9zodJKu1Hm"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="https://s.shopee.co.id/6prbXkv8PS">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://www.belajarwibu.com/cameliaz/img/headset.jpg"
+              alt="Headset"
+              width="1600"
+              height="1000"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="badge">Headset</span>
+            <span class="spark">💗</span>
+          </div>
+          <div class="body" role="link" onclick="openCard(this)">
+            <h3 class="title">Headset Kabel</h3>
+            <p class="desc">Empuk & kedap, nyaman lama.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://s.shopee.co.id/6prbXkv8PS"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="https://s.shopee.co.id/1BDEnSs60j">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://www.belajarwibu.com/cameliaz/img/mic.jpg"
+              alt="Mic"
+              width="1600"
+              height="1000"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="badge">Mic</span>
+            <span class="spark">🎤</span>
+          </div>
+          <div class="body" role="link" onclick="openCard(this)">
+            <h3 class="title">Mikrofon TaffSTUDIO Kondenser</h3>
+            <p class="desc">Suara jernih buat live.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://s.shopee.co.id/1BDEnSs60j"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="https://s.shopee.co.id/5L2nl9t5qa">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://www.belajarwibu.com/cameliaz/img/armstand.jpg"
+              alt="Arm Stand"
+              width="1600"
+              height="1000"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="badge">Arm Stand</span>
+            <span class="spark">🎤</span>
+          </div>
+          <div class="body" role="link" onclick="openCard(this)">
+            <h3 class="title">Pegangan Mikrofon</h3>
+            <p class="desc">Biar enak mic bisa diatur atur.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://s.shopee.co.id/5L2nl9t5qa"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="https://s.shopee.co.id/6fYBLynWha">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://www.belajarwibu.com/cameliaz/img/lampu.jpg"
+              alt="Lampu"
+              width="1600"
+              height="1000"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="badge">Lampu</span>
+            <span class="spark">💡</span>
+          </div>
+          <div class="body" role="link" onclick="openCard(this)">
+            <h3 class="title">Lampu Live</h3>
+            <p class="desc">Cahaya lebih rata supaya wajah terlihat jelas.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://s.shopee.co.id/6fYBLynWha"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="https://s.shopee.co.id/1Vq5CfWrXd">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://www.belajarwibu.com/cameliaz/img/deskmat.jpg"
+              alt="Desk Mat"
+              width="1600"
+              height="1000"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="badge">Desk Mat</span>
+            <span class="spark">💫</span>
+          </div>
+          <div class="body" role="link" onclick="openCard(this)">
+            <h3 class="title">Taplak / Desk Mat</h3>
+            <p class="desc">Luas, anti‑selip, tambah estetik.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://s.shopee.co.id/1Vq5CfWrXd"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="https://s.shopee.co.id/30eszcZurY">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://www.belajarwibu.com/cameliaz/img/webcam.jpg"
+              alt="Webcam 1080p"
+              width="1600"
+              height="1000"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="badge">Kamera</span>
+            <span class="spark">📷</span>
+          </div>
+          <div class="body" role="link" onclick="openCard(this)">
+            <h3 class="title">Webcam Logitech C270</h3>
+            <p class="desc">
+              Lebih jelas dengan lighting yang cukup, cocok untuk live.
+            </p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://s.shopee.co.id/30eszcZurY"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="https://s.shopee.co.id/1Vq5D4nA70">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://www.belajarwibu.com/cameliaz/img/kursi.jpg"
+              alt="Kursi Ergonomis"
+              width="1600"
+              height="1000"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="badge">Kursi</span>
+            <span class="spark">🪑</span>
+          </div>
+          <div class="body" role="link" onclick="openCard(this)">
+            <h3 class="title">Kursi Ergonomis</h3>
+            <p class="desc">Nyaman untuk duduk lama.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://s.shopee.co.id/1Vq5D4nA70"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+
+        <!-- <article class="card" data-url="https://shope.ee/XXXXCOLOKAN">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1200&auto=format&fit=crop"
+              alt="Power Strip"
+              loading="lazy"
+            />
+            <span class="badge">Colokan</span>
+            <span class="spark">🔌</span>
+          </div>
+          <div class="body">
+            <h3 class="title">Colokan / Power Strip</h3>
+            <p class="desc">Ada switch & proteksi lonjakan.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://shope.ee/XXXXCOLOKAN"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article> -->
+
+        <!-- <article class="card" data-url="https://shope.ee/XXXXRANJANG">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://images.unsplash.com/photo-1582582494700-99a9b4947c19?q=80&w=1200&auto=format&fit=crop"
+              alt="Ranjang Minimalis"
+              loading="lazy"
+            />
+            <span class="badge">Ranjang</span>
+            <span class="spark">🛏️</span>
+          </div>
+          <div class="body">
+            <h3 class="title">Ranjang Minimalis</h3>
+            <p class="desc">Frame kokoh, desain simpel.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://shope.ee/XXXXRANJANG"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+        <article class="card" data-url="https://shope.ee/XXXXMEJA">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://images.unsplash.com/photo-1519710164239-da123dc03ef4?q=80&w=1200&auto=format&fit=crop"
+              alt="Meja Komputer"
+              loading="lazy"
+            />
+            <span class="badge">Meja</span>
+            <span class="spark">🧁</span>
+          </div>
+          <div class="body">
+            <h3 class="title">Meja Komputer</h3>
+            <p class="desc">Kokoh & muat setup 1–2 monitor.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://shope.ee/XXXXMEJA"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+        <article class="card" data-url="https://shope.ee/XXXXKASUR">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://images.unsplash.com/photo-1505692794403-34d4982f88aa?q=80&w=1200&auto=format&fit=crop"
+              alt="Kasur Foam / Pocket Spring"
+              loading="lazy"
+            />
+            <span class="badge">Kasur</span>
+            <span class="spark">💤</span>
+          </div>
+          <div class="body">
+            <h3 class="title">Kasur Foam / Pocket Spring</h3>
+            <p class="desc">Tidur nyaman, punggung aman.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://shope.ee/XXXXKASUR"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+        <article class="card" data-url="https://shope.ee/XXXXLEDSTRIP">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=1200&auto=format&fit=crop"
+              alt="LED Strip RGB"
+              loading="lazy"
+            />
+            <span class="badge">LED Strip</span>
+            <span class="spark">🌈</span>
+          </div>
+          <div class="body">
+            <h3 class="title">LED Strip RGB</h3>
+            <p class="desc">Mood lighting biar makin cozy.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://shope.ee/XXXXLEDSTRIP"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+        <article class="card" data-url="https://shope.ee/XXXXTIRAI">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://images.unsplash.com/photo-1601918774946-25832a4be0d8?q=80&w=1200&auto=format&fit=crop"
+              alt="Tirai Blackout"
+              loading="lazy"
+            />
+            <span class="badge">Tirai</span>
+            <span class="spark">🧵</span>
+          </div>
+          <div class="body">
+            <h3 class="title">Tirai Blackout</h3>
+            <p class="desc">Redam cahaya untuk tidur nyenyak.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://shope.ee/XXXXTIRAI"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+        <article class="card" data-url="https://shope.ee/XXXXKARPET">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://images.unsplash.com/photo-1598300183928-3ab54b02f179?q=80&w=1200&auto=format&fit=crop"
+              alt="Karpet Bulu"
+              loading="lazy"
+            />
+            <span class="badge">Karpet</span>
+            <span class="spark">🧸</span>
+          </div>
+          <div class="body">
+            <h3 class="title">Karpet Bulu / Plush</h3>
+            <p class="desc">Hangat & cozy untuk kamar.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://shope.ee/XXXXKARPET"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+        <article class="card" data-url="https://shope.ee/XXXXCERMN">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?q=80&w=1200&auto=format&fit=crop"
+              alt="Cermin Meja/Standing"
+              loading="lazy"
+            />
+            <span class="badge">Cermin</span>
+            <span class="spark">✨</span>
+          </div>
+          <div class="body">
+            <h3 class="title">Cermin Meja / Standing</h3>
+            <p class="desc">Biar rapi sebelum live/keluar.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://shope.ee/XXXXCERMN"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+        <article class="card" data-url="https://shope.ee/XXXXKASUR">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://images.unsplash.com/photo-1505692794403-34d4982f88aa?q=80&w=1200&auto=format&fit=crop"
+              alt="Kasur Foam / Pocket Spring"
+              loading="lazy"
+            />
+            <span class="badge">Kasur</span>
+            <span class="spark">💤</span>
+          </div>
+          <div class="body">
+            <h3 class="title">Kasur Foam / Pocket Spring</h3>
+            <p class="desc">Tidur nyaman, punggung aman.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://shope.ee/XXXXKASUR"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+        <article class="card" data-url="https://shope.ee/XXXXLEDSTRIP">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=1200&auto=format&fit=crop"
+              alt="LED Strip RGB"
+              loading="lazy"
+            />
+            <span class="badge">LED Strip</span>
+            <span class="spark">🌈</span>
+          </div>
+          <div class="body">
+            <h3 class="title">LED Strip RGB</h3>
+            <p class="desc">Mood lighting biar makin cozy.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://shope.ee/XXXXLEDSTRIP"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+        <article class="card" data-url="https://shope.ee/XXXXTIRAI">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://images.unsplash.com/photo-1601918774946-25832a4be0d8?q=80&w=1200&auto=format&fit=crop"
+              alt="Tirai Blackout"
+              loading="lazy"
+            />
+            <span class="badge">Tirai</span>
+            <span class="spark">🧵</span>
+          </div>
+          <div class="body">
+            <h3 class="title">Tirai Blackout</h3>
+            <p class="desc">Redam cahaya untuk tidur nyenyak.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://shope.ee/XXXXTIRAI"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+        <article class="card" data-url="https://shope.ee/XXXXKARPET">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://images.unsplash.com/photo-1598300183928-3ab54b02f179?q=80&w=1200&auto=format&fit=crop"
+              alt="Karpet Bulu"
+              loading="lazy"
+            />
+            <span class="badge">Karpet</span>
+            <span class="spark">🧸</span>
+          </div>
+          <div class="body">
+            <h3 class="title">Karpet Bulu / Plush</h3>
+            <p class="desc">Hangat & cozy untuk kamar.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://shope.ee/XXXXKARPET"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+        <article class="card" data-url="https://shope.ee/XXXXCERMN">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?q=80&w=1200&auto=format&fit=crop"
+              alt="Cermin Meja/Standing"
+              loading="lazy"
+            />
+            <span class="badge">Cermin</span>
+            <span class="spark">✨</span>
+          </div>
+          <div class="body">
+            <h3 class="title">Cermin Meja / Standing</h3>
+            <p class="desc">Biar rapi sebelum live/keluar.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://shope.ee/XXXXCERMN"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article> -->
+        <!-- ====== CUTE / IMPULSIVE BUY ====== -->
+        <!-- <article class="card" data-url="https://shope.ee/XXXXHUMID">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://images.unsplash.com/photo-1556227701-8280b6d96547?q=80&w=1200&auto=format&fit=crop"
+              alt="Humidifier Mini"
+              loading="lazy"
+            />
+            <span class="badge">Humidifier</span>
+            <span class="spark">🌫️</span>
+          </div>
+          <div class="body">
+            <h3 class="title">Humidifier Mini</h3>
+            <p class="desc">Bikin kamar lembap & wangi.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://shope.ee/XXXXHUMID"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="https://shope.ee/XXXXDIFF">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://images.unsplash.com/photo-1545239351-1141bd82e8a6?q=80&w=1200&auto=format&fit=crop"
+              alt="Aroma Diffuser + Essential Oil"
+              loading="lazy"
+            />
+            <span class="badge">Diffuser</span>
+            <span class="spark">🌸</span>
+          </div>
+          <div class="body">
+            <h3 class="title">Aroma Diffuser + Oil</h3>
+            <p class="desc">Mood booster aromatherapy.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://shope.ee/XXXXDIFF"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="https://shope.ee/XXXXPLUSH">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://images.unsplash.com/photo-1592194996308-7b43878e84a6?q=80&w=1200&auto=format&fit=crop"
+              alt="Boneka Plush"
+              loading="lazy"
+            />
+            <span class="badge">Plush</span>
+            <span class="spark">🧸</span>
+          </div>
+          <div class="body">
+            <h3 class="title">Boneka Plush Imut</h3>
+            <p class="desc">Teman tidur & dekor lucu.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://shope.ee/XXXXPLUSH"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="https://shope.ee/XXXXMAKEUP">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://images.unsplash.com/photo-1512203492609-8f7f06f1f8c4?q=80&w=1200&auto=format&fit=crop"
+              alt="Acrylic Makeup Organizer"
+              loading="lazy"
+            />
+            <span class="badge">Organizer</span>
+            <span class="spark">💄</span>
+          </div>
+          <div class="body">
+            <h3 class="title">Acrylic Makeup Organizer</h3>
+            <p class="desc">Biar meja rias rapi & aesthetic.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://shope.ee/XXXXMAKEUP"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="https://shope.ee/XXXXFAIRY">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://images.unsplash.com/photo-1542362567-b07e54358753?q=80&w=1200&auto=format&fit=crop"
+              alt="Fairy Lights"
+              loading="lazy"
+            />
+            <span class="badge">Fairy Lights</span>
+            <span class="spark">✨</span>
+          </div>
+          <div class="body">
+            <h3 class="title">Lampu Tumblr / Fairy</h3>
+            <p class="desc">Auto cozy & instagramable.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://shope.ee/XXXXFAIRY"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="https://shope.ee/XXXXCLIPS">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://images.unsplash.com/photo-1523419409543-a5e549c9b682?q=80&w=1200&auto=format&fit=crop"
+              alt="Photo Clips String"
+              loading="lazy"
+            />
+            <span class="badge">Photo String</span>
+            <span class="spark">📸</span>
+          </div>
+          <div class="body">
+            <h3 class="title">String Lights + Clips</h3>
+            <p class="desc">Gantung foto-foto momen lucu.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://shope.ee/XXXXCLIPS"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="https://shope.ee/XXXXCABLE">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://images.unsplash.com/photo-1612815154858-c3b7671a0632?q=80&w=1200&auto=format&fit=crop"
+              alt="Cable Organizer Pastel"
+              loading="lazy"
+            />
+            <span class="badge">Kabel</span>
+            <span class="spark">🧷</span>
+          </div>
+          <div class="body">
+            <h3 class="title">Cable Organizer Pastel</h3>
+            <p class="desc">Kabel rapi, no kusut-kusut club.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://shope.ee/XXXXCABLE"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="https://shope.ee/XXXXWIRELESS">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://images.unsplash.com/photo-1551292831-023188e78222?q=80&w=1200&auto=format&fit=crop"
+              alt="Wireless Charger Cute"
+              loading="lazy"
+            />
+            <span class="badge">Charger</span>
+            <span class="spark">🔋</span>
+          </div>
+          <div class="body">
+            <h3 class="title">Wireless Charger Cute</h3>
+            <p class="desc">Pad lucu buat HP di meja.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://shope.ee/XXXXWIRELESS"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="https://shope.ee/XXXXSTAND">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://images.unsplash.com/photo-1593879075160-a5982bf3e1a9?q=80&w=1200&auto=format&fit=crop"
+              alt="Phone Stand Cat"
+              loading="lazy"
+            />
+            <span class="badge">Stand HP</span>
+            <span class="spark">🐱</span>
+          </div>
+          <div class="body">
+            <h3 class="title">Phone Stand Kucing</h3>
+            <p class="desc">Biar lucu pas nonton/scroll.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://shope.ee/XXXXSTAND"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="https://shope.ee/XXXXMUG">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://images.unsplash.com/photo-1542990253-0d0b4a3b8ee8?q=80&w=1200&auto=format&fit=crop"
+              alt="Mug Warmer"
+              loading="lazy"
+            />
+            <span class="badge">Mug Warmer</span>
+            <span class="spark">☕</span>
+          </div>
+          <div class="body">
+            <h3 class="title">Pemanas Mug Mini</h3>
+            <p class="desc">Teh/kopi tetap hangat lama.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://shope.ee/XXXXMUG"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="https://shope.ee/XXXXTRASH">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://images.unsplash.com/photo-1604328698692-f76ea9498e76?q=80&w=1200&auto=format&fit=crop"
+              alt="Mini Trash Bin"
+              loading="lazy"
+            />
+            <span class="badge">Mini Bin</span>
+            <span class="spark">🗑️</span>
+          </div>
+          <div class="body">
+            <h3 class="title">Tempat Sampah Mini</h3>
+            <p class="desc">Meja rapi, no remahan mie.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://shope.ee/XXXXTRASH"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="https://shope.ee/XXXXCOASTER">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://images.unsplash.com/photo-1628294895950-b5150dfd8781?q=80&w=1200&auto=format&fit=crop"
+              alt="Coaster Kawaii"
+              loading="lazy"
+            />
+            <span class="badge">Coaster</span>
+            <span class="spark">🍓</span>
+          </div>
+          <div class="body">
+            <h3 class="title">Coaster Kawaii</h3>
+            <p class="desc">Anti noda di meja, gemesin.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://shope.ee/XXXXCOASTER"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="https://shope.ee/XXXXKEYCAP">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://images.unsplash.com/photo-1595044426077-3cfa932bf5a2?q=80&w=1200&auto=format&fit=crop"
+              alt="Keycaps Pastel"
+              loading="lazy"
+            />
+            <span class="badge">Keycaps</span>
+            <span class="spark">🎀</span>
+          </div>
+          <div class="body">
+            <h3 class="title">Keycaps Pastel</h3>
+            <p class="desc">Upgrade keyboard jadi kawaii.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://shope.ee/XXXXKEYCAP"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="https://shope.ee/XXXXWRIST">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://images.unsplash.com/photo-1587614203976-365c74645e83?q=80&w=1200&auto=format&fit=crop"
+              alt="Wrist Rest Plush"
+              loading="lazy"
+            />
+            <span class="badge">Wrist Rest</span>
+            <span class="spark">🧼</span>
+          </div>
+          <div class="body">
+            <h3 class="title">Wrist Rest Plush</h3>
+            <p class="desc">Pergelangan nyaman anti pegal.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://shope.ee/XXXXWRIST"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="https://shope.ee/XXXXPLANT">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://images.unsplash.com/photo-1485955900006-10f4d324d411?q=80&w=1200&auto=format&fit=crop"
+              alt="Tanaman Hias"
+              loading="lazy"
+            />
+            <span class="badge">Plant</span>
+            <span class="spark">🌿</span>
+          </div>
+          <div class="body">
+            <h3 class="title">Tanaman Hias / Artificial</h3>
+            <p class="desc">Tambah fresh & warna hijau.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://shope.ee/XXXXPLANT"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-url="https://shope.ee/XXXXCLOCK">
+          <div class="imgbox" onclick="openCard(this)">
+            <img
+              src="https://images.unsplash.com/photo-1582719478250-38a1c8a43057?q=80&w=1200&auto=format&fit=crop"
+              alt="LED Alarm Clock"
+              loading="lazy"
+            />
+            <span class="badge">Clock</span>
+            <span class="spark">⏰</span>
+          </div>
+          <div class="body">
+            <h3 class="title">LED Alarm Clock</h3>
+            <p class="desc">Jam digital minimalis.</p>
+            <div class="cta">
+              <a
+                class="btn shopee"
+                href="https://shope.ee/XXXXCLOCK"
+                target="_blank"
+                rel="noopener"
+                >Beli di Shopee</a
+              >
+            </div>
+          </div>
+        </article> -->
+      </section>
+
+      <p class="foot" style="margin-top: 12px">
+        *Sebagian link di halaman ini merupakan affiliate link.
+      </p>
+      <p class="foot">Tap gambar atau tombol untuk langsung ke Shopee 💖</p>
+    </div>
+
+    <script>
+      // Buka link Shopee jika klik gambar/kartu
+      function openCard(el) {
+        const card = el.closest(".card");
+        const url = card?.dataset.url;
+        if (url) {
+          window.open(url, "_blank", "noopener");
+        }
+      }
+      // Keyboard support: Enter/Space activates body-as-link
+      document.querySelectorAll('.body[role="link"]').forEach((b) => {
+        b.tabIndex = 0;
+        b.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            openCard(b);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
