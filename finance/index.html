@@ -145,7 +145,7 @@
       }
       .history-item.removing {
         opacity: 0;
-        transform: translateY(-10px);
+        transform: scale(0.95) translateY(-10px);
       }
       .history-item .inner {
         transition: transform 0.2s var(--ios-ease);
@@ -428,7 +428,8 @@
         opacity: 1;
       }
 
-      #categoryButtons button.active {
+      #categoryButtons button.active,
+      #editCategoryChips button.active {
         background: var(--accent);
         color: white;
         opacity: 1;
@@ -608,7 +609,7 @@
         position: relative;
         overflow-x: hidden;
       }
-      .chip-group {
+      .chip-group:not(#monthChips) {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(100px, 140px));
         justify-content: flex-start;
@@ -616,20 +617,128 @@
         margin-top: 8px;
       }
       .chip {
-        padding: 12px 0;
+        padding: 12px 22px;
         border-radius: 999px;
-        font-size: 13px;
+        font-size: 12px;
         background: rgba(255, 255, 255, 0.04);
         color: var(--text-primary);
         opacity: 0.7;
         transition:
           background 0.2s var(--ios-ease),
           opacity 0.2s var(--ios-ease);
-        display: flex;
+        display: inline-flex;
         align-items: center;
         gap: 6px;
-        width: 100%;
+        width: auto;
         justify-content: center;
+        min-width: 72px;
+      }
+      #monthChips {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        gap: 8px;
+        padding-bottom: 4px;
+        margin-top: 8px;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x mandatory;
+      }
+      #monthChips .chip {
+        flex: 0 0 auto;
+        white-space: nowrap;
+        scroll-snap-align: start;
+        max-width: max-content;
+      }
+
+      #categoryChips,
+      #walletChips {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        transition:
+          opacity 0.2s ease,
+          transform 0.2s ease;
+      }
+
+      #categoryDropdown {
+        display: none;
+      }
+
+      #monthChips::-webkit-scrollbar {
+        display: none;
+      }
+
+      #categoryChips {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        gap: 8px;
+        margin-top: 10px;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x mandatory;
+      }
+
+      #categoryChips .chip {
+        flex: 0 0 auto;
+        white-space: nowrap;
+        scroll-snap-align: start;
+        max-width: max-content;
+        padding: 12px 22px;
+      }
+
+      #categoryChips::-webkit-scrollbar {
+        display: none;
+      }
+
+      #dateFilters {
+        margin-bottom: 6px;
+      }
+
+      #categoryChips {
+        margin-top: 10px;
+      }
+
+      #walletChips {
+        margin-top: 10px;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        gap: 8px;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x mandatory;
+      }
+
+      #walletChips .chip {
+        flex: 0 0 auto;
+        white-space: nowrap;
+        scroll-snap-align: start;
+        max-width: max-content;
+        padding: 6px 12px;
+      }
+
+      #walletChips::-webkit-scrollbar {
+        display: none;
+      }
+      #monthChips .chip.active {
+        background: rgba(37, 99, 235, 0.2);
+        color: #93c5fd;
+      }
+      #categoryChips .chip {
+        font-size: 12px;
+        opacity: 0.7;
+      }
+
+      #walletChips .chip {
+        padding: 12px 22px;
+        font-size: 12px;
+        opacity: 0.6;
+      }
+
+      #categoryChips .chip.active,
+      #walletChips .chip.active {
+        opacity: 1;
       }
       .chip:hover {
         opacity: 0.9;
@@ -689,16 +798,17 @@
         letter-spacing: 0.5px;
       }
       #categoryButtons {
-        display: grid !important;
-        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        display: flex;
+        flex-wrap: wrap;
         gap: 8px;
         width: 100%;
       }
       #categoryButtons button {
-        width: 100%;
-        padding: 12px 0;
+        width: auto;
+        padding: 12px 20px;
         border-radius: 999px;
         font-size: 13px;
+        white-space: nowrap;
         background: rgba(255, 255, 255, 0.04);
         opacity: 0.7;
         text-align: center;
@@ -709,11 +819,6 @@
       }
       #categoryButtons button:active {
         transform: scale(0.95);
-      }
-      @media (max-width: 480px) {
-        #categoryButtons {
-          grid-template-columns: repeat(2, 1fr);
-        }
       }
       /* ===== WALLET BUTTONS ===== */
 
@@ -744,6 +849,13 @@
       }
 
       #walletButtons button.active {
+        background: var(--accent);
+        color: white;
+        opacity: 1;
+        box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4);
+      }
+
+      #editWalletButtons button.active {
         background: var(--accent);
         color: white;
         opacity: 1;
@@ -809,6 +921,47 @@
         max-width: 900px;
         margin: 0 auto;
       }
+      @media (max-width: 480px) {
+        #categoryButtons {
+          display: flex;
+          flex-wrap: nowrap;
+          overflow-x: auto;
+          overflow-y: hidden;
+          gap: 8px;
+          -webkit-overflow-scrolling: touch;
+          scroll-snap-type: x mandatory;
+          padding-left: 4px;
+          padding-right: 4px;
+        }
+
+        #categoryButtons button {
+          flex: 0 0 auto;
+          white-space: nowrap;
+          scroll-snap-align: start;
+          padding: 10px 16px;
+          font-size: 12px;
+          border-radius: 999px;
+        }
+
+        #categoryDropdown {
+          display: none !important;
+        }
+      }
+      .chip.active {
+        animation: chipPop 0.2s var(--ios-ease);
+      }
+
+      @keyframes chipPop {
+        0% {
+          transform: scale(0.95);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+      .history-item:active {
+        transform: scale(0.98);
+      }
     </style>
   </head>
 
@@ -835,7 +988,16 @@
         </div>
       </div>
       <div class="card primary">
-        <h2>New Transaction</h2>
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          "
+        >
+          <h2 style="margin: 0">New Transaction</h2>
+          <div id="topBalance" style="font-size: 12px; opacity: 0.6"></div>
+        </div>
 
         <!-- Tabs -->
         <div id="tabs" style="display: flex; gap: 4px; margin-top: 10px">
@@ -868,15 +1030,15 @@
           -
         </div>
         <!-- EXPENSE & INCOME FIELDS -->
+        <input
+          id="amount"
+          readonly
+          placeholder="Tap to enter amount"
+          onclick="openKeypad('amount')"
+        />
         <div id="commonFields">
-          <input
-            id="amount"
-            readonly
-            placeholder="Tap to enter amount"
-            onclick="openKeypad('amount')"
-          />
-
           <div id="categoryButtons"></div>
+          <select id="categoryDropdown" style="margin-top: 8px"></select>
           <input type="hidden" id="category" value="food" />
 
           <div id="walletButtons">
@@ -931,7 +1093,6 @@
             background: rgba(0, 0, 0, 0.6);
             padding: 0;
             z-index: 9999;
-            display: none;
           "
         >
           <div
@@ -1097,6 +1258,7 @@
             Newest First ↓
           </button>
         </div>
+        <div id="monthChips" class="chip-group" style="margin-top: 8px"></div>
         <input
           type="date"
           id="hiddenDate"
@@ -1160,43 +1322,51 @@
 
         <input type="hidden" id="editType" value="expense" />
 
-        <div id="editCommonFields">
-          <input
-            id="editAmount"
-            readonly
-            placeholder="Tap to enter amount"
-            onclick="openKeypad('editAmount')"
-          />
-          <select id="editCategory" style="margin-top: 8px">
-            <option value="food">Food</option>
-            <option value="transport">Transport</option>
-            <option value="household">Household</option>
-            <option value="salary">Salary</option>
-            <option value="other">Other</option>
-          </select>
+        <input
+          id="editAmount"
+          readonly
+          placeholder="Tap to enter amount"
+          onclick="openKeypad('editAmount')"
+          style="margin-top: 8px"
+        />
 
-          <select id="editWallet" style="margin-top: 8px">
-            <option value="bca">BCA</option>
-            <option value="gopay">GoPay</option>
-            <option value="dana">DANA</option>
-            <option value="cash">Cash</option>
-          </select>
+        <div id="editCommonFields">
+          <div
+            id="editCategoryChips"
+            style="margin-top: 8px; display: flex; gap: 8px; overflow-x: auto"
+          ></div>
+          <input type="hidden" id="editCategory" />
+
+          <div
+            id="editWalletButtons"
+            style="display: flex; gap: 8px; margin-top: 8px"
+          >
+            <button onclick="setEditWallet('bca', this)">BCA</button>
+            <button onclick="setEditWallet('gopay', this)">GoPay</button>
+            <button onclick="setEditWallet('dana', this)">DANA</button>
+            <button onclick="setEditWallet('cash', this)">Cash</button>
+          </div>
+          <input type="hidden" id="editWallet" />
         </div>
 
         <div id="editTransferFields" style="display: none">
-          <select id="editFromWallet" style="margin-top: 8px">
-            <option value="bca">BCA</option>
-            <option value="gopay">GoPay</option>
-            <option value="dana">DANA</option>
-            <option value="cash">Cash</option>
-          </select>
+          <div style="margin-top: 8px; font-size: 12px; opacity: 0.6">From</div>
+          <div id="editFromWalletButtons" class="wallet-grid">
+            <button onclick="setEditFromWallet('bca', this)">BCA</button>
+            <button onclick="setEditFromWallet('gopay', this)">GoPay</button>
+            <button onclick="setEditFromWallet('dana', this)">DANA</button>
+            <button onclick="setEditFromWallet('cash', this)">Cash</button>
+          </div>
+          <input type="hidden" id="editFromWallet" />
 
-          <select id="editToWallet" style="margin-top: 8px">
-            <option value="bca">BCA</option>
-            <option value="gopay">GoPay</option>
-            <option value="dana">DANA</option>
-            <option value="cash">Cash</option>
-          </select>
+          <div style="margin-top: 12px; font-size: 12px; opacity: 0.6">To</div>
+          <div id="editToWalletButtons" class="wallet-grid">
+            <button onclick="setEditToWallet('bca', this)">BCA</button>
+            <button onclick="setEditToWallet('gopay', this)">GoPay</button>
+            <button onclick="setEditToWallet('dana', this)">DANA</button>
+            <button onclick="setEditToWallet('cash', this)">Cash</button>
+          </div>
+          <input type="hidden" id="editToWallet" />
 
           <input
             id="editFee"
@@ -1231,6 +1401,7 @@
       let editIndex = null;
       let currentDateFilter = "today";
       let selectedCustomDate = null;
+      let selectedMonth = null; // format: YYYY-MM
       let sortMode = "desc"; // desc = terbaru di atas
       let currentCategoryFilter = "all";
       let currentWalletFilter = "all";
@@ -1238,6 +1409,10 @@
       let syncQueue = JSON.parse(localStorage.getItem("syncQueue") || "[]");
       // Store original edit timestamp for edit modal
       let originalEditTanggal = null;
+      let isLoadingData = true;
+      let isTransactionAnimation = false;
+
+      let skipNextBalanceAnimation = false;
 
       // Centralized state and DOM cache
       const state = {
@@ -1382,6 +1557,21 @@
       // setMood removed
 
       function setEditMood(val, el) {
+        function setEditFromWallet(val, el) {
+          document.getElementById("editFromWallet").value = val;
+          document
+            .querySelectorAll("#editFromWalletButtons button")
+            .forEach((b) => b.classList.remove("active"));
+          el.classList.add("active");
+        }
+
+        function setEditToWallet(val, el) {
+          document.getElementById("editToWallet").value = val;
+          document
+            .querySelectorAll("#editToWalletButtons button")
+            .forEach((b) => b.classList.remove("active"));
+          el.classList.add("active");
+        }
         document.getElementById("editMood").value = val;
         document
           .querySelectorAll("#editMoodButtons button")
@@ -1391,8 +1581,21 @@
 
       function setDateFilter(type, el) {
         currentDateFilter = type;
+        selectedMonth = null;
+        // smart month visibility
+        const monthEl = document.getElementById("monthChips");
+
+        if (type === "today" || type === "week") {
+          monthEl.style.display = "none";
+        } else {
+          monthEl.style.display = "flex";
+        }
         document
           .querySelectorAll("#dateFilters button")
+          .forEach((b) => b.classList.remove("active"));
+        // Also clear month chips active state
+        document
+          .querySelectorAll("#monthChips .chip")
           .forEach((b) => b.classList.remove("active"));
         el.classList.add("active");
         render();
@@ -1574,6 +1777,39 @@
         // Log payload before fetch
         console.log("SEND PAYLOAD:", payload);
 
+        /* --- smooth pre-animation for balance change --- */
+        try {
+          const balancesBefore = calculateBalances(dataGlobal);
+          const totalBefore =
+            (balancesBefore.bca || 0) +
+            (balancesBefore.gopay || 0) +
+            (balancesBefore.dana || 0) +
+            (balancesBefore.cash || 0);
+
+          let delta = payloadData.amount || 0;
+
+          if (payloadData.type === "expense") delta = -delta;
+          if (payloadData.type === "transfer") delta = 0;
+
+          const targetTotal = totalBefore + delta;
+
+          // animate from current DOM value instead of jumping
+          const elBalance = document.getElementById("topBalance");
+          const currentText = elBalance.innerText.replace(/[^\d]/g, "");
+          const currentVal = Number(currentText) || totalBefore;
+
+          isTransactionAnimation = true;
+
+          setTimeout(() => {
+            animateNumber(elBalance, targetTotal, "Balance: Rp ", 1200);
+
+            // reset setelah animasi selesai
+            setTimeout(() => {
+              isTransactionAnimation = false;
+            }, 1800);
+          }, 80);
+        } catch (e) {}
+
         // prevent accidental double fire
         const payloadKey = JSON.stringify(payload);
         if (window.__lastPayload === payloadKey) {
@@ -1588,44 +1824,61 @@
         })
           .then((res) => res.text())
           .then((res) => {
-            // normalize response (Apps Script kadang ada newline/spasi)
             const cleanRes = (res || "").toString().trim();
 
             if (!cleanRes || cleanRes.toLowerCase().includes("error")) {
               throw new Error("Server error");
             }
+
+            // ALWAYS reset sending + button first
             window.__sending = false;
-            btn.disabled = false;
-            clearForm();
-            editMode = false;
             btn.classList.remove("btn-loading");
+            btn.disabled = false;
+
+            editMode = false;
+
             btn.classList.add("button-success");
             btn.innerText = "Saved";
+            btn.style.transform = "scale(1.05)";
+            setTimeout(() => {
+              btn.style.transform = "scale(1)";
+            }, 150);
+
             setTimeout(() => {
               btn.classList.remove("button-success");
               btn.innerText = "Save Entry";
-            }, 1200);
+            }, 200);
+
             document.getElementById("status").innerText = "Nice. Keep going.";
             showToast();
+
             clearTimeout(window.__reloadTimer);
             window.__lastPayload = null;
-            window.__reloadTimer = setTimeout(loadData, 500);
+            window.__reloadTimer = setTimeout(loadData, 1200);
           })
           .catch((err) => {
-            btn.classList.remove("btn-loading");
-            btn.disabled = false;
-            window.__sending = false;
-            window.__lastPayload = null;
             console.warn("Request issue but may still succeed:", err);
 
-            // Jangan tampilkan alert keras, karena sering false negative
-            // Anggap sukses dan tetap reload data
+            // ALWAYS reset state
+            window.__sending = false;
+            btn.classList.remove("btn-loading");
+            btn.disabled = false;
+            window.__lastPayload = null;
+
+            // queue for retry
             syncQueue.push(payload);
             localStorage.setItem("syncQueue", JSON.stringify(syncQueue));
 
             clearTimeout(window.__reloadTimer);
-            window.__reloadTimer = setTimeout(loadData, 800);
+            window.__reloadTimer = setTimeout(loadData, 1200);
           });
+
+        // Final failsafe: reset sending/button state after 5s in case of stuck
+        setTimeout(() => {
+          window.__sending = false;
+          btn.disabled = false;
+          btn.classList.remove("btn-loading");
+        }, 5000);
       }
 
       function loadData() {
@@ -1652,13 +1905,22 @@
             }
 
             dataGlobal = Array.isArray(d) ? d : d.data || [];
+            isLoadingData = false;
             renderCategoryChips();
             renderWalletChips();
+            renderMonthChips();
+            // initial smart visibility
+            document.getElementById("monthChips").style.display = "none";
             // cache disabled
             renderedIds.clear();
-            render();
-            // Enforce filter on first load
+            // Enforce filter on first load BEFORE render
             currentDateFilter = "today";
+            selectedMonth = null;
+            render();
+            // Auto-activate Today button on load AFTER render
+            document
+              .querySelector("#dateFilters button:first-child")
+              ?.classList.add("active");
           })
           .catch(() => {
             historyEl.innerHTML = "";
@@ -1669,22 +1931,17 @@
           });
       }
 
-      function calculateMonthly(data) {
+      function calculateStats(data) {
         let income = 0;
         let expense = 0;
-        const now = new Date();
 
         data.forEach((item) => {
-          const d = safeDate(item.tanggal);
-          if (
-            d &&
-            d.getMonth() === now.getMonth() &&
-            d.getFullYear() === now.getFullYear()
-          ) {
-            const amt = Number(item.amount) || 0;
-            if (item.type === "income") income += amt;
-            if (item.type === "expense") expense += amt;
-          }
+          const amt = Number(item.amount) || 0;
+
+          const type = (item.type || "").toLowerCase();
+
+          if (type === "income") income += amt;
+          if (type === "expense") expense += amt;
         });
 
         return { income, expense };
@@ -1775,30 +2032,87 @@
             return getLocalDateString(d) === selectedCustomDate;
           }
 
+          if (currentDateFilter === "monthCustom" && selectedMonth) {
+            const [year, month] = selectedMonth.split("-");
+            return (
+              d.getFullYear() === Number(year) &&
+              d.getMonth() === Number(month) - 1
+            );
+          }
+
           return true;
         });
       }
 
       function updateWalletUI(balances) {
-        document.querySelector("#wallet-bca b").innerText =
-          "Rp " + balances.bca.toLocaleString();
-        document.querySelector("#wallet-gopay b").innerText =
-          "Rp " + balances.gopay.toLocaleString();
-        document.querySelector("#wallet-dana b").innerText =
-          "Rp " + balances.dana.toLocaleString();
-        document.querySelector("#wallet-cash b").innerText =
-          "Rp " + balances.cash.toLocaleString();
+        if (isTransactionAnimation && window.__walletLock) return;
+        if (isTransactionAnimation) {
+          window.__walletLock = true;
+
+          setTimeout(() => {
+            window.__walletLock = false;
+          }, 1500);
+        }
+        // Wallet lift animation
+        document.querySelectorAll(".wallet-card").forEach((card) => {
+          card.style.transform = "scale(1.03)";
+          setTimeout(() => {
+            card.style.transform = "scale(1)";
+          }, 150);
+        });
+        const wallets = [
+          { el: "#wallet-bca b", val: balances.bca },
+          { el: "#wallet-gopay b", val: balances.gopay },
+          { el: "#wallet-dana b", val: balances.dana },
+          { el: "#wallet-cash b", val: balances.cash },
+        ];
+
+        wallets.forEach((w, i) => {
+          setTimeout(() => {
+            const el = document.querySelector(w.el);
+
+            // ambil nilai sebelum animasi
+            const currentText = (el.innerText || "").replace(/[^\d]/g, "");
+            const currentVal = Number(currentText) || 0;
+
+            let color = "";
+
+            if (isTransactionAnimation) {
+              if (w.val > currentVal) color = "#60a5fa";
+              if (w.val < currentVal) color = "#f87171";
+            }
+
+            animateNumber(el, w.val, "Rp ");
+
+            if (color) {
+              el.style.color = color;
+
+              setTimeout(() => {
+                el.style.color = "";
+              }, 1200);
+            }
+          }, i * 120);
+        });
       }
 
       function updateChart(income, expense) {
-        const total = income + expense || 1;
-        const expensePercent = (expense / total) * 100;
-        const remainPercent = 100 - expensePercent;
+        const bar1 = document.getElementById("chartBarRemaining");
+        const bar2 = document.getElementById("chartBarExpense");
 
-        document.getElementById("chartBarRemaining").style.width =
-          remainPercent + "%";
-        document.getElementById("chartBarExpense").style.width =
-          expensePercent + "%";
+        bar1.style.transition = "width 0.5s var(--ios-ease)";
+        bar2.style.transition = "width 0.5s var(--ios-ease)";
+
+        const total = income + expense;
+
+        if (total === 0) {
+          bar1.style.width = "0%";
+          bar2.style.width = "0%";
+          return;
+        }
+        const incomePercent = (income / total) * 100;
+        const expensePercent = (expense / total) * 100;
+        bar1.style.width = incomePercent + "%";
+        bar2.style.width = expensePercent + "%";
       }
 
       function renderList(data) {
@@ -1806,56 +2120,91 @@
 
         if (!data.length) {
           historyEl.innerHTML = `
-                                          <div style="text-align:center; padding:30px 10px; opacity:0.8;">
-                                            <div style="font-size:28px;">📝</div>
-                                            <div style="font-size:14px;">No entries yet</div>
-                                          </div>
-                                        `;
+                                                <div style="text-align:center; padding:30px 10px; opacity:0.8;">
+                                                  <div style="font-size:28px;">📝</div>
+                                                  <div style="font-size:14px;">No entries yet</div>
+                                                </div>
+                                              `;
           return;
         }
 
-        data.forEach((item) => {
+        data.forEach((item, index) => {
           const div = document.createElement("div");
           div.className = `history-item ${item.type || ""}`;
           div.setAttribute("data-id", item.id);
+
+          const emojiMap = {
+            food: "🍜",
+            transport: "🚗",
+            household: "🏠",
+            social: "👥",
+            apparel: "👕",
+            education: "📚",
+            gift: "🎁",
+            production: "🏭",
+            salary: "💰",
+            transfer: "🔁",
+            other: "📦",
+          };
+
+          const emoji =
+            item.type === "transfer" ? "🔁" : emojiMap[item.category] || "📦";
+
           div.innerHTML = `
-                          <div class="inner">
-                            <b>${item.judul || "-"}</b>
-                            <div class="small" style="font-size:13px; opacity:0.8;">
-                              ${formatDateDisplay(item.tanggal)} •
-                              ${
-                                safeDate(item.tanggal)?.toLocaleTimeString(
-                                  "id-ID",
-                                  {
-                                    hour: "2-digit",
-                                    minute: "2-digit",
-                                  },
-                                ) || "-"
-                              }
-                            </div>
+            <div class="inner" style="display:flex; justify-content:space-between; align-items:center;">
+              
+              <div style="flex:1;">
+                <b>${item.judul || "-"}</b>
+
+                <div class="small" style="font-size:13px; opacity:0.8;">
+                  ${formatDateDisplay(item.tanggal)} •
+                  ${
+                    safeDate(item.tanggal)?.toLocaleTimeString("id-ID", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    }) || "-"
+                  }
+                </div>
+
                 <div style="margin-top:6px; font-weight:800; font-size:22px;">
                   Rp ${Number(item.amount || 0).toLocaleString()}
                 </div>
-                            <div class="small">
-                              ${
-                                item.type === "transfer"
-                                  ? `transfer • ${item.fromWallet || "-"} → ${item.toWallet || "-"}`
-                                  : `${item.type} • ${item.category || "-"} • ${item.wallet || ""}`
-                              }
-                            </div>
 
-                            <div class="actions">
-                              <button onclick="editData('${item.id}')">Edit</button>
-                              <button onclick="deleteData('${item.id}')">Delete</button>
-                            </div>
-                          </div>
-                        `;
+                <div class="small">
+                  ${
+                    item.type === "transfer"
+                      ? `transfer • ${item.fromWallet || "-"} → ${item.toWallet || "-"}`
+                      : `${item.type} • ${item.category || "-"} • ${item.wallet || ""}`
+                  }
+                </div>
+
+                <div class="actions">
+                  <button onclick="editData('${item.id}')">Edit</button>
+                  <button onclick="deleteData('${item.id}')">Delete</button>
+                </div>
+              </div>
+
+              <div style="font-size:26px; opacity:0.8; margin-left:10px;">
+                ${emoji}
+              </div>
+
+            </div>
+          `;
           // Prevent accidental trigger overlap on button clicks
           div.addEventListener("click", (e) => {
             if (e.target.tagName === "BUTTON") e.stopPropagation();
           });
 
           historyEl.appendChild(div);
+          // stagger animation
+          div.style.opacity = 0;
+          div.style.transform = "translateY(10px)";
+
+          setTimeout(() => {
+            div.style.transition = "all 0.25s var(--ios-ease)";
+            div.style.opacity = 1;
+            div.style.transform = "translateY(0)";
+          }, index * 40);
         });
       }
 
@@ -1871,10 +2220,17 @@
         renderStats(filtered);
         renderWallet();
         renderChart(filtered);
-        renderList(filtered);
+        historyEl.style.opacity = 0;
+        historyEl.style.filter = "blur(4px)";
+
+        setTimeout(() => {
+          renderList(filtered);
+          historyEl.style.opacity = 1;
+          historyEl.style.filter = "blur(0)";
+        }, 120);
       }
       function renderStats(data) {
-        const { income, expense } = calculateMonthly(data);
+        const { income, expense } = calculateStats(data);
         const balances = calculateBalances(dataGlobal);
         const total =
           (balances.bca || 0) +
@@ -1883,7 +2239,13 @@
           (balances.cash || 0);
 
         document.getElementById("topStats").innerText =
-          `Income: Rp ${income.toLocaleString()} • Expense: Rp ${expense.toLocaleString()} • Balance: Rp ${total.toLocaleString()}`;
+          `Income: Rp ${income.toLocaleString()} • Expense: Rp ${expense.toLocaleString()}`;
+
+        animateNumber(
+          document.getElementById("topBalance"),
+          total,
+          "Balance: Rp ",
+        );
       }
 
       function renderWallet() {
@@ -1892,7 +2254,7 @@
       }
 
       function renderChart(data) {
-        const { income, expense } = calculateMonthly(data);
+        const { income, expense } = calculateStats(data);
         updateChart(income, expense);
       }
 
@@ -1915,6 +2277,14 @@
         editAmountEl.onclick = () => openKeypad("editAmount");
         document.getElementById("editType").value = item.type || "expense";
         document.getElementById("editWallet").value = item.wallet || "cash";
+        const walletVal = (item.wallet || "cash").toLowerCase();
+
+        document.querySelectorAll("#editWalletButtons button").forEach((b) => {
+          b.classList.remove("active");
+          if (b.innerText.toLowerCase() === walletVal) {
+            b.classList.add("active");
+          }
+        });
         // REMOVE direct category assignment here (moved after setEditTab)
         // document.getElementById("editCategory").value = item.category || "other";
 
@@ -1929,8 +2299,7 @@
           type,
           document.querySelector(`#editTabs button:nth-child(${idx})`),
         );
-
-        // then set category value
+        renderCategories(type, "editCategoryChips", item.category); // then set category value
         if (type !== "transfer") {
           document.getElementById("editCategory").value =
             item.category || "other";
@@ -1943,6 +2312,25 @@
           document.getElementById("editFromWallet").value =
             item.fromWallet || "";
           document.getElementById("editToWallet").value = item.toWallet || "";
+
+          const fromVal = (item.fromWallet || "").toLowerCase();
+          const toVal = (item.toWallet || "").toLowerCase();
+
+          document
+            .querySelectorAll("#editFromWalletButtons button")
+            .forEach((b) => {
+              b.classList.remove("active");
+              if (b.innerText.toLowerCase() === fromVal)
+                b.classList.add("active");
+            });
+
+          document
+            .querySelectorAll("#editToWalletButtons button")
+            .forEach((b) => {
+              b.classList.remove("active");
+              if (b.innerText.toLowerCase() === toVal)
+                b.classList.add("active");
+            });
         }
         // After setting amount, reset keypad state to avoid carry-over
         keypadExpression = "";
@@ -2021,7 +2409,7 @@
             }
             closeModal();
             showToast();
-            setTimeout(loadData, 500);
+            setTimeout(loadData, 200);
           })
           .catch(() => alert("Failed to update entry"))
           .finally(() => btns.forEach((b) => (b.disabled = false)));
@@ -2137,9 +2525,7 @@
       // Use el.history for consistency
       const historyEl = el.history;
 
-      document
-        .querySelector("#dateFilters button:first-child")
-        .classList.add("active");
+      // (Moved auto-activate Today button to loadData)
 
       function loadDraft() {
         const d = JSON.parse(localStorage.getItem("draft") || "null");
@@ -2153,6 +2539,28 @@
       localStorage.removeItem("draft");
       setInterval(processSyncQueue, 5000);
       processSyncQueue();
+      /* initial fake animation (hide loading) */
+      function fakeLoadingAnimation() {
+        if (!isLoadingData) return;
+        const fake = Math.floor(Math.random() * 100_000_000) + 10_000_000;
+
+        updateWalletUI({
+          bca: Math.floor(fake * 0.4),
+          gopay: Math.floor(fake * 0.2),
+          dana: Math.floor(fake * 0.25),
+          cash: Math.floor(fake * 0.15),
+        });
+
+        animateNumber(
+          document.getElementById("topBalance"),
+          fake,
+          "Balance: Rp ",
+        );
+
+        setTimeout(fakeLoadingAnimation, 600);
+      }
+
+      fakeLoadingAnimation();
       loadData();
       // Show onboarding only first time
       if (!localStorage.getItem("seen_onboarding")) {
@@ -2167,7 +2575,40 @@
       judulEl.focus();
       // Set default date = hari ini
       (function setDefaultDate() {
-        renderCategories("expense");
+        renderCategories("expense", "categoryButtons");
+        // enhanced "peek scroll" animation for category buttons
+        setTimeout(() => {
+          const container = document.getElementById("categoryButtons");
+          if (!container) return;
+
+          // scroll to end first (show it's scrollable)
+          container.scrollTo({
+            left: container.scrollWidth,
+            behavior: "smooth",
+          });
+
+          // pause at end, then go back to active
+          setTimeout(() => {
+            const activeEl = container.querySelector(".active");
+            if (activeEl) {
+              setTimeout(() => {
+                activeEl.scrollIntoView({
+                  behavior: "smooth",
+                  inline: "center",
+                  block: "nearest",
+                });
+
+                // micro-bounce effect
+                setTimeout(() => {
+                  activeEl.style.transform = "scale(1.05)";
+                  setTimeout(() => {
+                    activeEl.style.transform = "scale(1)";
+                  }, 120);
+                }, 400);
+              }, 300);
+            }
+          }, 500);
+        }, 200);
         const dateInput = document.getElementById("date");
         const today = new Date();
 
@@ -2258,12 +2699,17 @@
           transferFields.style.display = "none";
 
           // reset category to default
-          renderCategories(type);
+          renderCategories(type, "categoryButtons");
         }
       }
 
-      function renderCategories(type = "expense") {
-        const container = document.getElementById("categoryButtons");
+      function renderCategories(
+        type = "expense",
+        containerId = "categoryButtons",
+        active = "",
+      ) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
 
         const expenseCategories = [
           "food",
@@ -2283,25 +2729,76 @@
 
         container.innerHTML = list
           .map(
-            (c, i) => `
-                                          <button onclick="setCategory('${c}', this)" class="${i === 0 ? "active" : ""}">
-                                            ${c.charAt(0).toUpperCase() + c.slice(1)}
-                                          </button>
-                                        `,
+            (c) => `
+    <button data-value="${c}" class="${c === (active || "").toLowerCase() ? "active" : ""}"
+      onclick="setCategoryUnified('${c}', this, '${containerId}')">
+      ${c.charAt(0).toUpperCase() + c.slice(1)}
+    </button>
+  `,
           )
           .join("");
 
-        document.getElementById("category").value = list[0];
-      }
+        const val = active || list[0];
 
+        setTimeout(() => {
+          const buttons = container.querySelectorAll("button");
+
+          // ensure correct active based on value
+          const target = (active || list[0]).toLowerCase();
+
+          buttons.forEach((b) => {
+            if ((b.dataset.value || "").toLowerCase() === target) {
+              b.classList.add("active");
+            } else {
+              b.classList.remove("active");
+            }
+          });
+
+          // auto scroll into view (for edit chips)
+          if (containerId === "editCategoryChips") {
+            const activeEl = container.querySelector(".active");
+            if (activeEl) {
+              activeEl.scrollIntoView({
+                behavior: "smooth",
+                inline: "center",
+                block: "nearest",
+              });
+            }
+          }
+        }, 0);
+
+        if (containerId === "categoryButtons") {
+          document.getElementById("category").value = val;
+        } else if (containerId === "editCategoryChips") {
+          document.getElementById("editCategory").value = val;
+        }
+      }
+      function setCategoryUnified(val, el, containerId) {
+        if (containerId === "categoryButtons") {
+          document.getElementById("category").value = val;
+        } else if (containerId === "editCategoryChips") {
+          document.getElementById("editCategory").value = val;
+        }
+
+        document
+          .querySelectorAll(`#${containerId} button`)
+          .forEach((b) => b.classList.remove("active"));
+
+        if (el) el.classList.add("active");
+      }
       function setCategory(val, el) {
         document.getElementById("category").value = val;
+
         document
           .querySelectorAll("#categoryButtons button")
           .forEach((b) => b.classList.remove("active"));
-        el.classList.add("active");
-      }
 
+        if (el) el.classList.add("active");
+
+        // sync dropdown
+        const dropdown = document.getElementById("categoryDropdown");
+        if (dropdown) dropdown.value = val;
+      }
       function setWallet(val, elBtn) {
         state.wallet = val;
         el.wallet.value = val;
@@ -2313,6 +2810,11 @@
         elBtn.classList.add("active");
       }
       function setFromWallet(val, el) {
+        const toVal = document.getElementById("toWallet").value;
+
+        // prevent same selection
+        if (val === toVal) return;
+
         document.getElementById("fromWallet").value = val;
 
         const container = el.closest(".wallet-grid");
@@ -2324,6 +2826,11 @@
       }
 
       function setToWallet(val, el) {
+        const fromVal = document.getElementById("fromWallet").value;
+
+        // prevent same selection
+        if (val === fromVal) return;
+
         document.getElementById("toWallet").value = val;
 
         const container = el.closest(".wallet-grid");
@@ -2351,6 +2858,13 @@
       }
 
       function keypadInput(val) {
+        const btn = event?.target;
+        if (btn) {
+          btn.style.transform = "scale(0.92)";
+          setTimeout(() => {
+            btn.style.transform = "scale(1)";
+          }, 100);
+        }
         keypadExpression += val;
         updateKeypadDisplay();
       }
@@ -2461,13 +2975,21 @@
 
         const list = ["all", ...Array.from(categories)];
 
+        // auto-hide if only 'all' or 1 category
+        if (list.length <= 2) {
+          container.style.display = "none";
+          return;
+        } else {
+          container.style.display = "flex";
+        }
+
         container.innerHTML = list
           .map(
             (c) => `
-              <button class="chip ${c === currentCategoryFilter ? "active" : ""}" onclick="setCategoryFilter('${c}', this)">
-                ${c === "all" ? "All" : c}
-              </button>
-            `,
+                    <button class="chip ${c === currentCategoryFilter ? "active" : ""}" onclick="setCategoryFilter('${c}', this)">
+                      ${c === "all" ? "All" : c}
+                    </button>
+                  `,
           )
           .join("");
       }
@@ -2482,61 +3004,30 @@
 
         const common = document.getElementById("editCommonFields");
         const transfer = document.getElementById("editTransferFields");
-        const walletEl = document.getElementById("editWallet");
 
         if (type === "transfer") {
           common.style.display = "none";
           transfer.style.display = "block";
-
-          // make wallet truly inactive in transfer
-          walletEl.value = "";
-          walletEl.disabled = true;
         } else {
           common.style.display = "block";
           transfer.style.display = "none";
-
-          // re-enable wallet for normal types
-          walletEl.disabled = false;
         }
 
-        // update category options when switching tab, but prevent category reset
-        const editCategory = document.getElementById("editCategory");
-
-        const expenseCategories = [
-          "food",
-          "transport",
-          "household",
-          "social",
-          "apparel",
-          "education",
-          "gift",
-          "production",
-          "other",
-        ];
-
-        const incomeCategories = ["salary", "other"];
-
-        const list = type === "income" ? incomeCategories : expenseCategories;
-
-        const current = editCategory.value;
-        editCategory.innerHTML = list
-          .map(
-            (c) =>
-              `<option value="${c}">${c.charAt(0).toUpperCase() + c.slice(1)}</option>`,
-          )
-          .join("");
-
-        if (list.includes(current)) {
-          editCategory.value = current;
-        } else {
-          editCategory.value = list[0];
-        }
+        // render ulang kategori (PENTING)
+        renderCategories(type, "editCategoryChips");
       }
       function renderWalletChips() {
         const container = document.getElementById("walletChips");
         const wallets = new Set();
 
-        dataGlobal.forEach((item) => {
+        const prevWallet = currentWalletFilter;
+        currentWalletFilter = "all";
+
+        const filtered = filterData(dataGlobal);
+
+        currentWalletFilter = prevWallet;
+
+        filtered.forEach((item) => {
           if (item.wallet) wallets.add(item.wallet);
           if (item.fromWallet) wallets.add(item.fromWallet);
           if (item.toWallet) wallets.add(item.toWallet);
@@ -2544,13 +3035,24 @@
 
         const list = ["all", ...Array.from(wallets)];
 
+        if (list.length <= 1) {
+          container.style.display = "none";
+          return;
+        } else {
+          container.style.display = "flex";
+        }
+
+        if (!list.includes(currentWalletFilter)) {
+          currentWalletFilter = "all";
+        }
+
         container.innerHTML = list
           .map(
             (w) => `
-                                      <button class="chip ${w === currentWalletFilter ? "active" : ""}" onclick="setWalletFilter('${w}', this)">
-                                        ${w === "all" ? "All Wallet" : w}
-                                      </button>
-                                    `,
+        <button class="chip ${w === currentWalletFilter ? "active" : ""}" onclick="setWalletFilter('${w}', this)">
+          ${w === "all" ? "All Wallet" : w}
+        </button>
+      `,
           )
           .join("");
       }
@@ -2596,6 +3098,113 @@
           keypadValue = "";
           currentKeypadField = null;
         }
+      }
+      function renderMonthChips() {
+        const container = document.getElementById("monthChips");
+        const months = new Set();
+
+        dataGlobal.forEach((item) => {
+          const d = safeDate(item.tanggal);
+          if (!d) return;
+
+          const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+          months.add(key);
+        });
+
+        const list = Array.from(months).sort().reverse();
+
+        container.innerHTML = list
+          .map((m) => {
+            const [y, mo] = m.split("-");
+            const label = new Date(y, mo - 1).toLocaleString("en-US", {
+              month: "short",
+            });
+
+            return `
+              <button class="chip ${m === selectedMonth ? "active" : ""}"
+                onclick="setMonthFilter('${m}', this)">
+                ${label} ${y}
+              </button>
+            `;
+          })
+          .join("");
+      }
+      function setMonthFilter(val, el) {
+        document.getElementById("monthChips").style.display = "flex";
+
+        selectedMonth = val;
+        currentDateFilter = "monthCustom";
+        document
+          .querySelectorAll("#monthChips .chip")
+          .forEach((b) => b.classList.remove("active"));
+
+        el.classList.add("active");
+
+        // reset tombol filter lain
+        document
+          .querySelectorAll("#dateFilters button")
+          .forEach((b) => b.classList.remove("active"));
+
+        render();
+        renderCategoryChips();
+      }
+      function setEditCategory(val, el) {
+        document.getElementById("editCategory").value = val;
+
+        document
+          .querySelectorAll("#editCategoryChips .chip")
+          .forEach((b) => b.classList.remove("active"));
+
+        if (el) el.classList.add("active");
+      }
+      function setEditWallet(val, el) {
+        document.getElementById("editWallet").value = val;
+
+        document
+          .querySelectorAll("#editWalletButtons button")
+          .forEach((b) => b.classList.remove("active"));
+
+        if (el) el.classList.add("active");
+      }
+      function animateNumber(el, target, prefix = "") {
+        const duration = 900; // ms (fast)
+        const currentText = el.innerText || "";
+        const currentNumber = Number(currentText.replace(/[^\d]/g, "")) || 0;
+        const start = currentNumber;
+        const startTime = performance.now();
+
+        function update(now) {
+          const progress = Math.min((now - startTime) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          const value = Math.floor(start + (target - start) * eased);
+
+          el.innerText = prefix + value.toLocaleString();
+
+          // warna naik / turun
+          if (isTransactionAnimation) {
+            if (target > start) {
+              el.style.color = "#60a5fa"; // naik
+            } else if (target < start) {
+              el.style.color = "#f87171"; // turun
+            } else {
+              el.style.color = "";
+            }
+          } else {
+            el.style.color = "";
+          }
+          if (progress < 1) {
+            requestAnimationFrame(update);
+          } else {
+            el.innerText = `${prefix}${target.toLocaleString()}`;
+
+            // penting: jangan reset warna kalau transaksi
+            if (!isTransactionAnimation) {
+              el.style.color = "";
+            }
+          }
+        }
+
+        requestAnimationFrame(update);
       }
     </script>
   </body>
