@@ -1,0 +1,835 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>COKELAT MANIS</title>
+    <link rel="icon" type="image/x-icon" href="../img/icon.jpg" />
+
+    <style>
+      body {
+        font-family: "Poppins", Arial, sans-serif;
+        text-align: center;
+        margin: 0;
+        padding: 24px;
+        background: linear-gradient(180deg, #ffe4f1, #fff);
+        color: #5a2a3c;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      :root {
+        --ease-apple: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      h1 {
+        font-size: 30px;
+        margin-bottom: 6px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+      }
+      h2 {
+        font-size: 15px;
+        margin-top: 0;
+        margin-bottom: 28px;
+        font-weight: 400;
+        color: #8a4b64;
+      }
+      .links {
+        list-style: none;
+        padding: 0;
+        max-width: 420px;
+        margin: 0 auto;
+      }
+      .links li {
+        margin: 14px 0;
+      }
+      .links a {
+        display: block;
+        padding: 15px;
+        background: #ffb6d5;
+        color: #5a2a3c;
+        text-decoration: none;
+        border-radius: 999px;
+        font-size: 17px;
+        font-weight: 600;
+        box-shadow: 0 6px 14px rgba(255, 182, 213, 0.45);
+        transition:
+          transform 0.2s var(--ease-apple),
+          box-shadow 0.2s var(--ease-apple);
+      }
+      .links a:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(255, 182, 213, 0.6);
+      }
+      .roles {
+        margin-top: 18px;
+        padding: 12px;
+        background: #fff7fb;
+        border-radius: 14px;
+        font-size: 14px;
+        box-shadow: 0 4px 10px rgba(255, 182, 213, 0.2);
+      }
+
+      .role-icons {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        margin: 10px 0 6px;
+      }
+
+      .role-icons img {
+        width: 32px;
+        height: 32px;
+        object-fit: contain;
+        background: linear-gradient(135deg, #ff7ab6, #ff4fa3);
+        padding: 6px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(255, 95, 162, 0.35);
+        filter: brightness(1.1);
+        transition:
+          transform 0.25s var(--ease-apple),
+          box-shadow 0.25s var(--ease-apple);
+      }
+
+      .role-icons img:hover {
+        transform: translateY(-2px) scale(1.08);
+        box-shadow: 0 8px 18px rgba(255, 95, 162, 0.5);
+      }
+
+      .agent-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+        margin-top: 8px;
+      }
+
+      .agent-grid img {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        object-fit: cover;
+        transition: transform 0.2s ease;
+      }
+
+      .agent-grid img:hover {
+        transform: scale(1.15);
+      }
+
+      .agent-showcase {
+        margin-top: 30px;
+      }
+
+      .agent-card {
+        position: relative;
+        border-radius: 14px;
+        overflow: hidden;
+        background: #ffffff;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+        text-decoration: none;
+        color: inherit;
+        cursor: pointer;
+        transition:
+          transform 0.25s var(--ease-apple),
+          box-shadow 0.25s var(--ease-apple);
+      }
+
+      .agent-card img {
+        width: 100%;
+        height: 160px;
+        object-fit: cover;
+        background: #1c1f2b;
+        transition: transform 0.35s var(--ease-apple);
+      }
+      .agent-card:hover img {
+        transform: scale(1.06);
+        filter: brightness(1.05);
+      }
+
+      .agent-name {
+        position: static;
+        background: none;
+        color: #222;
+        font-weight: 700;
+        font-size: 13px;
+        padding: 6px 8px;
+        text-align: left;
+      }
+
+      .agent-big-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+
+      @media (min-width: 480px) {
+        .agent-big-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+
+      .map-showcase {
+        margin-top: 32px;
+      }
+
+      .map-big-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      @media (min-width: 480px) {
+        .map-big-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      .map-card {
+        border-radius: 14px;
+        overflow: hidden;
+        background: #ffffff;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+        display: flex;
+        flex-direction: column;
+        transition:
+          transform 0.25s var(--ease-apple),
+          box-shadow 0.25s var(--ease-apple);
+      }
+      .map-card:hover {
+        transform: translateY(-6px) scale(1.02);
+        box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+      }
+
+      .map-card img {
+        width: 100%;
+        aspect-ratio: 16/9;
+        object-fit: contain;
+        background: #eae6dd;
+        transition: transform 0.35s var(--ease-apple);
+      }
+
+      .map-name {
+        font-size: 13px;
+        font-weight: 700;
+        padding: 8px;
+        text-align: left;
+        color: #222;
+      }
+      .map-desc {
+        font-size: 10px;
+        color: #666;
+        padding: 0 8px 10px;
+        text-align: left;
+        line-height: 1.3;
+      }
+      /* Removed duplicate .section-title block */
+
+      .role-spacing {
+        margin-bottom: 10px;
+      }
+
+      .team-showcase {
+        margin-top: 24px;
+      }
+
+      .agent-showcase,
+      .map-showcase,
+      .weapon-showcase,
+      .team-showcase {
+        background: transparent;
+        padding: 0;
+        border-radius: 0;
+      }
+
+      .agent-showcase,
+      .map-showcase,
+      .weapon-showcase,
+      .team-showcase {
+        margin-top: 28px;
+      }
+
+      .weapon-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      @media (min-width: 480px) {
+        .weapon-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      .team-card {
+        border-radius: 18px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 10px;
+        padding: 18px 16px;
+        transition:
+          transform 0.25s var(--ease-apple),
+          box-shadow 0.25s var(--ease-apple);
+        text-decoration: none;
+        color: inherit;
+        cursor: pointer;
+      }
+
+      .team-card img {
+        width: 84px;
+        height: 84px;
+        object-fit: contain;
+        border-radius: 16px;
+        background: #2b0d2b;
+        padding: 12px;
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+      }
+
+      .team-name {
+        font-size: 16px;
+        font-weight: 700;
+        color: #2b1a24;
+        letter-spacing: 0.4px;
+      }
+      .team-sub {
+        font-size: 12px;
+        color: #a06b85;
+        letter-spacing: 0.3px;
+        font-weight: 500;
+      }
+
+      .team-card:hover {
+        transform: translateY(-4px) scale(1.01);
+      }
+      .agent-card:hover {
+        transform: translateY(-6px) scale(1.04);
+        box-shadow: 0 12px 26px rgba(0, 0, 0, 0.15);
+      }
+      .weapon-card {
+        background: #ffffff;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+        display: flex;
+        flex-direction: column;
+        border-radius: 12px;
+        transition:
+          transform 0.25s var(--ease-apple),
+          box-shadow 0.25s var(--ease-apple);
+      }
+      .weapon-card:hover {
+        transform: translateY(-6px) scale(1.04);
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.18);
+      }
+      .weapon-card img {
+        width: 100%;
+        aspect-ratio: 16/9;
+        object-fit: contain;
+        background: #eae6dd;
+        transition: transform 0.35s var(--ease-apple);
+      }
+      .weapon-name {
+        font-size: 12px;
+        font-weight: 700;
+        padding: 6px 6px 2px;
+        color: #222;
+        text-align: left;
+      }
+      .weapon-desc {
+        font-size: 10px;
+        color: #666;
+        padding: 0 6px 8px;
+        text-align: left;
+        line-height: 1.3;
+      }
+
+      .testimonial {
+        margin-top: 24px;
+        padding: 20px 14px 14px;
+        background: #fff0f6;
+        border-radius: 16px;
+        font-size: 14px;
+        box-shadow: 0 4px 12px rgba(255, 182, 213, 0.25);
+        overflow: hidden;
+        position: relative;
+        min-height: 100px;
+      }
+      .testimonial p {
+        opacity: 0;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        animation: slideTesti 12s infinite;
+      }
+
+      .testimonial p:nth-child(2) {
+        animation-delay: 0s;
+      }
+      .testimonial p:nth-child(3) {
+        animation-delay: 3s;
+      }
+      .testimonial p:nth-child(4) {
+        animation-delay: 6s;
+      }
+      .testimonial p:nth-child(5) {
+        animation-delay: 9s;
+      }
+
+      @keyframes slideTesti {
+        0% {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        5% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        25% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        30% {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+
+      .testimonial p:first-child {
+        position: static;
+        transform: none;
+        opacity: 1;
+        animation: none;
+        margin-bottom: 10px;
+      }
+      .footer {
+        margin-top: 36px;
+        font-size: 14px;
+        color: #8a4b64;
+      }
+      .footer a {
+        color: #ff5fa2;
+        text-decoration: none;
+        margin: 0 6px;
+        font-weight: 600;
+      }
+      .container {
+        width: 100%;
+        max-width: 480px;
+      }
+      @keyframes pulseGlow {
+        0% {
+          transform: scale(1);
+          box-shadow: 0 0 0 rgba(255, 95, 162, 0.6);
+        }
+        50% {
+          transform: scale(1.04);
+          box-shadow: 0 0 18px rgba(255, 95, 162, 0.9);
+        }
+        100% {
+          transform: scale(1);
+          box-shadow: 0 0 0 rgba(255, 95, 162, 0.6);
+        }
+      }
+
+      .links a.support {
+        background: linear-gradient(135deg, #ff5fa2, #ff9fc7);
+        color: #ffffff;
+        animation: pulseGlow 1.8s ease-in-out infinite;
+      }
+
+      .links a.support:hover {
+        animation-play-state: paused;
+        transform: scale(1.06);
+      }
+
+      /* Entrance Animation */
+      @keyframes fadeUp {
+        0% {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .container {
+        opacity: 0;
+        animation: fadeUp 0.7s ease forwards;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      .price {
+        opacity: 0;
+        animation: fadeUp 0.6s ease forwards;
+      }
+
+      h1 {
+        animation-delay: 0.1s;
+      }
+      h2 {
+        animation-delay: 0.2s;
+      }
+      h3 {
+        animation-delay: 0.3s;
+      }
+      h4 {
+        animation-delay: 0.4s;
+      }
+      .price {
+        animation-delay: 0.5s;
+      }
+
+      .links li {
+        opacity: 0;
+        animation: fadeUp 0.6s ease forwards;
+        animation-delay: 0.6s;
+      }
+
+      .footer {
+        opacity: 0;
+        animation: fadeUp 0.6s ease forwards;
+        animation-delay: 0.8s;
+      }
+      .section-title {
+        font-weight: 700;
+        margin-bottom: 14px;
+        font-size: 17px;
+        text-align: center;
+        letter-spacing: 0.4px;
+        color: #5a2a3c;
+        position: relative;
+      }
+
+      .section-title::after {
+        content: "";
+        display: block;
+        width: 40px;
+        height: 3px;
+        background: linear-gradient(90deg, #ff7ab6, #ff4fa3);
+        margin: 6px auto 0;
+        border-radius: 999px;
+      }
+      .map-card img,
+      .weapon-card img {
+        transition: transform 0.35s var(--ease-apple);
+      }
+
+      .map-card:hover img,
+      .weapon-card:hover img {
+        transform: scale(1.05);
+      }
+      .weapon-card:hover img {
+        transform: scale(1.05);
+      }
+      .agent-card:hover,
+      .weapon-card:hover {
+        box-shadow:
+          0 14px 28px rgba(0, 0, 0, 0.18),
+          0 0 12px rgba(255, 95, 162, 0.25);
+      }
+
+      .agent-card:active,
+      .weapon-card:active,
+      .map-card:active {
+        transform: scale(0.97);
+      }
+      .links a.support {
+        letter-spacing: 0.5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <div style="font-size: 48px; margin-bottom: 8px">🎀</div>
+      <h1>Mabar Valorant Fun</h1>
+      <h2>Teman mabar santai + komunikasi</h2>
+      <h3>Cocok untuk Bronze • Voice ON • Anti Toxic</h3>
+      <h4>⋆｡˚ ♡ ayo mabar ♡ ˚｡⋆</h4>
+      <div class="price">
+        💸 <strong>15k / 1 match</strong><br />
+        🎮 <strong>50k / sampai end live</strong><br />
+        🔥 <strong>100k / request agent</strong>
+      </div>
+
+      <!-- Link List -->
+      <ul class="links">
+        <li>
+          <a href="https://saweria.co/Cameliazanindya" class="support">
+            💖 Order Sekarang (slot terbatas)
+          </a>
+        </li>
+      </ul>
+
+      <!-- Testimoni -->
+      <div class="testimonial">
+        <p style="font-weight: 700; margin-bottom: 10px">
+          ⭐ 5.0 dari 18+ review
+        </p>
+
+        <p style="font-size: 14px; color: #8a4b64; margin-bottom: 8px">
+          “ggwp, seru banget mabar nya 😭💖”
+        </p>
+
+        <p style="font-size: 14px; color: #8a4b64; margin-bottom: 8px">
+          “makasih buat carry nya kak 😭🙏”
+        </p>
+
+        <p style="font-size: 14px; color: #8a4b64; margin-bottom: 8px">
+          “baik banget, ga toxic sama sekali”
+        </p>
+
+        <p style="font-size: 14px; color: #8a4b64">
+          “fun banget, pengen mabar lagi 😆”
+        </p>
+      </div>
+
+      <!-- Share footer -->
+      <div class="footer">
+        <p><strong>WAJIB</strong> isi keterangan di Saweria / chat live:</p>
+        <p><strong>Username | Rank</strong></p>
+        <p>Main santai, nggak marah walau kalah</p>
+      </div>
+
+      <!-- Favorite Team -->
+      <div class="team-showcase">
+        <p class="section-title">Team Favorit</p>
+        <a href="https://pprx.team/" target="_blank" class="team-card">
+          <img src="img/prx.jpg" />
+          <div class="team-text">
+            <div class="team-name">Paper Rex (PRX)</div>
+            <div class="team-sub">Play like ranked, win like pro</div>
+          </div>
+        </a>
+      </div>
+
+      <!-- Agent Showcase -->
+      <div class="agent-showcase">
+        <p class="section-title">Role & Agent Pool</p>
+        <div class="role-icons role-spacing">
+          <img src="img/duelist.png" alt="Duelist" />
+          <img src="img/initiator.png" alt="Initiator" />
+          <img src="img/controller.png" alt="Controller" />
+          <img src="img/sentinel.png" alt="Sentinel" />
+        </div>
+        <div class="agent-big-grid">
+          <!-- Duelist -->
+          <a
+            href="https://playvalorant.com/id-id/agents/yoru/"
+            target="_blank"
+            class="agent-card"
+          >
+            <img src="img/yoru.avif" />
+            <div class="agent-name">YORU</div>
+          </a>
+          <a
+            href="https://playvalorant.com/id-id/agents/reyna/"
+            target="_blank"
+            class="agent-card"
+          >
+            <img src="img/reyna.avif" />
+            <div class="agent-name">REYNA</div>
+          </a>
+          <a
+            href="https://playvalorant.com/id-id/agents/iso/"
+            target="_blank"
+            class="agent-card"
+          >
+            <img src="img/iso.avif" />
+            <div class="agent-name">ISO</div>
+          </a>
+          <a
+            href="https://playvalorant.com/id-id/agents/raze/"
+            target="_blank"
+            class="agent-card"
+          >
+            <img src="img/raze.avif" />
+            <div class="agent-name">RAZE</div>
+          </a>
+          <a
+            href="https://playvalorant.com/id-id/agents/phoenix/"
+            target="_blank"
+            class="agent-card"
+          >
+            <img src="img/phoenix.avif" />
+            <div class="agent-name">PHOENIX</div>
+          </a>
+          <a
+            href="https://playvalorant.com/id-id/agents/neon/"
+            target="_blank"
+            class="agent-card"
+          >
+            <img src="img/neon.avif" />
+            <div class="agent-name">NEON</div>
+          </a>
+
+          <!-- Initiator -->
+          <a
+            href="https://playvalorant.com/id-id/agents/fade/"
+            target="_blank"
+            class="agent-card"
+          >
+            <img src="img/fade.avif" />
+            <div class="agent-name">FADE</div>
+          </a>
+
+          <!-- Controller -->
+          <a
+            href="https://playvalorant.com/id-id/agents/clove/"
+            target="_blank"
+            class="agent-card"
+          >
+            <img src="img/clove.avif" />
+            <div class="agent-name">CLOVE</div>
+          </a>
+          <a
+            href="https://playvalorant.com/id-id/agents/omen/"
+            target="_blank"
+            class="agent-card"
+          >
+            <img src="img/omen.avif" />
+            <div class="agent-name">OMEN</div>
+          </a>
+          <a
+            href="https://playvalorant.com/id-id/agents/miks/"
+            target="_blank"
+            class="agent-card"
+          >
+            <img src="img/miks.avif" />
+            <div class="agent-name">MIKS</div>
+          </a>
+          <a
+            href="https://playvalorant.com/id-id/agents/brimstone/"
+            target="_blank"
+            class="agent-card"
+          >
+            <img src="img/brimstone.avif" />
+            <div class="agent-name">BRIMSTONE</div>
+          </a>
+          <a
+            href="https://playvalorant.com/id-id/agents/viper/"
+            target="_blank"
+            class="agent-card"
+          >
+            <img src="img/viper.avif" />
+            <div class="agent-name">VIPER</div>
+          </a>
+
+          <!-- Sentinel -->
+          <a
+            href="https://playvalorant.com/id-id/agents/sage/"
+            target="_blank"
+            class="agent-card"
+          >
+            <img src="img/sage.avif" />
+            <div class="agent-name">SAGE</div>
+          </a>
+          <a
+            href="https://playvalorant.com/id-id/agents/killjoy/"
+            target="_blank"
+            class="agent-card"
+          >
+            <img src="img/killjoy.avif" />
+            <div class="agent-name">KILLJOY</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Favorite Map -->
+      <div class="map-showcase">
+        <p class="section-title">Map Favorit</p>
+        <div class="map-big-grid">
+          <div class="map-card">
+            <img src="img/sunset.avif" />
+            <div class="map-name">SUNSET</div>
+            <div class="map-desc">
+              Clear 1 sudut, mati dari arah yang gak kepikiran.
+            </div>
+          </div>
+          <div class="map-card">
+            <img src="img/bind.avif" />
+            <div class="map-name">BIND</div>
+            <div class="map-desc">
+              Denger TP? bingung harus rotate atau diem aja.
+            </div>
+          </div>
+          <div class="map-card">
+            <img src="img/abyss.avif" />
+            <div class="map-name">ABYSS</div>
+            <div class="map-desc">Belum war, udah jatuh duluan.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Favorite Weapons -->
+      <div class="weapon-showcase">
+        <p class="section-title">Senjata Favorit</p>
+        <div class="weapon-grid">
+          <div class="weapon-card">
+            <img src="img/ghost.avif" />
+            <div class="weapon-name">GHOST</div>
+            <div class="weapon-desc">
+              Dibilang eco, tapi kok bisa one tap terus?
+            </div>
+          </div>
+          <div class="weapon-card">
+            <img src="img/bucky.avif" />
+            <div class="weapon-name">BUCKY</div>
+            <div class="weapon-desc">
+              Ngumpet di corner = langsung kena ceramah di all chat.
+            </div>
+          </div>
+          <div class="weapon-card">
+            <img src="img/spectre.avif" />
+            <div class="weapon-name">SPECTRE</div>
+            <div class="weapon-desc">
+              Katanya jelek… tapi tiap eco selalu kepake juga.
+            </div>
+          </div>
+          <div class="weapon-card">
+            <img src="img/ares.avif" />
+            <div class="weapon-name">ARES</div>
+            <div class="weapon-desc">
+              Murah, spam dikit… musuh langsung toxic.
+            </div>
+          </div>
+          <div class="weapon-card">
+            <img src="img/vandal.avif" />
+            <div class="weapon-name">VANDAL</div>
+            <div class="weapon-desc">
+              Miss 10 peluru, tapi 1 headshot langsung lupa dosa.
+            </div>
+          </div>
+          <div class="weapon-card">
+            <img src="img/phantom.avif" />
+            <div class="weapon-name">PHANTOM</div>
+            <div class="weapon-desc">Spray enak… tapi kok ga mati-mati ya?</div>
+          </div>
+          <div class="weapon-card">
+            <img src="img/operator.avif" />
+            <div class="weapon-name">OPERATOR</div>
+            <div class="weapon-desc">
+              Miss sekali, langsung dikejar 5 orang.
+            </div>
+          </div>
+          <div class="weapon-card">
+            <img src="img/odin.avif" />
+            <div class="weapon-name">ODIN</div>
+            <div class="weapon-desc">Menang? iya. Dihina? juga iya.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
