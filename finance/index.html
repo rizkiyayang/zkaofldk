@@ -1,0 +1,2602 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="../assets/img/favicon.png" />
+
+    <title>Finance Tracker</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --ios-ease: cubic-bezier(0.22, 1, 0.36, 1);
+        --bg: #0b0f1a;
+        --surface: rgba(255, 255, 255, 0.04);
+        --surface-soft: rgba(255, 255, 255, 0.02);
+        --text-primary: #e5e7eb;
+        --text-secondary: rgba(229, 231, 235, 0.6);
+        --text-tertiary: rgba(229, 231, 235, 0.4);
+        --accent: #2563eb;
+        --radius: 14px;
+        --space-1: 4px;
+        --space-2: 8px;
+        --space-3: 12px;
+        --space-4: 16px;
+        --space-5: 20px;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+          system-ui, sans-serif;
+        background: var(--bg);
+        color: var(--text-primary);
+        padding: var(--space-4);
+        -webkit-font-smoothing: antialiased;
+        scroll-behavior: smooth;
+        letter-spacing: -0.1px;
+        overflow-x: hidden;
+        max-width: 100%;
+      }
+      html {
+        overflow-x: hidden;
+      }
+      .app {
+        margin: auto;
+        width: 100%;
+        max-width: 900px;
+      }
+      .card {
+        background: var(--surface-soft);
+        border-radius: var(--radius);
+        padding: 14px;
+        margin-bottom: var(--space-4);
+        width: 100%;
+        max-width: 100%;
+      }
+      .card.primary {
+        background: rgba(255, 255, 255, 0.02);
+      }
+      .card.primary > * + * {
+        margin-top: 12px;
+      }
+      input,
+      textarea,
+      select {
+        width: 100%;
+        padding: var(--space-3);
+        margin-top: var(--space-2);
+        border-radius: var(--radius);
+        border: none;
+        background: var(--surface);
+        color: var(--text-primary);
+        font-family: inherit;
+        resize: none;
+        transition: transform 0.08s var(--ios-ease);
+        font-size: 16px;
+      }
+
+      input:focus,
+      textarea:focus {
+        outline: none;
+        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
+      }
+
+      input::placeholder,
+      textarea::placeholder {
+        font-family: inherit;
+      }
+      button {
+        margin-top: var(--space-2);
+        padding: var(--space-3);
+        border-radius: var(--radius);
+        border: none;
+        background: transparent;
+        color: var(--text-primary);
+        opacity: 0.7;
+        min-height: 44px;
+        transition: opacity 0.2s var(--ios-ease);
+      }
+      button:hover {
+        opacity: 0.85;
+      }
+      button:active {
+        transform: scale(0.97);
+      }
+      .card.primary button {
+        background: var(--accent);
+        color: white;
+        opacity: 1;
+      }
+      .history-item {
+        padding: 12px 8px;
+        margin-bottom: 0;
+        border-radius: 0;
+        background: transparent;
+        border: none;
+        line-height: 1.6;
+        will-change: transform;
+        font-size: 15px;
+        color: rgba(229, 231, 235, 0.9);
+        overflow: hidden;
+        transition:
+          background 0.2s,
+          transform 0.2s,
+          opacity 0.2s;
+      }
+      /* transaction type colors */
+      .history-item.expense {
+        background: rgba(239, 68, 68, 0.08);
+      }
+
+      .history-item.income {
+        background: rgba(37, 99, 235, 0.08);
+      }
+
+      .history-item.transfer {
+        background: transparent;
+      }
+      .history-item + .history-item {
+        border-top: 1px solid rgba(255, 255, 255, 0.03);
+      }
+      .history-item.removing {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      .history-item .inner {
+        transition: transform 0.2s var(--ios-ease);
+      }
+      .history-item:hover .inner {
+        transform: translateY(-2px);
+      }
+
+      .history-item:hover {
+        background: rgba(255, 255, 255, 0.02);
+        border-radius: 12px;
+      }
+      .small {
+        font-size: 12px;
+        color: var(--text-tertiary);
+      }
+      .actions button {
+        margin-right: 5px;
+      }
+      .toast {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translate(-50%, 10px);
+        background: var(--surface);
+        color: var(--text-primary);
+        padding: 8px 14px;
+        border-radius: 999px;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+      }
+      .toast.show {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+      .button-success {
+        background: #22c55e !important;
+        color: #022c22 !important;
+        animation: successPop 0.4s var(--ios-ease);
+      }
+
+      .button-success::after {
+        content: "✓";
+        margin-left: 6px;
+      }
+
+      #onboarding {
+        transition: opacity 0.4s var(--ios-ease);
+      }
+
+      #onboarding.hide {
+        opacity: 0;
+      }
+
+      .primary {
+        outline: 1px solid #38bdf8;
+      }
+      .secondary {
+        opacity: 1;
+      }
+      #search {
+        margin-top: 8px;
+        font-size: 16px;
+      }
+      #dateFilters button {
+        flex: 1 1 auto;
+        min-width: 0;
+        white-space: nowrap;
+        padding: 10px 8px;
+        font-size: clamp(10px, 2.8vw, 13px);
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 999px;
+        text-align: center;
+      }
+      #dateFilters button.active {
+        background: var(--accent);
+        color: white;
+        opacity: 1;
+      }
+      input[type="date"] {
+        position: relative;
+        padding-right: 44px;
+        font-size: 16px;
+      }
+      input[type="date"]::-webkit-calendar-picker-indicator {
+        filter: invert(1);
+        cursor: pointer;
+        width: 24px;
+        height: 24px;
+      }
+      /* make entire field feel clickable */
+      #filterDate {
+        height: 48px;
+      }
+      #filterDate:focus {
+        outline: none;
+        border-color: #2563eb;
+        box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.3);
+      }
+
+      .btn-loading {
+        opacity: 0.6;
+        pointer-events: none;
+      }
+
+      .badge {
+        font-size: 13px;
+        margin-left: 0;
+        color: var(--text-secondary);
+        background: transparent;
+      }
+      .mood-💡,
+      .mood-🇯🇵,
+      .mood-🔥 {
+        background: transparent;
+        color: inherit;
+      }
+
+      .truncate {
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+
+      .status {
+        font-size: 11px;
+        margin-top: 0;
+        opacity: 0.6;
+      }
+      #stats {
+        font-size: 13px;
+        color: var(--text-secondary);
+      }
+      /* removed moodButtons styles */
+      .history-item b {
+        display: block;
+        font-weight: 700;
+        font-size: 20px;
+        letter-spacing: 0.3px;
+        margin-bottom: 6px;
+      }
+
+      .history-item .small {
+        font-size: 14px;
+        opacity: 0.8;
+      }
+      @keyframes successPop {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.08);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+      /* actions button style */
+      .actions button {
+        background: transparent;
+        border: none;
+        color: var(--text-primary);
+        opacity: 0.75;
+        padding: 6px 4px;
+        flex: 1;
+        text-align: center;
+        border-radius: 8px;
+      }
+
+      .actions button:hover {
+        opacity: 1;
+      }
+
+      .actions button:last-child {
+        color: #f87171;
+        background: transparent;
+      }
+
+      .actions {
+        margin-top: 8px;
+        display: flex;
+        flex-direction: row;
+        gap: 8px;
+        opacity: 0.6;
+      }
+      .history-item:hover .actions {
+        opacity: 1;
+      }
+
+      #loading {
+        text-align: center;
+        padding: 16px 0;
+        font-size: 13px;
+        opacity: 0.6;
+      }
+
+      /* subtle background by mood */
+      .mood-bg-💡,
+      .mood-bg-🇯🇵,
+      .mood-bg-🔥 {
+        background: transparent;
+      }
+      .history-item.mood-bg-💡,
+      .history-item.mood-bg-🇯🇵,
+      .history-item.mood-bg-🔥 {
+      }
+
+      .highlight {
+        background: rgba(253, 224, 71, 0.3);
+        color: #fde047;
+        padding: 0 2px;
+        border-radius: 3px;
+      }
+      #moodButtons button:active {
+        transform: scale(0.95);
+      }
+
+      /* skeleton loading */
+      /* Tabs UI */
+      #tabs {
+        background: rgba(255, 255, 255, 0.04);
+        padding: 4px;
+        border-radius: 12px;
+      }
+
+      #tabs .tab {
+        flex: 1;
+        padding: 10px 0;
+        border-radius: 10px;
+        font-size: 14px;
+        opacity: 0.6;
+        background: transparent;
+        transition: all 0.2s var(--ios-ease);
+      }
+
+      #tabs .tab.active {
+        background: var(--accent);
+        color: #fff;
+        opacity: 1;
+        box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4);
+      }
+
+      /* EDIT MODAL TABS */
+      #editTabs {
+        background: rgba(255, 255, 255, 0.04);
+        padding: 4px;
+        border-radius: 12px;
+      }
+
+      #editTabs .tab {
+        flex: 1;
+        padding: 10px 0;
+        border-radius: 10px;
+        font-size: 14px;
+        opacity: 0.6;
+        background: transparent;
+        transition: all 0.2s var(--ios-ease);
+      }
+
+      #editTabs .tab.active {
+        background: var(--accent);
+        color: #fff;
+        opacity: 1;
+        box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4);
+      }
+
+      #tabs .tab:not(.active):hover {
+        opacity: 0.8;
+      }
+
+      #commonFields,
+      #transferFields {
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      #walletButtons button.active {
+        background: var(--accent);
+        color: white;
+        opacity: 1;
+      }
+
+      #categoryButtons button.active {
+        background: var(--accent);
+        color: white;
+        opacity: 1;
+        box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4);
+      }
+
+      .skeleton {
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.05) 25%,
+          rgba(255, 255, 255, 0.08) 50%,
+          rgba(255, 255, 255, 0.05) 75%
+        );
+        background-size: 200% 100%;
+        animation: shimmer 1.2s infinite;
+        border-radius: 12px;
+      }
+
+      .skeleton-item {
+        height: 80px;
+        margin-bottom: 10px;
+      }
+
+      @keyframes shimmer {
+        0% {
+          background-position: 200% 0;
+        }
+        100% {
+          background-position: -200% 0;
+        }
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .history-header {
+        display: none;
+      }
+
+      .history-title-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 4px;
+      }
+      #topStats {
+        font-size: 12px;
+        opacity: 0.6;
+      }
+      .card.secondary h2 {
+        margin-bottom: 4px;
+      }
+
+      .history-title-row h2 {
+        margin: 0;
+      }
+
+      .history-info {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .history-info .status {
+        white-space: normal;
+        line-height: 1.4;
+      }
+
+      .history-chart {
+        width: 80px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+      .card.secondary {
+        background: transparent;
+        border: none;
+        opacity: 0.85;
+      }
+      .history-chart canvas {
+        width: 100% !important;
+        height: 100% !important;
+        display: block;
+      }
+
+      @media (max-width: 600px) {
+        .history-header {
+          flex-direction: column;
+          align-items: stretch;
+        }
+        .history-title-row {
+          flex-direction: row;
+          align-items: center;
+          gap: 8px;
+        }
+        .history-chart {
+          width: 90px;
+          height: 36px;
+        }
+      }
+      #modal > div {
+        transform: scale(0.95);
+        opacity: 0;
+        animation: modalIn 0.2s var(--ios-ease) forwards;
+
+        width: 100%;
+        max-width: calc(100% - 32px); /* padding compensation */
+        margin: 0 auto;
+      }
+
+      @keyframes modalIn {
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      body.typing .card.secondary {
+        opacity: 0.4;
+      }
+      h2 {
+        font-size: 18px;
+        font-weight: 600;
+        letter-spacing: -0.2px;
+      }
+      /* .history-header::after removed, replaced by border-bottom */
+      input::placeholder,
+      textarea::placeholder {
+        opacity: 0.4;
+      }
+      #sortBtn:hover {
+        opacity: 0.8;
+      }
+      #editMoodButtons .edit-mood-btn {
+        flex: 1;
+        padding: 12px;
+        font-size: 18px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.05);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s var(--ios-ease);
+      }
+      #editMoodButtons .edit-mood-btn.active {
+        background: var(--accent);
+        color: white;
+        transform: scale(1.03);
+      }
+      #editMoodButtons .edit-mood-btn:active {
+        transform: scale(0.95);
+      }
+      #dateFilters {
+        overflow-x: hidden;
+        flex-wrap: wrap;
+      }
+      #sortBtn {
+        flex: 1 1 100%;
+        text-align: center;
+        margin-top: 6px;
+      }
+
+      body,
+      html {
+        position: relative;
+        overflow-x: hidden;
+      }
+      .chip-group {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 140px));
+        justify-content: flex-start;
+        gap: 8px;
+        margin-top: 8px;
+      }
+      .chip {
+        padding: 12px 0;
+        border-radius: 999px;
+        font-size: 13px;
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--text-primary);
+        opacity: 0.7;
+        transition:
+          background 0.2s var(--ios-ease),
+          opacity 0.2s var(--ios-ease);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        width: 100%;
+        justify-content: center;
+      }
+      .chip:hover {
+        opacity: 0.9;
+      }
+      .chip.active {
+        background: var(--accent);
+        color: white;
+        opacity: 1;
+        transform: none;
+      }
+      .chip:active {
+        transform: scale(0.95);
+      }
+      /* ===== KEYPAD CLEAN ===== */
+
+      .keypad-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+        width: 100%;
+      }
+
+      .keypad-btn {
+        padding: 18px 0;
+        font-size: 18px;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--text-primary);
+        transition: all 0.15s var(--ios-ease);
+        width: 100%;
+      }
+
+      .keypad-btn:active {
+        transform: scale(0.95);
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      /* operator beda visual */
+      .keypad-btn.operator {
+        background: rgba(37, 99, 235, 0.15);
+        color: #93c5fd;
+      }
+
+      /* tombol utama */
+      .keypad-btn.equal {
+        background: var(--accent);
+        color: white;
+        font-weight: 600;
+        grid-column: span 4;
+        padding: 18px 0;
+      }
+
+      /* display lebih tegas */
+      #keypadDisplay {
+        font-size: 26px !important;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+      }
+      #categoryButtons {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 8px;
+        width: 100%;
+      }
+      #categoryButtons button {
+        width: 100%;
+        padding: 12px 0;
+        border-radius: 999px;
+        font-size: 13px;
+        background: rgba(255, 255, 255, 0.04);
+        opacity: 0.7;
+        text-align: center;
+        transition: all 0.15s var(--ios-ease);
+      }
+      #categoryButtons button:hover {
+        opacity: 0.9;
+      }
+      #categoryButtons button:active {
+        transform: scale(0.95);
+      }
+      @media (max-width: 480px) {
+        #categoryButtons {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      /* ===== WALLET BUTTONS ===== */
+
+      #walletButtons {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+        gap: 8px;
+        margin-top: 8px;
+      }
+
+      #walletButtons button {
+        width: 100%;
+        padding: 12px 0;
+        border-radius: 999px;
+        font-size: 13px;
+        background: rgba(255, 255, 255, 0.04);
+        opacity: 0.7;
+        text-align: center;
+        transition: all 0.15s var(--ios-ease);
+      }
+
+      #walletButtons button:hover {
+        opacity: 0.9;
+      }
+
+      #walletButtons button:active {
+        transform: scale(0.95);
+      }
+
+      #walletButtons button.active {
+        background: var(--accent);
+        color: white;
+        opacity: 1;
+        box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4);
+      }
+
+      /* mobile */
+      @media (max-width: 480px) {
+        #walletButtons {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      /* ===== TRANSFER WALLET ===== */
+
+      .wallet-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 8px;
+        margin-top: 8px;
+      }
+
+      .wallet-grid button {
+        width: 100%;
+        padding: 12px 0;
+        border-radius: 999px;
+        font-size: 13px;
+        background: rgba(255, 255, 255, 0.04) !important;
+        color: var(--text-primary) !important;
+        opacity: 0.6;
+        text-align: center;
+        transition: all 0.15s var(--ios-ease);
+      }
+
+      .wallet-grid button.active {
+        background: var(--accent) !important;
+        color: white !important;
+        opacity: 1;
+        box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.6);
+        transform: scale(1.03);
+      }
+      /* ===== WALLET SUMMARY ===== */
+
+      .wallet-card {
+        padding: 14px;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.03);
+        font-size: 13px;
+        line-height: 1.4;
+        transition: all 0.2s var(--ios-ease);
+      }
+
+      .wallet-card b {
+        display: block;
+        margin-top: 4px;
+        font-size: 18px;
+        font-weight: 600;
+      }
+
+      .wallet-card:active {
+        transform: scale(0.97);
+      }
+      #history {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <div
+        id="walletSummary"
+        style="
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 10px;
+          margin-bottom: 16px;
+        "
+      >
+        <div class="wallet-card" id="wallet-bca">BCA<br /><b>Rp 0</b></div>
+        <div class="wallet-card" id="wallet-gopay">GoPay<br /><b>Rp 0</b></div>
+        <div class="wallet-card" id="wallet-dana">DANA<br /><b>Rp 0</b></div>
+        <div class="wallet-card" id="wallet-cash">Cash<br /><b>Rp 0</b></div>
+      </div>
+      <div id="onboarding" class="card secondary" style="display: none">
+        <div style="font-size: 14px; opacity: 0.8">Welcome</div>
+        <div style="font-size: 13px; opacity: 0.6; margin-top: 4px">
+          Start with a simple thought.
+        </div>
+      </div>
+      <div class="card primary">
+        <h2>New Transaction</h2>
+
+        <!-- Tabs -->
+        <div id="tabs" style="display: flex; gap: 4px; margin-top: 10px">
+          <button class="tab active" onclick="setTab('expense', this)">
+            Expense
+          </button>
+          <button class="tab" onclick="setTab('income', this)">Income</button>
+          <button class="tab" onclick="setTab('transfer', this)">
+            Transfer
+          </button>
+        </div>
+        <input type="hidden" id="tabType" value="expense" />
+
+        <!-- Date -->
+        <input
+          id="date"
+          type="datetime-local"
+          style="position: absolute; opacity: 0; pointer-events: none"
+        />
+        <div
+          id="dateDisplay"
+          onclick="openDatePicker()"
+          style="
+            margin-top: 8px;
+            padding: 12px;
+            border-radius: 14px;
+            background: var(--surface);
+          "
+        >
+          -
+        </div>
+        <!-- EXPENSE & INCOME FIELDS -->
+        <div id="commonFields">
+          <input
+            id="amount"
+            readonly
+            placeholder="Tap to enter amount"
+            onclick="openKeypad('amount')"
+          />
+
+          <div id="categoryButtons"></div>
+          <input type="hidden" id="category" value="food" />
+
+          <div id="walletButtons">
+            <button onclick="setWallet('bca', this)">BCA</button>
+            <button onclick="setWallet('gopay', this)">GoPay</button>
+            <button onclick="setWallet('dana', this)">DANA</button>
+            <button onclick="setWallet('cash', this)">Cash</button>
+          </div>
+          <input type="hidden" id="wallet" value="cash" />
+        </div>
+
+        <!-- TRANSFER FIELDS -->
+        <div id="transferFields" style="display: none">
+          <div style="margin-top: 8px; font-size: 12px; opacity: 0.6">From</div>
+          <div class="wallet-grid">
+            <button onclick="setFromWallet('bca', this)">BCA</button>
+            <button onclick="setFromWallet('gopay', this)">GoPay</button>
+            <button onclick="setFromWallet('dana', this)">DANA</button>
+            <button onclick="setFromWallet('cash', this)">Cash</button>
+          </div>
+          <input type="hidden" id="fromWallet" value="" />
+          <input type="hidden" id="toWallet" value="" />
+          <div style="margin-top: 12px; font-size: 12px; opacity: 0.6">To</div>
+          <div class="wallet-grid">
+            <button onclick="setToWallet('bca', this)">BCA</button>
+            <button onclick="setToWallet('gopay', this)">GoPay</button>
+            <button onclick="setToWallet('dana', this)">DANA</button>
+            <button onclick="setToWallet('cash', this)">Cash</button>
+          </div>
+          <input
+            id="fee"
+            readonly
+            placeholder="Tap fee"
+            onclick="openKeypad('fee')"
+          />
+        </div>
+
+        <!-- Description -->
+        <input id="judul" placeholder="Description" />
+
+        <!-- KEYPAD -->
+        <div
+          id="keypadModal"
+          onclick="handleKeypadOverlayClick(event)"
+          style="
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 0;
+            z-index: 9999;
+            display: none;
+          "
+        >
+          <div
+            style="
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              width: 100%;
+              background: #111827;
+              padding: 16px;
+              border-top-left-radius: 16px;
+              border-top-right-radius: 16px;
+              box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+            "
+          >
+            <div
+              id="keypadDisplay"
+              style="font-size: 22px; margin-bottom: 12px; text-align: right"
+            >
+              0
+            </div>
+
+            <div class="keypad-grid">
+              <button class="keypad-btn" onclick="keypadInput('1')">1</button>
+              <button class="keypad-btn" onclick="keypadInput('2')">2</button>
+              <button class="keypad-btn" onclick="keypadInput('3')">3</button>
+              <button class="keypad-btn operator" onclick="keypadOperator('+')">
+                +
+              </button>
+
+              <button class="keypad-btn" onclick="keypadInput('4')">4</button>
+              <button class="keypad-btn" onclick="keypadInput('5')">5</button>
+              <button class="keypad-btn" onclick="keypadInput('6')">6</button>
+              <button class="keypad-btn operator" onclick="keypadOperator('-')">
+                −
+              </button>
+
+              <button class="keypad-btn" onclick="keypadInput('7')">7</button>
+              <button class="keypad-btn" onclick="keypadInput('8')">8</button>
+              <button class="keypad-btn" onclick="keypadInput('9')">9</button>
+              <button class="keypad-btn operator" onclick="keypadOperator('*')">
+                ×
+              </button>
+
+              <button class="keypad-btn" onclick="keypadClear()">C</button>
+              <button class="keypad-btn" onclick="keypadInput('0')">0</button>
+              <button class="keypad-btn" onclick="keypadBackspace()">⌫</button>
+              <button class="keypad-btn operator" onclick="keypadOperator('/')">
+                ÷
+              </button>
+
+              <button class="keypad-btn equal" onclick="keypadEqual()">
+                =
+              </button>
+            </div>
+
+            <button
+              class="keypad-btn equal"
+              style="margin-top: 12px"
+              onclick="keypadDone()"
+            >
+              Done
+            </button>
+          </div>
+        </div>
+
+        <button id="saveBtn" style="width: 100%" onclick="kirimData(event)">
+          Save Entry
+        </button>
+        <div id="status" class="status"></div>
+      </div>
+
+      <div class="card secondary">
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 10px;
+          "
+        >
+          <h2 style="margin: 0">History</h2>
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              gap: 10px;
+              margin-left: 6px;
+            "
+          >
+            <div id="topStats" class="status"></div>
+          </div>
+        </div>
+
+        <div style="margin-top: 10px">
+          <div
+            style="
+              width: 100%;
+              height: 6px;
+              background: rgba(255, 255, 255, 0.05);
+              border-radius: 6px;
+              overflow: hidden;
+              position: relative;
+            "
+          >
+            <div
+              id="chartBarRemaining"
+              style="
+                position: absolute;
+                left: 0;
+                top: 0;
+                height: 100%;
+                width: 0%;
+                background: #2563eb;
+              "
+            ></div>
+            <div
+              id="chartBarExpense"
+              style="
+                position: absolute;
+                right: 0;
+                top: 0;
+                height: 100%;
+                width: 0%;
+                background: #ef4444;
+              "
+            ></div>
+          </div>
+        </div>
+
+        <input
+          id="search"
+          placeholder="Search entries..."
+          style="margin-top: var(--space-2); height: 36px"
+        />
+        <div
+          id="dateFilters"
+          style="
+            display: flex;
+            gap: var(--space-2);
+            margin-top: var(--space-2);
+            align-items: center;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            width: 100%;
+          "
+        >
+          <button type="button" onclick="setDateFilter('today', this)">
+            Today
+          </button>
+          <button type="button" onclick="setDateFilter('week', this)">
+            This Week
+          </button>
+          <button type="button" onclick="setDateFilter('month', this)">
+            This Month
+          </button>
+          <button type="button" onclick="openCalendar()">Calendar</button>
+          <button
+            onclick="toggleSort()"
+            id="sortBtn"
+            style="padding: 6px 10px; font-size: 13px; opacity: 0.6"
+          >
+            Newest First ↓
+          </button>
+        </div>
+        <input
+          type="date"
+          id="hiddenDate"
+          style="position: absolute; opacity: 0; pointer-events: none"
+          onchange="setCustomDate(this.value)"
+        />
+        <div id="categoryChips" class="chip-group"></div>
+        <div id="walletChips" class="chip-group" style="margin-top: 8px"></div>
+      </div>
+
+      <div class="card secondary">
+        <div style="height: 4px"></div>
+        <div class="history-header">
+          <div class="history-info">
+            <div id="resultCount" class="status"></div>
+            <div id="stats" class="status"></div>
+          </div>
+        </div>
+        <div id="loading" class="status" style="display: none">Loading...</div>
+        <div id="history"></div>
+      </div>
+    </div>
+    <div id="toast" class="toast">Saved</div>
+
+    <div
+      id="modal"
+      style="
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        justify-content: center;
+        align-items: center;
+      "
+    >
+      <div
+        style="
+          background: #1e293b;
+          padding: 16px;
+          border-radius: 14px;
+          width: 100%;
+          max-width: 320px;
+        "
+      >
+        <h3 style="margin-bottom: 10px">Edit Entry</h3>
+
+        <div id="editTabs" style="display: flex; gap: 4px; margin-bottom: 10px">
+          <button class="tab active" onclick="setEditTab('expense', this)">
+            Expense
+          </button>
+          <button class="tab" onclick="setEditTab('income', this)">
+            Income
+          </button>
+          <button class="tab" onclick="setEditTab('transfer', this)">
+            Transfer
+          </button>
+        </div>
+
+        <input type="hidden" id="editType" value="expense" />
+
+        <div id="editCommonFields">
+          <input
+            id="editAmount"
+            readonly
+            placeholder="Tap to enter amount"
+            onclick="openKeypad('editAmount')"
+          />
+          <select id="editCategory" style="margin-top: 8px">
+            <option value="food">Food</option>
+            <option value="transport">Transport</option>
+            <option value="household">Household</option>
+            <option value="salary">Salary</option>
+            <option value="other">Other</option>
+          </select>
+
+          <select id="editWallet" style="margin-top: 8px">
+            <option value="bca">BCA</option>
+            <option value="gopay">GoPay</option>
+            <option value="dana">DANA</option>
+            <option value="cash">Cash</option>
+          </select>
+        </div>
+
+        <div id="editTransferFields" style="display: none">
+          <select id="editFromWallet" style="margin-top: 8px">
+            <option value="bca">BCA</option>
+            <option value="gopay">GoPay</option>
+            <option value="dana">DANA</option>
+            <option value="cash">Cash</option>
+          </select>
+
+          <select id="editToWallet" style="margin-top: 8px">
+            <option value="bca">BCA</option>
+            <option value="gopay">GoPay</option>
+            <option value="dana">DANA</option>
+            <option value="cash">Cash</option>
+          </select>
+
+          <input
+            id="editFee"
+            placeholder="Fee (optional)"
+            style="margin-top: 8px"
+          />
+        </div>
+
+        <input
+          id="editJudul"
+          placeholder="Description"
+          style="margin-top: 8px"
+        />
+
+        <div style="display: flex; gap: 8px; margin-top: 14px">
+          <button
+            onclick="saveEdit()"
+            style="flex: 1; background: #2563eb; color: white"
+          >
+            Save
+          </button>
+          <button onclick="closeModal()" style="flex: 1">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const URL =
+        "https://script.google.com/macros/s/AKfycbyPwNHS1CzeNWNiPjvrRFy4z02DsKMSlTXqF72s7F5N_aCCqq8dEqyXCt_VCHBBUWpM/exec";
+      let dataGlobal = [];
+      let editMode = false;
+      let editIndex = null;
+      let currentDateFilter = "today";
+      let selectedCustomDate = null;
+      let sortMode = "desc"; // desc = terbaru di atas
+      let currentCategoryFilter = "all";
+      let currentWalletFilter = "all";
+      let renderedIds = new Set();
+      let syncQueue = JSON.parse(localStorage.getItem("syncQueue") || "[]");
+      // Store original edit timestamp for edit modal
+      let originalEditTanggal = null;
+
+      // Centralized state and DOM cache
+      const state = {
+        type: "expense",
+        wallet: "cash",
+        category: "food",
+        filter: { date: "today", category: "all", search: "" },
+      };
+
+      const el = {
+        wallet: document.getElementById("wallet"),
+        category: document.getElementById("category"),
+        date: document.getElementById("date"),
+        history: document.getElementById("history"),
+        amount: document.getElementById("amount"),
+      };
+
+      function parseNumber(val) {
+        return Number(String(val || "").replace(/\./g, "")) || 0;
+      }
+      function processSyncQueue() {
+        if (!syncQueue.length) return;
+
+        const item = syncQueue[0];
+
+        fetchWithTimeout(URL, {
+          method: "POST",
+          body: new URLSearchParams(item),
+        })
+          .then((res) => res.text())
+          .then(() => {
+            syncQueue.shift();
+            localStorage.setItem("syncQueue", JSON.stringify(syncQueue));
+            processSyncQueue(); // process next
+          })
+          .catch(() => {
+            // retry later
+            setTimeout(processSyncQueue, 5000);
+          });
+      }
+      function fetchWithTimeout(url, options = {}, timeout = 15000) {
+        const controller = new AbortController();
+        const id = setTimeout(() => controller.abort(), timeout);
+
+        return fetch(url, { ...options, signal: controller.signal }).finally(
+          () => clearTimeout(id),
+        );
+      }
+
+      function highlightText(text, keyword) {
+        if (!keyword) return text;
+        const regex = new RegExp(`(${keyword})`, "gi");
+        return text.replace(regex, `<span class="highlight">$1</span>`);
+      }
+
+      // Format date to Indonesian format (e.g., 8 Agustus 2026, 23.00)
+      function formatTanggal(dateStr) {
+        const d = safeDate(dateStr);
+        if (!d) return "-";
+
+        const bulan = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ];
+
+        const tanggal = d.getDate();
+        const bulanText = bulan[d.getMonth()];
+        const tahun = d.getFullYear();
+
+        let jam = d.getHours().toString().padStart(2, "0");
+        let menit = d.getMinutes().toString().padStart(2, "0");
+
+        return `${tanggal} ${bulanText} ${tahun}, ${jam}.${menit}`;
+      }
+
+      // Format date for display with day name (fixed: avoid timezone shift)
+      function formatDateDisplay(val) {
+        if (!val) return "-";
+
+        const d = safeDate(val);
+        if (!d) return "-";
+
+        const hari = [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+        ];
+
+        const bulan = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ];
+
+        return `${hari[d.getDay()]}, ${d.getDate()} ${bulan[d.getMonth()]} ${d.getFullYear()}`;
+      }
+      // Human-readable relative time
+      function formatRelative(dateStr) {
+        const now = new Date();
+        const d = safeDate(dateStr);
+        if (!d) return "-";
+
+        const diffMs = now - d;
+        const diffMinutes = Math.floor(diffMs / (1000 * 60));
+        const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+        const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+        if (diffMinutes < 1) return "Just now";
+        if (diffMinutes < 60) return `${diffMinutes} min ago`;
+        if (diffHours < 24) return `${diffHours} hr ago`;
+
+        if (diffDays === 0) return "Today";
+        if (diffDays === 1) return "Yesterday";
+        if (diffDays < 7) return `${diffDays} days ago`;
+
+        return formatTanggal(dateStr);
+      }
+
+      // setMood removed
+
+      function setEditMood(val, el) {
+        document.getElementById("editMood").value = val;
+        document
+          .querySelectorAll("#editMoodButtons button")
+          .forEach((b) => b.classList.remove("active"));
+        el.classList.add("active");
+      }
+
+      function setDateFilter(type, el) {
+        currentDateFilter = type;
+        document
+          .querySelectorAll("#dateFilters button")
+          .forEach((b) => b.classList.remove("active"));
+        el.classList.add("active");
+        render();
+        renderCategoryChips();
+      }
+
+      function setCategoryFilter(type, el) {
+        currentCategoryFilter = type;
+
+        // reset active hanya untuk kategori
+        document
+          .querySelectorAll("#categoryChips .chip")
+          .forEach((b) => b.classList.remove("active"));
+
+        el.classList.add("active");
+
+        render();
+      }
+
+      function openCalendar() {
+        document.getElementById("hiddenDate").showPicker?.() ||
+          document.getElementById("hiddenDate").click();
+      }
+
+      function setCustomDate(val) {
+        currentDateFilter = "custom";
+        selectedCustomDate = val;
+        document
+          .querySelectorAll("#dateFilters button")
+          .forEach((b) => b.classList.remove("active"));
+        // Add active state for Calendar button
+        const calendarBtn = [
+          ...document.querySelectorAll("#dateFilters button"),
+        ].find((b) => b.innerText.includes("Calendar"));
+        if (calendarBtn) calendarBtn.classList.add("active");
+        render();
+        renderCategoryChips();
+      }
+      // Helper for local date string comparison
+      function getLocalDateString(d) {
+        const yyyy = d.getFullYear();
+        const mm = String(d.getMonth() + 1).padStart(2, "0");
+        const dd = String(d.getDate()).padStart(2, "0");
+        return `${yyyy}-${mm}-${dd}`;
+      } // NOTE: backend must handle updateIndex to update row instead of append
+      function buildPayload({
+        judul,
+        amount,
+        type,
+        wallet,
+        category,
+        fee,
+        tanggal,
+        fromWallet,
+        toWallet,
+      }) {
+        const parsedAmount = parseNumber(amount);
+        const parsedFee = parseNumber(fee || 0);
+
+        const normalizedDate = safeDate(tanggal)
+          .toLocaleString("sv-SE")
+          .replace(" ", "T");
+
+        return {
+          judul,
+          amount: parsedAmount,
+          type,
+          wallet: type === "transfer" ? "" : wallet,
+          category: type === "transfer" ? "transfer" : category,
+          fee: parsedFee,
+          mood: "",
+          tanggal: normalizedDate,
+          fromWallet: fromWallet || "",
+          toWallet: toWallet || "",
+        };
+      }
+      function kirimData(e) {
+        const judul = judulEl.value;
+        let amount = el.amount.value;
+        const type = document.getElementById("tabType").value;
+        let wallet = el.wallet.value;
+        // After tabType logic, ensure wallet is empty for transfer
+        if (type === "transfer") {
+          wallet = "";
+          el.wallet.value = "";
+        }
+        document
+          .querySelectorAll("#walletButtons button")
+          .forEach((b) => b.classList.remove("active"));
+        let category = el.category.value;
+        if (type === "transfer") {
+          category = "transfer";
+        }
+        let fee = document.getElementById("fee").value || 0;
+        fee = parseNumber(fee);
+        const mood = ""; // REMOVE moodEl, set to ""
+        const dateInput = el.date.value;
+        let date;
+
+        // prevent duplicate rapid submit
+        if (window.__sending) return;
+        window.__sending = true;
+
+        if (dateInput) {
+          const selected = new Date(dateInput);
+          date = selected.toLocaleString("sv-SE").replace(" ", "T");
+        } else {
+          date = new Date().toLocaleString("sv-SE").replace(" ", "T");
+        }
+        const fromWallet = document.getElementById("fromWallet")?.value || "";
+        const toWallet = document.getElementById("toWallet")?.value || "";
+        if (type === "transfer") {
+          if (!fromWallet || !toWallet) {
+            alert("Pilih wallet asal dan tujuan");
+            window.__sending = false;
+            return;
+          }
+          if (fromWallet === toWallet) {
+            alert("Tidak bisa transfer ke wallet yang sama");
+            window.__sending = false;
+            return;
+          }
+        }
+        amount = parseNumber(amount);
+        if (!amount || Number(amount) <= 0) {
+          const btn = e.target;
+          btn.classList.remove("btn-loading");
+          btn.innerText = "Save Entry";
+          alert("Amount tidak valid");
+          window.__sending = false;
+          return;
+        }
+        const btn = e.target;
+        if (btn.classList.contains("btn-loading")) {
+          window.__sending = false;
+          return;
+        }
+        btn.classList.add("btn-loading");
+        btn.disabled = true;
+        btn.innerText = editMode ? "Updating..." : "Saving...";
+
+        const tempItem = {
+          id: "temp-" + Date.now(),
+          judul,
+          amount,
+          type,
+          wallet,
+          category,
+          fee,
+          mood,
+          tanggal: date,
+          fromWallet,
+          toWallet,
+        };
+
+        const payloadData = buildPayload({
+          judul,
+          amount,
+          type,
+          wallet,
+          category,
+          fee,
+          tanggal: date,
+          fromWallet,
+          toWallet,
+        });
+
+        const payload = {
+          clientId:
+            (judul || "") +
+            "-" +
+            payloadData.amount +
+            "-" +
+            payloadData.tanggal,
+          action: "insert",
+          ...payloadData,
+        };
+
+        // Log payload before fetch
+        console.log("SEND PAYLOAD:", payload);
+
+        // prevent accidental double fire
+        const payloadKey = JSON.stringify(payload);
+        if (window.__lastPayload === payloadKey) {
+          window.__sending = false;
+          return;
+        }
+        window.__lastPayload = payloadKey;
+
+        fetchWithTimeout(URL, {
+          method: "POST",
+          body: new URLSearchParams(payload),
+        })
+          .then((res) => res.text())
+          .then((res) => {
+            // normalize response (Apps Script kadang ada newline/spasi)
+            const cleanRes = (res || "").toString().trim();
+
+            if (!cleanRes || cleanRes.toLowerCase().includes("error")) {
+              throw new Error("Server error");
+            }
+            window.__sending = false;
+            btn.disabled = false;
+            clearForm();
+            editMode = false;
+            btn.classList.remove("btn-loading");
+            btn.classList.add("button-success");
+            btn.innerText = "Saved";
+            setTimeout(() => {
+              btn.classList.remove("button-success");
+              btn.innerText = "Save Entry";
+            }, 1200);
+            document.getElementById("status").innerText = "Nice. Keep going.";
+            showToast();
+            clearTimeout(window.__reloadTimer);
+            window.__lastPayload = null;
+            window.__reloadTimer = setTimeout(loadData, 500);
+          })
+          .catch((err) => {
+            btn.classList.remove("btn-loading");
+            btn.disabled = false;
+            window.__sending = false;
+            window.__lastPayload = null;
+            console.warn("Request issue but may still succeed:", err);
+
+            // Jangan tampilkan alert keras, karena sering false negative
+            // Anggap sukses dan tetap reload data
+            syncQueue.push(payload);
+            localStorage.setItem("syncQueue", JSON.stringify(syncQueue));
+
+            clearTimeout(window.__reloadTimer);
+            window.__reloadTimer = setTimeout(loadData, 800);
+          });
+      }
+
+      function loadData() {
+        const loadingEl = document.getElementById("loading");
+        loadingEl.style.display = "block";
+        for (let i = 0; i < 5; i++) {
+          const sk = document.createElement("div");
+          sk.className = "history-item skeleton skeleton-item";
+          historyEl.appendChild(sk);
+        }
+
+        fetchWithTimeout(URL, {
+          method: "GET",
+          cache: "no-store",
+        })
+          .then((r) => r.text())
+          .then((text) => {
+            console.log("RAW RESPONSE:", text);
+            let d;
+            try {
+              d = JSON.parse(text);
+            } catch {
+              throw new Error("Invalid JSON");
+            }
+
+            dataGlobal = Array.isArray(d) ? d : d.data || [];
+            renderCategoryChips();
+            renderWalletChips();
+            // cache disabled
+            renderedIds.clear();
+            render();
+            // Enforce filter on first load
+            currentDateFilter = "today";
+          })
+          .catch(() => {
+            historyEl.innerHTML = "";
+            console.warn("Load failed, showing cached data");
+          })
+          .finally(() => {
+            document.getElementById("loading").style.display = "none";
+          });
+      }
+
+      function calculateMonthly(data) {
+        let income = 0;
+        let expense = 0;
+        const now = new Date();
+
+        data.forEach((item) => {
+          const d = safeDate(item.tanggal);
+          if (
+            d &&
+            d.getMonth() === now.getMonth() &&
+            d.getFullYear() === now.getFullYear()
+          ) {
+            const amt = Number(item.amount) || 0;
+            if (item.type === "income") income += amt;
+            if (item.type === "expense") expense += amt;
+          }
+        });
+
+        return { income, expense };
+      }
+
+      function calculateBalances(data) {
+        const balances = { bca: 0, gopay: 0, dana: 0, cash: 0 };
+
+        data.forEach((item) => {
+          const amt = Number(item.amount) || 0;
+          const fee = Number(item.fee) || 0;
+
+          const w = (item.wallet || "").toLowerCase();
+          const from = (item.fromWallet || "").toLowerCase();
+          const to = (item.toWallet || "").toLowerCase();
+
+          if (item.type === "income" && balances[w] !== undefined) {
+            balances[w] += amt;
+          }
+
+          if (item.type === "expense" && balances[w] !== undefined) {
+            balances[w] -= amt;
+          }
+
+          if (item.type === "transfer") {
+            if (balances[from] !== undefined) balances[from] -= amt + fee;
+            if (balances[to] !== undefined) balances[to] += amt;
+          }
+        });
+
+        return balances;
+      }
+
+      function filterData(data) {
+        const search = searchEl.value.toLowerCase();
+
+        return data.filter((item) => {
+          // Wallet filter
+          if (currentWalletFilter !== "all") {
+            const w = (item.wallet || "").toLowerCase();
+            const from = (item.fromWallet || "").toLowerCase();
+            const to = (item.toWallet || "").toLowerCase();
+
+            if (
+              w !== currentWalletFilter &&
+              from !== currentWalletFilter &&
+              to !== currentWalletFilter
+            ) {
+              return false;
+            }
+          }
+
+          if (
+            currentCategoryFilter !== "all" &&
+            item.category !== currentCategoryFilter
+          ) {
+            return false;
+          }
+
+          if (
+            search &&
+            !(item.judul || "").toLowerCase().includes(search) &&
+            !String(item.amount || "").includes(search)
+          ) {
+            return false;
+          }
+
+          const d = safeDate(item.tanggal);
+          const now = new Date();
+          if (!d) return false;
+
+          if (currentDateFilter === "today") {
+            return getLocalDateString(d) === getLocalDateString(now);
+          }
+
+          if (currentDateFilter === "week") {
+            return (now - d) / (1000 * 60 * 60 * 24) <= 7;
+          }
+
+          if (currentDateFilter === "month") {
+            return (
+              d.getMonth() === now.getMonth() &&
+              d.getFullYear() === now.getFullYear()
+            );
+          }
+
+          if (currentDateFilter === "custom" && selectedCustomDate) {
+            return getLocalDateString(d) === selectedCustomDate;
+          }
+
+          return true;
+        });
+      }
+
+      function updateWalletUI(balances) {
+        document.querySelector("#wallet-bca b").innerText =
+          "Rp " + balances.bca.toLocaleString();
+        document.querySelector("#wallet-gopay b").innerText =
+          "Rp " + balances.gopay.toLocaleString();
+        document.querySelector("#wallet-dana b").innerText =
+          "Rp " + balances.dana.toLocaleString();
+        document.querySelector("#wallet-cash b").innerText =
+          "Rp " + balances.cash.toLocaleString();
+      }
+
+      function updateChart(income, expense) {
+        const total = income + expense || 1;
+        const expensePercent = (expense / total) * 100;
+        const remainPercent = 100 - expensePercent;
+
+        document.getElementById("chartBarRemaining").style.width =
+          remainPercent + "%";
+        document.getElementById("chartBarExpense").style.width =
+          expensePercent + "%";
+      }
+
+      function renderList(data) {
+        historyEl.innerHTML = "";
+
+        if (!data.length) {
+          historyEl.innerHTML = `
+                                          <div style="text-align:center; padding:30px 10px; opacity:0.8;">
+                                            <div style="font-size:28px;">📝</div>
+                                            <div style="font-size:14px;">No entries yet</div>
+                                          </div>
+                                        `;
+          return;
+        }
+
+        data.forEach((item) => {
+          const div = document.createElement("div");
+          div.className = `history-item ${item.type || ""}`;
+          div.setAttribute("data-id", item.id);
+          div.innerHTML = `
+                          <div class="inner">
+                            <b>${item.judul || "-"}</b>
+                            <div class="small" style="font-size:13px; opacity:0.8;">
+                              ${formatDateDisplay(item.tanggal)} •
+                              ${
+                                safeDate(item.tanggal)?.toLocaleTimeString(
+                                  "id-ID",
+                                  {
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                  },
+                                ) || "-"
+                              }
+                            </div>
+                <div style="margin-top:6px; font-weight:800; font-size:22px;">
+                  Rp ${Number(item.amount || 0).toLocaleString()}
+                </div>
+                            <div class="small">
+                              ${
+                                item.type === "transfer"
+                                  ? `transfer • ${item.fromWallet || "-"} → ${item.toWallet || "-"}`
+                                  : `${item.type} • ${item.category || "-"} • ${item.wallet || ""}`
+                              }
+                            </div>
+
+                            <div class="actions">
+                              <button onclick="editData('${item.id}')">Edit</button>
+                              <button onclick="deleteData('${item.id}')">Delete</button>
+                            </div>
+                          </div>
+                        `;
+          // Prevent accidental trigger overlap on button clicks
+          div.addEventListener("click", (e) => {
+            if (e.target.tagName === "BUTTON") e.stopPropagation();
+          });
+
+          historyEl.appendChild(div);
+        });
+      }
+
+      function render() {
+        let filtered = filterData(dataGlobal);
+
+        filtered.sort((a, b) => {
+          const da = safeDate(a.tanggal);
+          const db = safeDate(b.tanggal);
+          return sortMode === "desc" ? db - da : da - db;
+        });
+
+        renderStats(filtered);
+        renderWallet();
+        renderChart(filtered);
+        renderList(filtered);
+      }
+      function renderStats(data) {
+        const { income, expense } = calculateMonthly(data);
+        const balances = calculateBalances(dataGlobal);
+        const total =
+          (balances.bca || 0) +
+          (balances.gopay || 0) +
+          (balances.dana || 0) +
+          (balances.cash || 0);
+
+        document.getElementById("topStats").innerText =
+          `Income: Rp ${income.toLocaleString()} • Expense: Rp ${expense.toLocaleString()} • Balance: Rp ${total.toLocaleString()}`;
+      }
+
+      function renderWallet() {
+        const balances = calculateBalances(dataGlobal);
+        updateWalletUI(balances);
+      }
+
+      function renderChart(data) {
+        const { income, expense } = calculateMonthly(data);
+        updateChart(income, expense);
+      }
+
+      function editData(id) {
+        const item = dataGlobal.find((d) => String(d.id) === String(id));
+        if (!item) return;
+
+        editIndex = id;
+        // Store original timestamp for edit
+        originalEditTanggal = item.tanggal || null;
+        document.getElementById("editJudul").value = item.judul;
+        const editAmountEl = document.getElementById("editAmount");
+
+        // Set amount for non-transfer (transfer handled after tab)
+        editAmountEl.value = item.amount
+          ? Number(item.amount).toLocaleString("id-ID")
+          : "";
+
+        editAmountEl.setAttribute("readonly", true);
+        editAmountEl.onclick = () => openKeypad("editAmount");
+        document.getElementById("editType").value = item.type || "expense";
+        document.getElementById("editWallet").value = item.wallet || "cash";
+        // REMOVE direct category assignment here (moved after setEditTab)
+        // document.getElementById("editCategory").value = item.category || "other";
+
+        document.getElementById("editFee").value = item.fee || "";
+        // Removed editDate logic
+
+        const type = item.type || "expense";
+        const idx = type === "income" ? 2 : type === "transfer" ? 3 : 1;
+
+        // first set tab (builds category options)
+        setEditTab(
+          type,
+          document.querySelector(`#editTabs button:nth-child(${idx})`),
+        );
+
+        // then set category value
+        if (type !== "transfer") {
+          document.getElementById("editCategory").value =
+            item.category || "other";
+        }
+
+        if (type === "transfer") {
+          document.getElementById("editAmount").value = item.amount
+            ? Number(item.amount).toLocaleString("id-ID")
+            : "";
+          document.getElementById("editFromWallet").value =
+            item.fromWallet || "";
+          document.getElementById("editToWallet").value = item.toWallet || "";
+        }
+        // After setting amount, reset keypad state to avoid carry-over
+        keypadExpression = "";
+        keypadValue = "";
+        // Mood fields/buttons removed from modal and logic
+        document.getElementById("modal").style.display = "flex";
+      }
+
+      function closeModal() {
+        document.getElementById("modal").style.display = "none";
+        originalEditTanggal = null;
+      }
+
+      function saveEdit() {
+        const judul = document.getElementById("editJudul").value;
+        const type = document.getElementById("editType").value;
+
+        let amount = document.getElementById("editAmount").value || "";
+        let wallet = document.getElementById("editWallet").value;
+
+        if (type === "transfer") {
+          wallet = "";
+        }
+        const category =
+          type === "transfer"
+            ? "transfer"
+            : document.getElementById("editCategory").value;
+        const fee = document.getElementById("editFee").value || 0;
+        const mood = "";
+        // ----- REPLACEMENT BLOCK START -----
+        let tanggalInput = originalEditTanggal || new Date();
+
+        const payloadData = buildPayload({
+          judul,
+          amount,
+          type,
+          wallet,
+          category,
+          fee,
+          tanggal: tanggalInput,
+          fromWallet: document.getElementById("editFromWallet")?.value,
+          toWallet: document.getElementById("editToWallet")?.value,
+        }); // ----- REPLACEMENT BLOCK END -----
+        // Replace amount validation:
+        const parsedAmount = parseNumber(amount);
+        if (!parsedAmount || parsedAmount <= 0) {
+          alert("Amount tidak valid");
+          return;
+        }
+        // Insert transfer validation BEFORE fetch call
+        if (type === "transfer") {
+          if (!payloadData.fromWallet || !payloadData.toWallet) {
+            alert("Pilih wallet asal dan tujuan");
+            return;
+          }
+          if (payloadData.fromWallet === payloadData.toWallet) {
+            alert("Tidak bisa transfer ke wallet yang sama");
+            return;
+          }
+        }
+        const btns = document.querySelectorAll("#modal button");
+        btns.forEach((b) => (b.disabled = true));
+
+        fetchWithTimeout(URL, {
+          method: "POST",
+          body: new URLSearchParams({
+            action: "update",
+            id: editIndex,
+            ...payloadData,
+          }),
+        })
+          .then((res) => res.text())
+          .then((res) => {
+            if (!(res || "").toLowerCase().includes("updated")) {
+              throw new Error("Server error");
+            }
+            closeModal();
+            showToast();
+            setTimeout(loadData, 500);
+          })
+          .catch(() => alert("Failed to update entry"))
+          .finally(() => btns.forEach((b) => (b.disabled = false)));
+      }
+
+      function deleteData(id) {
+        if (!confirm("Delete this entry?")) return;
+
+        const el = document.querySelector(`[data-id="${id}"]`);
+
+        if (el) {
+          el.style.transition = "all 0.25s var(--ios-ease)";
+          el.classList.add("removing");
+
+          setTimeout(() => {
+            // update data after animation
+            fetchWithTimeout(URL, {
+              method: "POST",
+              body: new URLSearchParams({
+                fromWallet:
+                  document.getElementById("editFromWallet")?.value || "",
+                toWallet: document.getElementById("editToWallet")?.value || "",
+                action: "delete",
+                id: id,
+              }),
+            })
+              .then((res) => res.text())
+              .then((res) => {
+                if (!res.includes("Deleted")) {
+                  throw new Error("Server error");
+                }
+                dataGlobal = dataGlobal.filter(
+                  (d) => String(d.id) !== String(id),
+                );
+                render();
+              })
+              .catch(() => alert("Failed to delete entry"));
+          }, 260);
+        }
+      }
+
+      function copyIsi(id) {
+        const item = dataGlobal.find((d) => String(d.id) === String(id));
+        if (!item) return;
+
+        navigator.clipboard.writeText(
+          `Rp ${Number(item.amount || 0).toLocaleString()} • ${item.type || "expense"} • ${item.judul}`,
+        );
+        const toast = document.getElementById("toast");
+        toast.innerText = "Copied";
+        toast.classList.add("show");
+        setTimeout(() => {
+          toast.classList.remove("show");
+          toast.innerText = "Saved";
+        }, 1500);
+      }
+
+      function clearForm() {
+        judulEl.value = "";
+        document.getElementById("amount").value = "";
+        document.getElementById("fee").value = "";
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, "0");
+        const dd = String(today.getDate()).padStart(2, "0");
+        const hh = String(today.getHours()).padStart(2, "0");
+        const min = String(today.getMinutes()).padStart(2, "0");
+
+        const dateTimeValue = `${yyyy}-${mm}-${dd}T${hh}:${min}`;
+        const dateInput = document.getElementById("date");
+        dateInput.value = dateTimeValue;
+        document.getElementById("date").value = dateTimeValue;
+        document.getElementById("dateDisplay").innerText =
+          formatDateDisplay(dateTimeValue);
+        document.getElementById("tabType").value = "expense";
+
+        document
+          .querySelectorAll("#tabs .tab")
+          .forEach((b) => b.classList.remove("active"));
+        document.querySelector("#tabs .tab").classList.add("active");
+
+        document
+          .querySelectorAll("#walletButtons button")
+          .forEach((b) => b.classList.remove("active"));
+        document.querySelector("#walletButtons button").classList.add("active");
+
+        document
+          .querySelectorAll("#categoryButtons button")
+          .forEach((b) => b.classList.remove("active"));
+        document
+          .querySelector("#categoryButtons button")
+          .classList.add("active");
+
+        // reset transfer selection
+        document.getElementById("fromWallet").value = "";
+        document.getElementById("toWallet").value = "";
+        document
+          .querySelectorAll("#transferFields .wallet-grid button")
+          .forEach((b) => b.classList.remove("active"));
+        window.__sending = false;
+      }
+
+      function showToast() {
+        const t = document.getElementById("toast");
+        t.classList.add("show");
+        setTimeout(() => t.classList.remove("show"), 1600);
+      }
+
+      // autosave (simple draft)
+      const judulEl = document.getElementById("judul");
+      const isiEl = null;
+      const searchEl = document.getElementById("search");
+      // Use el.history for consistency
+      const historyEl = el.history;
+
+      document
+        .querySelector("#dateFilters button:first-child")
+        .classList.add("active");
+
+      function loadDraft() {
+        const d = JSON.parse(localStorage.getItem("draft") || "null");
+        if (d) {
+          judulEl.value = d.judul;
+          document.getElementById("tabType").value = d.type || "expense";
+        }
+      }
+
+      // Clear any saved draft on load to ensure clean state
+      localStorage.removeItem("draft");
+      setInterval(processSyncQueue, 5000);
+      processSyncQueue();
+      loadData();
+      // Show onboarding only first time
+      if (!localStorage.getItem("seen_onboarding")) {
+        const ob = document.getElementById("onboarding");
+        ob.style.display = "block";
+        setTimeout(() => {
+          ob.classList.add("hide");
+          setTimeout(() => (ob.style.display = "none"), 400);
+        }, 3000);
+        localStorage.setItem("seen_onboarding", "1");
+      }
+      judulEl.focus();
+      // Set default date = hari ini
+      (function setDefaultDate() {
+        renderCategories("expense");
+        const dateInput = document.getElementById("date");
+        const today = new Date();
+
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, "0");
+        const dd = String(today.getDate()).padStart(2, "0");
+        const hh = String(today.getHours()).padStart(2, "0");
+        const min = String(today.getMinutes()).padStart(2, "0");
+
+        const dateTimeValue = `${yyyy}-${mm}-${dd}T${hh}:${min}`;
+        dateInput.value = dateTimeValue;
+
+        document.getElementById("dateDisplay").innerText = formatDateDisplay(
+          dateInput.value,
+        ); // set default wallet (cash)
+        const walletBtns = document.querySelectorAll("#walletButtons button");
+        if (walletBtns[3]) walletBtns[3].classList.add("active");
+      })();
+      // Also clear status text on load.
+      document.getElementById("status").innerText = "";
+
+      document.getElementById("modal").addEventListener("click", (e) => {
+        if (e.target.id === "modal") closeModal();
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeModal();
+      });
+
+      function resetFilter() {
+        searchEl.value = "";
+        currentDateFilter = "today";
+        document
+          .querySelectorAll("#dateFilters button")
+          .forEach((b) => b.classList.remove("active"));
+        document
+          .querySelector("#dateFilters button:first-child")
+          .classList.add("active");
+        render();
+      }
+
+      function toggleSort() {
+        sortMode = sortMode === "desc" ? "asc" : "desc";
+        document.getElementById("sortBtn").innerText =
+          sortMode === "desc" ? "Newest First ↓" : "Oldest First ↑";
+        render();
+      }
+
+      let searchTimer;
+      searchEl.addEventListener("input", () => {
+        clearTimeout(searchTimer);
+        searchTimer = setTimeout(render, 300);
+      });
+      function setType(val, el) {
+        document.getElementById("type").value = val;
+        document
+          .querySelectorAll("#typeButtons button")
+          .forEach((b) => b.classList.remove("active"));
+        el.classList.add("active");
+      }
+      function setEditType(val, el) {
+        document.getElementById("editType").value = val;
+        document
+          .querySelectorAll("#editTypeButtons button")
+          .forEach((b) => b.classList.remove("active"));
+        el.classList.add("active");
+      }
+
+      // New transaction tab/category/wallet/keypad logic
+      function setTab(type, el) {
+        document.getElementById("tabType").value = type;
+
+        document
+          .querySelectorAll("#tabs .tab")
+          .forEach((b) => b.classList.remove("active"));
+        el.classList.add("active");
+        const commonFields = document.getElementById("commonFields");
+        const transferFields = document.getElementById("transferFields");
+
+        if (type === "transfer") {
+          commonFields.style.display = "none";
+          transferFields.style.display = "block";
+
+          // force category to transfer
+          document.getElementById("category").value = "transfer";
+        } else {
+          commonFields.style.display = "block";
+          transferFields.style.display = "none";
+
+          // reset category to default
+          renderCategories(type);
+        }
+      }
+
+      function renderCategories(type = "expense") {
+        const container = document.getElementById("categoryButtons");
+
+        const expenseCategories = [
+          "food",
+          "transport",
+          "household",
+          "social",
+          "apparel",
+          "education",
+          "gift",
+          "production",
+          "other",
+        ];
+
+        const incomeCategories = ["salary", "other"];
+
+        const list = type === "income" ? incomeCategories : expenseCategories;
+
+        container.innerHTML = list
+          .map(
+            (c, i) => `
+                                          <button onclick="setCategory('${c}', this)" class="${i === 0 ? "active" : ""}">
+                                            ${c.charAt(0).toUpperCase() + c.slice(1)}
+                                          </button>
+                                        `,
+          )
+          .join("");
+
+        document.getElementById("category").value = list[0];
+      }
+
+      function setCategory(val, el) {
+        document.getElementById("category").value = val;
+        document
+          .querySelectorAll("#categoryButtons button")
+          .forEach((b) => b.classList.remove("active"));
+        el.classList.add("active");
+      }
+
+      function setWallet(val, elBtn) {
+        state.wallet = val;
+        el.wallet.value = val;
+
+        document
+          .querySelectorAll("#walletButtons button")
+          .forEach((b) => b.classList.remove("active"));
+
+        elBtn.classList.add("active");
+      }
+      function setFromWallet(val, el) {
+        document.getElementById("fromWallet").value = val;
+
+        const container = el.closest(".wallet-grid");
+        container
+          .querySelectorAll("button")
+          .forEach((b) => b.classList.remove("active"));
+
+        el.classList.add("active");
+      }
+
+      function setToWallet(val, el) {
+        document.getElementById("toWallet").value = val;
+
+        const container = el.closest(".wallet-grid");
+        container
+          .querySelectorAll("button")
+          .forEach((b) => b.classList.remove("active"));
+
+        el.classList.add("active");
+      }
+
+      // --- Custom Keypad Modal ---
+      let currentKeypadField = null;
+      let keypadValue = "";
+      let keypadExpression = "";
+
+      function openKeypad(fieldId) {
+        currentKeypadField = fieldId;
+
+        // reset state to avoid cross-field leakage
+        keypadValue = "";
+        keypadExpression = "";
+
+        updateKeypadDisplay();
+        document.getElementById("keypadModal").style.display = "block";
+      }
+
+      function keypadInput(val) {
+        keypadExpression += val;
+        updateKeypadDisplay();
+      }
+
+      function updateKeypadDisplay() {
+        const parts = keypadExpression.split(/([+\-*/])/);
+
+        const formatted = parts
+          .map((part) => {
+            if (/^[+\-*/]$/.test(part)) return ` ${part} `;
+            const num = part.replace(/\D/g, "");
+            return num ? Number(num).toLocaleString("id-ID") : "";
+          })
+          .join("")
+          .trim();
+
+        document.getElementById("keypadDisplay").innerText = formatted || "0";
+      }
+
+      function keypadOperator(op) {
+        if (!keypadExpression) return; // prevent starting with operator
+
+        const lastChar = keypadExpression.slice(-1);
+        if (/[+\-*/]/.test(lastChar)) {
+          // replace last operator instead of stacking
+          keypadExpression = keypadExpression.slice(0, -1) + op;
+        } else {
+          keypadExpression += op;
+        }
+
+        updateKeypadDisplay();
+      }
+
+      function keypadEqual() {
+        if (!/^[0-9+\-*/ ]+$/.test(keypadExpression)) {
+          keypadExpression = "";
+          document.getElementById("keypadDisplay").innerText = "Error";
+          return;
+        }
+        try {
+          const result = Function(
+            `"use strict"; return (${keypadExpression})`,
+          )();
+
+          if (!isFinite(result)) throw new Error();
+
+          keypadExpression = String(Math.floor(result));
+          updateKeypadDisplay();
+        } catch {
+          keypadExpression = "";
+          document.getElementById("keypadDisplay").innerText = "Error";
+        }
+      }
+
+      function keypadClear() {
+        keypadExpression = "";
+        document.getElementById("keypadDisplay").innerText = "0";
+      }
+
+      function keypadBackspace() {
+        keypadExpression = keypadExpression.slice(0, -1);
+        updateKeypadDisplay();
+      }
+
+      function keypadDone() {
+        if (currentKeypadField) {
+          const num = keypadExpression.replace(/[^0-9]/g, "");
+          const formatted = num ? Number(num).toLocaleString("id-ID") : "";
+          document.getElementById(currentKeypadField).value = formatted;
+        }
+        document.getElementById("keypadModal").style.display = "none";
+
+        // clear state after use
+        keypadExpression = "";
+        keypadValue = "";
+        currentKeypadField = null;
+      }
+      function openDatePicker() {
+        const input = document.getElementById("date");
+        if (input.showPicker) {
+          input.showPicker();
+        } else {
+          input.focus();
+          input.click();
+        }
+      }
+      document.getElementById("date").addEventListener("change", function () {
+        document.getElementById("dateDisplay").innerText = formatDateDisplay(
+          this.value,
+        );
+      });
+      function renderCategoryChips() {
+        const container = document.getElementById("categoryChips");
+
+        // Ambil data sesuai filter tanggal + wallet (tanpa filter kategori)
+        const prevCategory = currentCategoryFilter;
+        currentCategoryFilter = "all";
+
+        const filtered = filterData(dataGlobal);
+
+        currentCategoryFilter = prevCategory;
+
+        const categories = new Set();
+
+        filtered.forEach((item) => {
+          if (item.category) categories.add(item.category);
+        });
+
+        const list = ["all", ...Array.from(categories)];
+
+        container.innerHTML = list
+          .map(
+            (c) => `
+              <button class="chip ${c === currentCategoryFilter ? "active" : ""}" onclick="setCategoryFilter('${c}', this)">
+                ${c === "all" ? "All" : c}
+              </button>
+            `,
+          )
+          .join("");
+      }
+      function setEditTab(type, el) {
+        document.getElementById("editType").value = type;
+
+        document
+          .querySelectorAll("#editTabs .tab")
+          .forEach((b) => b.classList.remove("active"));
+
+        el.classList.add("active");
+
+        const common = document.getElementById("editCommonFields");
+        const transfer = document.getElementById("editTransferFields");
+        const walletEl = document.getElementById("editWallet");
+
+        if (type === "transfer") {
+          common.style.display = "none";
+          transfer.style.display = "block";
+
+          // make wallet truly inactive in transfer
+          walletEl.value = "";
+          walletEl.disabled = true;
+        } else {
+          common.style.display = "block";
+          transfer.style.display = "none";
+
+          // re-enable wallet for normal types
+          walletEl.disabled = false;
+        }
+
+        // update category options when switching tab, but prevent category reset
+        const editCategory = document.getElementById("editCategory");
+
+        const expenseCategories = [
+          "food",
+          "transport",
+          "household",
+          "social",
+          "apparel",
+          "education",
+          "gift",
+          "production",
+          "other",
+        ];
+
+        const incomeCategories = ["salary", "other"];
+
+        const list = type === "income" ? incomeCategories : expenseCategories;
+
+        const current = editCategory.value;
+        editCategory.innerHTML = list
+          .map(
+            (c) =>
+              `<option value="${c}">${c.charAt(0).toUpperCase() + c.slice(1)}</option>`,
+          )
+          .join("");
+
+        if (list.includes(current)) {
+          editCategory.value = current;
+        } else {
+          editCategory.value = list[0];
+        }
+      }
+      function renderWalletChips() {
+        const container = document.getElementById("walletChips");
+        const wallets = new Set();
+
+        dataGlobal.forEach((item) => {
+          if (item.wallet) wallets.add(item.wallet);
+          if (item.fromWallet) wallets.add(item.fromWallet);
+          if (item.toWallet) wallets.add(item.toWallet);
+        });
+
+        const list = ["all", ...Array.from(wallets)];
+
+        container.innerHTML = list
+          .map(
+            (w) => `
+                                      <button class="chip ${w === currentWalletFilter ? "active" : ""}" onclick="setWalletFilter('${w}', this)">
+                                        ${w === "all" ? "All Wallet" : w}
+                                      </button>
+                                    `,
+          )
+          .join("");
+      }
+
+      function setWalletFilter(val, el) {
+        currentWalletFilter = val;
+
+        document
+          .querySelectorAll("#walletChips .chip")
+          .forEach((b) => b.classList.remove("active"));
+
+        el.classList.add("active");
+
+        render();
+      }
+      // Safe date parse utility
+      function safeDate(str) {
+        if (!str) return new Date();
+
+        const s = String(str).trim();
+
+        if (/^\d{4}-\d{2}-\d{2}/.test(s)) {
+          return new Date(s.replace(" ", "T"));
+        }
+
+        if (/^\d{2}\/\d{2}\/\d{4}/.test(s)) {
+          const [datePart, timePart] = s.split(" ");
+          const [d, m, y] = datePart.split("/");
+          return new Date(`${y}-${m}-${d}${timePart ? "T" + timePart : ""}`);
+        }
+
+        const fallback = new Date(s);
+        return isNaN(fallback) ? new Date() : fallback;
+      }
+
+      // Overlay click-to-close for keypad
+      function handleKeypadOverlayClick(e) {
+        // close only if clicking outside keypad panel
+        if (e.target.id === "keypadModal") {
+          document.getElementById("keypadModal").style.display = "none";
+
+          keypadExpression = "";
+          keypadValue = "";
+          currentKeypadField = null;
+        }
+      }
+    </script>
+  </body>
+</html>
