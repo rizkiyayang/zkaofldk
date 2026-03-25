@@ -753,7 +753,28 @@
         transform: scale(0.95);
       }
       /* ===== KEYPAD CLEAN ===== */
+      /* ===== KEYPAD ANIMATION ===== */
 
+      #keypadModal {
+        backdrop-filter: blur(10px);
+        opacity: 0;
+        transition: opacity 0.25s ease;
+      }
+
+      #keypadModal.show {
+        opacity: 1;
+      }
+
+      #keypadModal > div {
+        transform: translateY(40px) scale(0.94);
+        opacity: 0;
+        transition: all 0.28s var(--ios-ease);
+      }
+
+      #keypadModal.show > div {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
       .keypad-grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
@@ -764,34 +785,48 @@
       .keypad-btn {
         padding: 18px 0;
         font-size: 18px;
-        border-radius: 14px;
-        background: rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.06);
         color: var(--text-primary);
-        transition: all 0.15s var(--ios-ease);
         width: 100%;
-      }
 
+        backdrop-filter: blur(6px);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.05),
+          0 4px 10px rgba(0, 0, 0, 0.2);
+
+        transition: all 0.15s var(--ios-ease);
+      }
       .keypad-btn:active {
-        transform: scale(0.95);
-        background: rgba(255, 255, 255, 0.1);
+        transform: scale(0.94);
+        background: rgba(255, 255, 255, 0.12);
+        box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.3);
+      }
+      .keypad-grid button:nth-child(13),
+      .keypad-grid button:nth-child(15) {
+        background: rgba(37, 99, 235, 0.18);
+        color: #bfdbfe;
       }
 
-      /* operator beda visual */
-      .keypad-btn.operator {
-        background: rgba(37, 99, 235, 0.15);
-        color: #93c5fd;
+      .keypad-grid .keypad-btn.operator {
+        background: #1e3a8a !important;
+        color: #c7d2fe;
+        backdrop-filter: none;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
       }
-
-      /* tombol utama */
-      .keypad-btn.equal {
-        background: var(--accent);
-        color: white;
+      .keypad-grid .keypad-btn.equal {
+        background: #1e3a8a !important;
+        color: #c7d2fe;
         font-weight: 600;
         grid-column: span 4;
         padding: 18px 0;
+        backdrop-filter: none;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
       }
-
-      /* display lebih tegas */
+      .keypad-btn.done {
+        background: linear-gradient(135deg, #2563eb, #3b82f6);
+        color: white;
+      }
       #keypadDisplay {
         font-size: 26px !important;
         font-weight: 600;
@@ -962,6 +997,87 @@
       .history-item:active {
         transform: scale(0.98);
       }
+      .wallet-card.wallet-up {
+        background: rgba(37, 99, 235, 0.18);
+        box-shadow: 0 0 0 rgba(37, 99, 235, 0);
+        animation: walletPulseUp 0.9s ease;
+      }
+
+      .wallet-card.wallet-down {
+        background: rgba(239, 68, 68, 0.18);
+        box-shadow: 0 0 0 rgba(239, 68, 68, 0);
+        animation: walletPulseDown 0.9s ease;
+      }
+
+      @keyframes walletPulseUp {
+        0% {
+          box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.6);
+          transform: scale(1);
+        }
+        50% {
+          box-shadow: 0 0 25px 6px rgba(37, 99, 235, 0.35);
+          transform: scale(1.03);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+          transform: scale(1);
+        }
+      }
+
+      @keyframes walletPulseDown {
+        0% {
+          box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6);
+          transform: scale(1);
+        }
+        50% {
+          box-shadow: 0 0 25px 6px rgba(239, 68, 68, 0.35);
+          transform: scale(0.97);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+          transform: scale(1);
+        }
+      }
+
+      .wallet-card.wallet-transfer-in {
+        background: rgba(37, 99, 235, 0.12);
+        animation: walletTransferIn 0.9s ease;
+      }
+
+      .wallet-card.wallet-transfer-out {
+        background: rgba(239, 68, 68, 0.12);
+        animation: walletTransferOut 0.9s ease;
+      }
+
+      @keyframes walletTransferIn {
+        0% {
+          transform: translateX(-6px);
+          opacity: 0.7;
+        }
+        50% {
+          transform: translateX(4px);
+          opacity: 1;
+        }
+        100% {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      @keyframes walletTransferOut {
+        0% {
+          transform: translateX(6px);
+          opacity: 0.7;
+        }
+        50% {
+          transform: translateX(-4px);
+          opacity: 1;
+        }
+        100% {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
     </style>
   </head>
 
@@ -1098,13 +1214,14 @@
           <div
             style="
               position: absolute;
-              bottom: 0;
-              left: 0;
-              width: 100%;
+              bottom: 12px;
+              left: 50%;
+              transform: translateX(-50%);
+              width: 92%;
+              max-width: 420px;
               background: #111827;
               padding: 16px;
-              border-top-left-radius: 16px;
-              border-top-right-radius: 16px;
+              border-radius: 20px;
               box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
             "
           >
@@ -1150,7 +1267,7 @@
             </div>
 
             <button
-              class="keypad-btn equal"
+              class="keypad-btn done"
               style="margin-top: 12px"
               onclick="keypadDone()"
             >
@@ -1410,7 +1527,11 @@
       // Store original edit timestamp for edit modal
       let originalEditTanggal = null;
       let isLoadingData = true;
-      let isTransactionAnimation = false;
+
+      // Store previous balances for wallet animation color logic
+      let prevBalances = null;
+
+      let highlightAfterTx = false;
 
       let skipNextBalanceAnimation = false;
 
@@ -1432,6 +1553,18 @@
 
       function parseNumber(val) {
         return Number(String(val || "").replace(/\./g, "")) || 0;
+      }
+
+      // Format date as yyyy-MM-ddTHH:mm:ss (full, zero-padded)
+      function formatDateTimeFull(date) {
+        const d = new Date(date);
+        const yyyy = d.getFullYear();
+        const mm = String(d.getMonth() + 1).padStart(2, "0");
+        const dd = String(d.getDate()).padStart(2, "0");
+        const hh = String(d.getHours()).padStart(2, "0");
+        const min = String(d.getMinutes()).padStart(2, "0");
+        const ss = String(d.getSeconds()).padStart(2, "0");
+        return `${yyyy}-${mm}-${dd}T${hh}:${min}:${ss}`;
       }
       function processSyncQueue() {
         if (!syncQueue.length) return;
@@ -1598,8 +1731,10 @@
           .querySelectorAll("#monthChips .chip")
           .forEach((b) => b.classList.remove("active"));
         el.classList.add("active");
+        currentWalletFilter = "all";
         render();
         renderCategoryChips();
+        renderWalletChips();
       }
 
       function setCategoryFilter(type, el) {
@@ -1631,8 +1766,10 @@
           ...document.querySelectorAll("#dateFilters button"),
         ].find((b) => b.innerText.includes("Calendar"));
         if (calendarBtn) calendarBtn.classList.add("active");
+        currentWalletFilter = "all";
         render();
         renderCategoryChips();
+        renderWalletChips();
       }
       // Helper for local date string comparison
       function getLocalDateString(d) {
@@ -1655,9 +1792,8 @@
         const parsedAmount = parseNumber(amount);
         const parsedFee = parseNumber(fee || 0);
 
-        const normalizedDate = safeDate(tanggal)
-          .toLocaleString("sv-SE")
-          .replace(" ", "T");
+        // ensure we always use a Date object with real seconds (not truncated input)
+        const normalizedDate = formatDateTimeFull(new Date(tanggal));
 
         return {
           judul,
@@ -1668,8 +1804,8 @@
           fee: parsedFee,
           mood: "",
           tanggal: normalizedDate,
-          fromWallet: fromWallet || "",
-          toWallet: toWallet || "",
+          fromWallet: type === "transfer" ? fromWallet || "" : "",
+          toWallet: type === "transfer" ? toWallet || "" : "",
         };
       }
       function kirimData(e) {
@@ -1699,14 +1835,18 @@
         if (window.__sending) return;
         window.__sending = true;
 
-        if (dateInput) {
-          const selected = new Date(dateInput);
-          date = selected.toLocaleString("sv-SE").replace(" ", "T");
-        } else {
-          date = new Date().toLocaleString("sv-SE").replace(" ", "T");
-        }
-        const fromWallet = document.getElementById("fromWallet")?.value || "";
-        const toWallet = document.getElementById("toWallet")?.value || "";
+        // Always use real current time for accurate ordering
+        const now = new Date();
+        date = formatDateTimeFull(now);
+        const fromWallet =
+          type === "transfer"
+            ? document.getElementById("fromWallet")?.value || ""
+            : "";
+
+        const toWallet =
+          type === "transfer"
+            ? document.getElementById("toWallet")?.value || ""
+            : "";
         if (type === "transfer") {
           if (!fromWallet || !toWallet) {
             alert("Pilih wallet asal dan tujuan");
@@ -1774,6 +1914,9 @@
           ...payloadData,
         };
 
+        // Set flag to highlight after transaction
+        highlightAfterTx = true;
+
         // Log payload before fetch
         console.log("SEND PAYLOAD:", payload);
 
@@ -1793,20 +1936,56 @@
 
           const targetTotal = totalBefore + delta;
 
+          // --- Begin wallet delta mapping ---
+          const walletDelta = { bca: 0, gopay: 0, dana: 0, cash: 0 };
+
+          if (payloadData.type === "income") {
+            walletDelta[payloadData.wallet] += payloadData.amount;
+          }
+
+          if (payloadData.type === "expense") {
+            walletDelta[payloadData.wallet] -= payloadData.amount;
+          }
+
+          if (payloadData.type === "transfer") {
+            if (payloadData.fromWallet)
+              walletDelta[payloadData.fromWallet] -= payloadData.amount;
+            if (payloadData.toWallet)
+              walletDelta[payloadData.toWallet] += payloadData.amount;
+          }
+
+          window.__lastWalletDelta = walletDelta;
+
+          // delayed wallet animation (after balance animation)
+          setTimeout(() => {
+            const balancesNow = calculateBalances(dataGlobal);
+
+            Object.keys(walletDelta).forEach((key) => {
+              balancesNow[key] += walletDelta[key];
+            });
+
+            updateWalletUI(balancesNow);
+          }, 1200);
+          // --- End wallet delta mapping ---
+
           // animate from current DOM value instead of jumping
           const elBalance = document.getElementById("topBalance");
           const currentText = elBalance.innerText.replace(/[^\d]/g, "");
           const currentVal = Number(currentText) || totalBefore;
 
-          isTransactionAnimation = true;
+          // Color animation for top balance
+          if (delta > 0) {
+            elBalance.style.setProperty("color", "#60a5fa", "important");
+          } else if (delta < 0) {
+            elBalance.style.setProperty("color", "#f87171", "important");
+          }
+
+          setTimeout(() => {
+            elBalance.style.removeProperty("color");
+          }, 1200);
 
           setTimeout(() => {
             animateNumber(elBalance, targetTotal, "Balance: Rp ", 1200);
-
-            // reset setelah animasi selesai
-            setTimeout(() => {
-              isTransactionAnimation = false;
-            }, 1800);
           }, 80);
         } catch (e) {}
 
@@ -1851,10 +2030,11 @@
 
             document.getElementById("status").innerText = "Nice. Keep going.";
             showToast();
+            clearForm();
 
             clearTimeout(window.__reloadTimer);
             window.__lastPayload = null;
-            window.__reloadTimer = setTimeout(loadData, 1200);
+            window.__reloadTimer = setTimeout(loadData, 1400);
           })
           .catch((err) => {
             console.warn("Request issue but may still succeed:", err);
@@ -1870,7 +2050,7 @@
             localStorage.setItem("syncQueue", JSON.stringify(syncQueue));
 
             clearTimeout(window.__reloadTimer);
-            window.__reloadTimer = setTimeout(loadData, 1200);
+            window.__reloadTimer = setTimeout(loadData, 1400);
           });
 
         // Final failsafe: reset sending/button state after 5s in case of stuck
@@ -1904,7 +2084,9 @@
               throw new Error("Invalid JSON");
             }
 
+            const oldBalances = calculateBalances(dataGlobal);
             dataGlobal = Array.isArray(d) ? d : d.data || [];
+            prevBalances = oldBalances;
             isLoadingData = false;
             renderCategoryChips();
             renderWalletChips();
@@ -2045,13 +2227,9 @@
       }
 
       function updateWalletUI(balances) {
-        if (isTransactionAnimation && window.__walletLock) return;
-        if (isTransactionAnimation) {
-          window.__walletLock = true;
-
-          setTimeout(() => {
-            window.__walletLock = false;
-          }, 1500);
+        // ensure prevBalances exists for comparison
+        if (!prevBalances) {
+          prevBalances = { ...balances };
         }
         // Wallet lift animation
         document.querySelectorAll(".wallet-card").forEach((card) => {
@@ -2061,38 +2239,72 @@
           }, 150);
         });
         const wallets = [
-          { el: "#wallet-bca b", val: balances.bca },
-          { el: "#wallet-gopay b", val: balances.gopay },
-          { el: "#wallet-dana b", val: balances.dana },
-          { el: "#wallet-cash b", val: balances.cash },
+          { key: "bca", el: "#wallet-bca b", val: balances.bca },
+          { key: "gopay", el: "#wallet-gopay b", val: balances.gopay },
+          { key: "dana", el: "#wallet-dana b", val: balances.dana },
+          { key: "cash", el: "#wallet-cash b", val: balances.cash },
         ];
 
         wallets.forEach((w, i) => {
           setTimeout(() => {
             const el = document.querySelector(w.el);
+            el.style.transition = "color 0.3s ease";
 
-            // ambil nilai sebelum animasi
-            const currentText = (el.innerText || "").replace(/[^\d]/g, "");
-            const currentVal = Number(currentText) || 0;
+            let bgClass = "";
+            const delta = window.__lastWalletDelta?.[w.key] || 0;
 
-            let color = "";
-
-            if (isTransactionAnimation) {
-              if (w.val > currentVal) color = "#60a5fa";
-              if (w.val < currentVal) color = "#f87171";
+            if (highlightAfterTx && delta !== 0) {
+              if (delta > 0) bgClass = "wallet-up";
+              if (delta < 0) bgClass = "wallet-down";
             }
 
             animateNumber(el, w.val, "Rp ");
 
-            if (color) {
-              el.style.color = color;
+            if (bgClass) {
+              const card = el.closest(".wallet-card");
 
-              setTimeout(() => {
-                el.style.color = "";
-              }, 1200);
+              if (card) {
+                // reset animation (important for repeat trigger)
+                card.classList.remove(
+                  "wallet-up",
+                  "wallet-down",
+                  "wallet-transfer-in",
+                  "wallet-transfer-out",
+                );
+
+                // detect transfer vs normal
+                const isTransfer =
+                  window.__lastWalletDelta &&
+                  Object.values(window.__lastWalletDelta).filter((v) => v !== 0)
+                    .length === 2;
+
+                if (isTransfer) {
+                  if (delta > 0) {
+                    card.classList.add("wallet-transfer-in");
+                  } else {
+                    card.classList.add("wallet-transfer-out");
+                  }
+                } else {
+                  card.classList.add(bgClass);
+                }
+
+                setTimeout(() => {
+                  card.classList.remove(
+                    "wallet-up",
+                    "wallet-down",
+                    "wallet-transfer-in",
+                    "wallet-transfer-out",
+                  );
+                }, 1200);
+              }
             }
           }, i * 120);
         });
+        // Save current balances as previous for next update
+        prevBalances = { ...balances };
+        setTimeout(() => {
+          highlightAfterTx = false;
+        }, 1500);
       }
 
       function updateChart(income, expense) {
@@ -2150,11 +2362,43 @@
           const emoji =
             item.type === "transfer" ? "🔁" : emojiMap[item.category] || "📦";
 
+          // --- ADD walletIcon and categoryIcon ---
+          const walletIcon = (w) => {
+            if (!w) return "";
+
+            const map = {
+              bca: "./img/bca.png",
+              gopay: "./img/gopay.png",
+              dana: "./img/dana.png",
+              cash: "./img/cash.png",
+            };
+
+            const key = String(w).toLowerCase();
+            const src = map[key] || "";
+
+            return src
+              ? `<img src="${src}" style="height:1.2em;width:auto;vertical-align:middle;border-radius:6px;object-fit:contain;" />`
+              : "";
+          };
+
+          const categoryIcon = emoji;
+          // ----------------------------------------
+
           div.innerHTML = `
             <div class="inner" style="display:flex; justify-content:space-between; align-items:center;">
               
               <div style="flex:1;">
-                <b>${item.judul || "-"}</b>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  ${
+                    item.type === "transfer"
+                      ? `${walletIcon(item.fromWallet)} <span style="opacity:0.5;">→</span> ${walletIcon(item.toWallet)}`
+                      : walletIcon(item.wallet)
+                  }
+                  <b style="display:flex; align-items:center; gap:6px;">
+                    ${item.judul || "-"}
+                    ${categoryIcon ? `<span style="font-size:16px; opacity:0.8;">${categoryIcon}</span>` : ""}
+                  </b>
+                </div>
 
                 <div class="small" style="font-size:13px; opacity:0.8;">
                   ${formatDateDisplay(item.tanggal)} •
@@ -2166,7 +2410,7 @@
                   }
                 </div>
 
-                <div style="margin-top:6px; font-weight:800; font-size:22px;">
+                <div style="margin-top:6px; font-weight:800; font-size:22px; display:flex; align-items:center; gap:8px;">
                   Rp ${Number(item.amount || 0).toLocaleString()}
                 </div>
 
@@ -2183,11 +2427,6 @@
                   <button onclick="deleteData('${item.id}')">Delete</button>
                 </div>
               </div>
-
-              <div style="font-size:26px; opacity:0.8; margin-left:10px;">
-                ${emoji}
-              </div>
-
             </div>
           `;
           // Prevent accidental trigger overlap on button clicks
@@ -2214,7 +2453,17 @@
         filtered.sort((a, b) => {
           const da = safeDate(a.tanggal);
           const db = safeDate(b.tanggal);
-          return sortMode === "desc" ? db - da : da - db;
+
+          const diff = db - da;
+          if (diff !== 0) {
+            return sortMode === "desc" ? diff : -diff;
+          }
+
+          // tie-breaker using id (newer entries assumed higher id)
+          const ida = Number(a.id) || 0;
+          const idb = Number(b.id) || 0;
+
+          return sortMode === "desc" ? idb - ida : ida - idb;
         });
 
         renderStats(filtered);
@@ -2494,7 +2743,13 @@
         document
           .querySelectorAll("#walletButtons button")
           .forEach((b) => b.classList.remove("active"));
-        document.querySelector("#walletButtons button").classList.add("active");
+
+        // set default wallet = cash
+        const walletBtns = document.querySelectorAll("#walletButtons button");
+        if (walletBtns[3]) {
+          walletBtns[3].classList.add("active");
+        }
+        document.getElementById("wallet").value = "cash";
 
         document
           .querySelectorAll("#categoryButtons button")
@@ -2557,7 +2812,9 @@
           "Balance: Rp ",
         );
 
-        setTimeout(fakeLoadingAnimation, 600);
+        if (isLoadingData) {
+          setTimeout(fakeLoadingAnimation, 600);
+        }
       }
 
       fakeLoadingAnimation();
@@ -2854,7 +3111,11 @@
         keypadExpression = "";
 
         updateKeypadDisplay();
-        document.getElementById("keypadModal").style.display = "block";
+        const modal = document.getElementById("keypadModal");
+        modal.style.display = "block";
+        requestAnimationFrame(() => {
+          modal.classList.add("show");
+        });
       }
 
       function keypadInput(val) {
@@ -2935,7 +3196,11 @@
           const formatted = num ? Number(num).toLocaleString("id-ID") : "";
           document.getElementById(currentKeypadField).value = formatted;
         }
-        document.getElementById("keypadModal").style.display = "none";
+        const modal = document.getElementById("keypadModal");
+        modal.classList.remove("show");
+        setTimeout(() => {
+          modal.style.display = "none";
+        }, 250);
 
         // clear state after use
         keypadExpression = "";
@@ -3092,7 +3357,12 @@
       function handleKeypadOverlayClick(e) {
         // close only if clicking outside keypad panel
         if (e.target.id === "keypadModal") {
-          document.getElementById("keypadModal").style.display = "none";
+          const modal = document.getElementById("keypadModal");
+          modal.classList.remove("show");
+
+          setTimeout(() => {
+            modal.style.display = "none";
+          }, 250);
 
           keypadExpression = "";
           keypadValue = "";
@@ -3147,6 +3417,7 @@
 
         render();
         renderCategoryChips();
+        renderWalletChips();
       }
       function setEditCategory(val, el) {
         document.getElementById("editCategory").value = val;
@@ -3178,28 +3449,21 @@
           const eased = 1 - Math.pow(1 - progress, 3);
           const value = Math.floor(start + (target - start) * eased);
 
-          el.innerText = prefix + value.toLocaleString();
-
-          // warna naik / turun
-          if (isTransactionAnimation) {
-            if (target > start) {
-              el.style.color = "#60a5fa"; // naik
-            } else if (target < start) {
-              el.style.color = "#f87171"; // turun
-            } else {
-              el.style.color = "";
-            }
-          } else {
-            el.style.color = "";
+          // Preserve color when updating text
+          const currentColor = el.style.color;
+          el.textContent = prefix + value.toLocaleString();
+          if (currentColor) {
+            el.style.color = currentColor;
           }
+
           if (progress < 1) {
             requestAnimationFrame(update);
           } else {
-            el.innerText = `${prefix}${target.toLocaleString()}`;
-
-            // penting: jangan reset warna kalau transaksi
-            if (!isTransactionAnimation) {
-              el.style.color = "";
+            // Preserve color when setting final text
+            const finalColor = el.style.color;
+            el.textContent = `${prefix}${target.toLocaleString()}`;
+            if (finalColor) {
+              el.style.color = finalColor;
             }
           }
         }
