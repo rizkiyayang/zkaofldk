@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="id">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -27,7 +27,7 @@
       h2 {
         font-size: 16px;
         margin-top: 0;
-        margin-bottom: 28px;
+        margin-bottom: 8px;
         font-weight: 400;
         color: #8a4b64;
       }
@@ -112,7 +112,7 @@
       .links a.support {
         background: linear-gradient(135deg, #ff5fa2, #ff9fc7);
         color: #ffffff;
-        animation: pulseGlow 2s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+        animation: pulseGlow 2.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
       }
 
       .links a.support:hover {
@@ -282,6 +282,108 @@
         align-items: center;
         text-align: center;
       }
+      .choice-list {
+        margin-bottom: 16px;
+      }
+      .links a.choice-card {
+        display: grid;
+        grid-template-columns: 48px 1fr;
+        align-items: center;
+        gap: 12px;
+        min-height: 86px;
+        padding: 16px;
+        border-radius: 22px;
+        text-align: left;
+      }
+      .choice-icon {
+        display: grid;
+        place-items: center;
+        width: 48px;
+        height: 48px;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.32);
+        font-size: 25px;
+      }
+      .choice-icon img {
+        width: 28px;
+        height: 28px;
+        object-fit: contain;
+      }
+      .choice-label {
+        display: inline-block;
+        margin-bottom: 4px;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.6px;
+        text-transform: uppercase;
+        opacity: 0.8;
+      }
+      .choice-title {
+        display: block;
+        font-size: 18px;
+        font-weight: 800;
+        line-height: 1.25;
+      }
+      .choice-hint {
+        display: block;
+        margin-top: 5px;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 1.4;
+        opacity: 0.82;
+      }
+      .links a.mabar-main {
+        background: linear-gradient(135deg, #ff7ab6, #ffd1e7);
+        border: 1px solid rgba(255, 95, 162, 0.28);
+        box-shadow: 0 8px 20px rgba(255, 95, 162, 0.26);
+      }
+      .more-links {
+        margin-top: 12px;
+        text-align: left;
+      }
+      .more-links summary {
+        cursor: pointer;
+        list-style: none;
+        text-align: center;
+        padding: 12px 14px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.58);
+        border: 1px solid rgba(255, 95, 162, 0.18);
+        font-size: 12px;
+        font-weight: 800;
+        color: #9b5a72;
+      }
+      .more-links summary::-webkit-details-marker {
+        display: none;
+      }
+      .secondary-links {
+        margin-top: 12px;
+      }
+      .secondary-links a {
+        padding: 13px 14px;
+        font-size: 15px;
+        background: rgba(255, 255, 255, 0.72);
+        border: 1px solid rgba(255, 95, 162, 0.16);
+        box-shadow: 0 5px 14px rgba(255, 182, 213, 0.24);
+      }
+      @media (max-width: 380px) {
+        body {
+          padding: 18px;
+        }
+        .links a.choice-card {
+          grid-template-columns: 42px 1fr;
+          gap: 10px;
+          min-height: 82px;
+        }
+        .choice-icon {
+          width: 42px;
+          height: 42px;
+          font-size: 22px;
+        }
+        .choice-title {
+          font-size: 17px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -305,90 +407,103 @@
           <a href="https://www.instagram.com/zkaofldk">
             <img
               src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg"
+              alt="Instagram"
             />
           </a>
           <a href="https://www.tiktok.com/@zkaofldk">
             <img
               src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg"
+              alt="TikTok"
             />
           </a>
           <a href="https://discord.gg/CVur7k6wsE">
             <img
               src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg"
+              alt="Discord"
             />
           </a>
         </div>
 
         <div class="header-title">
           <h1>COKELAT MANIS</h1>
-          <h2>(˶˃ ᵕ ˂˶) LIVE STREAM DI TIKTOK TIAP HARI</h2>
-          <h3>Welcome to my cute corner 🌸 ⋆｡˚ ♡ ˚｡⋆</h3>
+          <h2>Live TikTok tiap hari</h2>
         </div>
       </div>
 
-      <!-- Link List -->
-      <ul class="links">
-        <li>
-          <a href="https://saweria.co/Cameliazanindya" class="support"
-            >💖 Support me on Saweria ♡</a
-          >
-        </li>
-        <li>
-          <a href="https://www.lita.game/user/27947254" class="iconed">
-            <div class="text">
-              Mabar lewat Lita
-              <span class="sub">Find teammate & play together</span>
-            </div>
-          </a>
-        </li>
-        <li>
-          <a href="/mabar/" class="valorant iconed">
-            <img src="img/valorant.png" class="duelist" />
-            <div class="text">
-              Mabar Valorant
-              <span class="sub">My Playstyle & Loadout</span>
-            </div>
-          </a>
-        </li>
-        <li>
-          <a href="/setup/" class="iconed">
-            <div class="text">
-              My Streaming Setup
-              <span class="sub">Gear & tools I use</span>
-            </div>
-          </a>
-        </li>
-        <li>
-          <a href="/jajan/" class="iconed">
-            <div class="text">
-              Jajan Sambil Streaming
-              <span class="sub">Snacks & comfort list</span>
-            </div>
-          </a>
-        </li>
+      <ul class="links choice-list">
         <li>
           <a
-            href="https://wa.me/6289519133146?text=Halo%20kak,%20kami%20tertarik%20untuk%20kerja%20sama%20endorsement."
-            class="iconed"
+            href="https://saweria.co/Cameliazanindya"
+            class="support choice-card"
           >
-            <div class="text">
-              Kerja Sama & Endorsement
-              <span class="sub">Business inquiries</span>
-            </div>
+            <span class="choice-icon">💖</span>
+            <span>
+              <span class="choice-label">Donate live</span>
+              <span class="choice-title">Kirim Saweria</span>
+              <span class="choice-hint"
+                >Untuk support, request, atau say hi.</span
+              >
+            </span>
           </a>
         </li>
-        <!-- <li>
-          <a href="https://discord.gg/CVur7k6wsE">💬 Join my Discord ✨</a>
-        </li> -->
+        <li>
+          <a href="/mabar/" class="mabar-main choice-card">
+            <span class="choice-icon">
+              <img src="img/valorant.png" alt="Valorant" />
+            </span>
+            <span>
+              <span class="choice-label">Mau mabar?</span>
+              <span class="choice-title">Join Live Mabar Valorant</span>
+              <span class="choice-hint">mabar atau req agent.</span>
+            </span>
+          </a>
+        </li>
       </ul>
-      
+
+      <details class="more-links">
+        <summary>Link lainnya</summary>
+        <ul class="links secondary-links">
+          <li>
+            <a href="https://www.lita.game/user/27947254" class="iconed">
+              <div class="text">
+                Mabar lewat Lita
+                <span class="sub">Alternatif buat cari teammate.</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="/setup/" class="iconed">
+              <div class="text">
+                My Streaming Setup
+                <span class="sub">Gear & tools yang aku pakai.</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="/jajan/" class="iconed">
+              <div class="text">
+                Jajan Sambil Streaming
+                <span class="sub">Snack & comfort list.</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://wa.me/6289519133146?text=Halo%20kak,%20kami%20tertarik%20untuk%20kerja%20sama%20endorsement."
+              class="iconed"
+            >
+              <div class="text">
+                Kerja Sama & Endorsement
+                <span class="sub">Untuk brand atau business inquiries.</span>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </details>
 
       <!-- Share footer -->
       <div class="footer">
-        <p>Let’s stay connected 💕</p>
-        <div>
-          <h2>Thank you for visiting 💗</h2>
-        </div>
+        <h2>Thank you for visiting 💗</h2>
       </div>
     </div>
     <script>
