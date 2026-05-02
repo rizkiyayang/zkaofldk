@@ -181,28 +181,13 @@
       }
 
       .header-glass {
-        backdrop-filter: blur(14px);
-        background: rgba(255, 255, 255, 0.35);
-        border-radius: 24px;
-        padding: 20px 18px 16px;
-        box-shadow: 0 10px 30px rgba(255, 95, 162, 0.15);
-        border: 1px solid rgba(255, 255, 255, 0.4);
-        margin-bottom: 16px;
+        padding: 8px 0 18px;
+        margin-bottom: 6px;
         position: relative;
-        overflow: hidden;
       }
 
       .header-glass::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(
-          120deg,
-          rgba(255, 95, 162, 0.25),
-          transparent 60%
-        );
-        opacity: 0.6;
-        pointer-events: none;
+        content: none;
       }
 
       .header-icons a {
