@@ -23,17 +23,23 @@
         --ease-apple: cubic-bezier(0.22, 1, 0.36, 1);
       }
       h1 {
-        font-size: 30px;
-        margin-bottom: 6px;
+        font-size: 32px;
+        margin: 0 0 8px;
         font-weight: 700;
         letter-spacing: 0.5px;
       }
       h2 {
         font-size: 15px;
         margin-top: 0;
-        margin-bottom: 28px;
+        margin-bottom: 26px;
         font-weight: 400;
         color: #8a4b64;
+      }
+      h4 {
+        font-size: 16px;
+        margin: 0 0 24px;
+        font-weight: 700;
+        color: #5a2a3c;
       }
       .links {
         list-style: none;
@@ -519,6 +525,8 @@
       h2,
       h3,
       h4,
+      .ribbon,
+      .intro,
       .price {
         opacity: 0;
         animation: fadeUp 0.6s ease forwards;
@@ -533,11 +541,14 @@
       h3 {
         animation-delay: 0.3s;
       }
-      h4 {
-        animation-delay: 0.4s;
+      .ribbon {
+        animation-delay: 0.1s;
+      }
+      .intro {
+        animation-delay: 0.5s;
       }
       .price {
-        animation-delay: 0.5s;
+        animation-delay: 0.6s;
       }
 
       .links li {
@@ -597,6 +608,48 @@
       .links a.support {
         letter-spacing: 0.5px;
       }
+      .ribbon {
+        font-size: 48px;
+        margin-bottom: 8px;
+      }
+      .intro {
+        max-width: 360px;
+        margin: 0 auto 22px;
+        font-size: 13px;
+        line-height: 1.6;
+        color: #8a4b64;
+      }
+      .price {
+        width: min(100%, 360px);
+        margin: 0 auto 18px;
+        display: grid;
+        gap: 8px;
+      }
+      .price-row {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 14px;
+        padding: 10px 2px;
+        border-bottom: 1px solid rgba(90, 42, 60, 0.12);
+        color: #5a2a3c;
+      }
+      .price-row:last-of-type {
+        border-bottom: 0;
+      }
+      .price-row strong {
+        font-size: 18px;
+      }
+      .price-row span {
+        font-size: 13px;
+        color: #8a4b64;
+        text-align: right;
+      }
+      .slot-note {
+        margin: 8px 0 0;
+        color: #8a4b64;
+        font-size: 12px;
+      }
       .container a img:hover {
         transform: translateY(-4px) scale(1.05);
         box-shadow:
@@ -608,27 +661,37 @@
   <body>
     <div class="container">
       <!-- Header -->
-      <div style="font-size: 48px; margin-bottom: 8px">🎀</div>
+      <div class="ribbon">🎀</div>
       <h1>Mabar Prioritas</h1>
       <h2>Temenin aku live sambil main bareng 🎮</h2>
       <h4>⋆｡˚ ♡ santai, fun, tapi tetep pingin menang ♡ ˚｡⋆</h4>
+      <p class="intro">
+        Pilih paket, bayar via Saweria.
+      </p>
       <div class="price">
-        💸 <strong>15k / 1 match</strong> <br />
-        🎮 <strong>50k / mabar sampai live selesai</strong> <br />
-        🔥 <strong>100k / bebas request agent favorit</strong><br /><br />
-        <span style="font-size: 12px; color: #a06b85"
-          >slot terbatas tiap live</span
-        >
+        <div class="price-row">
+          <strong>15k</strong>
+          <span>1 match</span>
+        </div>
+        <div class="price-row">
+          <strong>50k</strong>
+          <span>sampai live selesai</span>
+        </div>
+        <div class="price-row">
+          <strong>100k</strong>
+          <span>request agent favorit</span>
+        </div>
       </div>
 
       <!-- Link List -->
       <ul class="links">
         <li>
           <a href="https://saweria.co/Cameliazanindya" class="support">
-            💖 Join Mabar Sekarang (selama live)
+            💖 Bayar Slot Mabar via Saweria
           </a>
         </li>
       </ul>
+      <p class="slot-note">Khusus saat live aktif. Slot terbatas.</p>
 
       <!-- Testimoni -->
       <div class="testimonial">
@@ -653,13 +716,6 @@
         </p>
       </div>
 
-      <!-- Share footer -->
-      <div class="footer">
-        <p><strong>Cara join:</strong> isi keterangan di Saweria / chat live</p>
-        <p><strong>Username | Rank</strong></p>
-        <p>Mabar hanya saat live aktif (cek live sebelum order)</p>
-      </div>
-
       <!-- Favorite Team -->
       <div class="team-showcase">
         <p class="section-title">Team Favorit</p>
@@ -672,7 +728,6 @@
         </a>
       </div>
 
-      
       <!-- Agent Showcase -->
       <div class="agent-showcase">
         <p class="section-title">Role & Agent Pool</p>
@@ -963,7 +1018,6 @@
         </a>
       </div>
     </div>
-  </body>
   <script>
     const roleIcons = document.querySelectorAll(".role-icons img");
     const agents = document.querySelectorAll(".agent-card");
@@ -1049,4 +1103,5 @@
       });
     });
   </script>
+  </body>
 </html>
