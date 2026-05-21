@@ -478,6 +478,23 @@
         width: 100%;
         max-width: 480px;
       }
+      .support-pay {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+      }
+
+      .support-pay img {
+        width: 34px;
+        height: 34px;
+        object-fit: contain;
+        background: rgba(255, 240, 246, 0.95);
+        padding: 6px;
+        border-radius: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        box-shadow: 0 4px 10px rgba(255, 95, 162, 0.12);
+      }
       @keyframes pulseGlow {
         0% {
           transform: scale(1);
@@ -651,10 +668,7 @@
         font-size: 12px;
       }
       .container a img:hover {
-        transform: translateY(-4px) scale(1.05);
-        box-shadow:
-          0 16px 32px rgba(0, 0, 0, 0.18),
-          0 0 16px rgba(255, 95, 162, 0.35);
+        transform: none;
       }
     </style>
   </head>
@@ -665,14 +679,12 @@
       <h1>Mabar Prioritas</h1>
       <h2>Temenin aku live sambil main bareng 🎮</h2>
       <h4>⋆｡˚ ♡ santai, fun, tapi tetep pingin menang ♡ ˚｡⋆</h4>
-      <p class="intro">
-        Pilih paket, bayar via Saweria.
-      </p>
+      <p class="intro">Pilih paket, bayar via Saweria.</p>
       <div class="price">
         <div class="price-row">
           <strong>20k</strong>
           <span>VIP sampe end live</span>
-        </div>        
+        </div>
         <div class="price-row">
           <strong>10k</strong>
           <span>request senjata 1 match</span>
@@ -686,20 +698,28 @@
       <!-- Link List -->
       <ul class="links">
         <li>
-          <a href="https://saweria.co/Cameliazanindya" class="support">
-            💖 Bayar Slot Mabar via Saweria
+          <a
+            href="https://saweria.co/Cameliazanindya"
+            class="support support-pay"
+          >
+            <img src="../img/saweria.png" alt="Saweria" />
+            <span>Bayar via Saweria</span>
           </a>
         </li>
       </ul>
 
-            <ul class="links">
+      <ul class="links">
         <li>
-          <a href="https://sociabuzz.com/zkaofldk/tribe" class="support">
-            💖 Bayar Slot Mabar via Sociabuzz
+          <a
+            href="https://sociabuzz.com/zkaofldk/tribe"
+            class="support support-pay"
+          >
+            <img src="../img/sociabuzz.png" alt="Sociabuzz" />
+            <span>Bayar via Sociabuzz</span>
           </a>
         </li>
       </ul>
-      
+
       <p class="slot-note">Khusus saat live aktif. Slot terbatas.</p>
 
       <!-- Testimoni -->
@@ -1027,90 +1047,90 @@
         </a>
       </div>
     </div>
-  <script>
-    const roleIcons = document.querySelectorAll(".role-icons img");
-    const agents = document.querySelectorAll(".agent-card");
+    <script>
+      const roleIcons = document.querySelectorAll(".role-icons img");
+      const agents = document.querySelectorAll(".agent-card");
 
-    roleIcons.forEach((icon) => {
-      icon.addEventListener("click", () => {
-        // skip if same role
-        if (icon.classList.contains("active")) return;
+      roleIcons.forEach((icon) => {
+        icon.addEventListener("click", () => {
+          // skip if same role
+          if (icon.classList.contains("active")) return;
 
-        roleIcons.forEach((i) => i.classList.remove("active"));
-        icon.classList.add("active");
+          roleIcons.forEach((i) => i.classList.remove("active"));
+          icon.classList.add("active");
 
-        const role = icon.dataset.role;
+          const role = icon.dataset.role;
 
-        // FIRST: record positions
-        const firstRects = new Map();
-        agents.forEach((el) => {
-          firstRects.set(el, el.getBoundingClientRect());
-        });
+          // FIRST: record positions
+          const firstRects = new Map();
+          agents.forEach((el) => {
+            firstRects.set(el, el.getBoundingClientRect());
+          });
 
-        // EXIT animation (for items that will be hidden)
-        agents.forEach((agent) => {
-          const agentRole = agent.dataset.role;
-          if (!(role === "all" || role === agentRole)) {
-            agent.classList.add("exit");
-          }
-        });
-
-        setTimeout(() => {
-          // APPLY FILTER (after exit)
+          // EXIT animation (for items that will be hidden)
           agents.forEach((agent) => {
             const agentRole = agent.dataset.role;
-
-            if (role === "all" || role === agentRole) {
-              agent.classList.remove("hide", "exit");
-              agent.classList.add("enter");
-            } else {
-              agent.classList.remove("exit");
-              agent.classList.add("hide");
+            if (!(role === "all" || role === agentRole)) {
+              agent.classList.add("exit");
             }
           });
 
-          // force reflow so grid recalculates
-          document.body.offsetHeight;
-          // SECOND: record new positions
-          const lastRects = new Map();
-          agents.forEach((el) => {
-            lastRects.set(el, el.getBoundingClientRect());
-          });
-
-          // FLIP
-          agents.forEach((el) => {
-            const first = firstRects.get(el);
-            const last = lastRects.get(el);
-
-            const dx = first.left - last.left;
-            const dy = first.top - last.top;
-
-            if (dx || dy) {
-              el.style.transform = `translate(${dx}px, ${dy}px)`;
-
-              requestAnimationFrame(() => {
-                el.style.transition =
-                  "transform 0.35s cubic-bezier(0.22, 1, 0.36, 1)";
-                el.style.transform = "";
-              });
-
-              setTimeout(() => {
-                el.style.transition = "";
-              }, 350);
-            }
-          });
-
-          // ENTER animation
-          requestAnimationFrame(() => {
+          setTimeout(() => {
+            // APPLY FILTER (after exit)
             agents.forEach((agent) => {
-              if (!agent.classList.contains("hide")) {
-                agent.classList.remove("enter");
+              const agentRole = agent.dataset.role;
+
+              if (role === "all" || role === agentRole) {
+                agent.classList.remove("hide", "exit");
+                agent.classList.add("enter");
+              } else {
+                agent.classList.remove("exit");
+                agent.classList.add("hide");
               }
             });
-          });
-        }, 180);
+
+            // force reflow so grid recalculates
+            document.body.offsetHeight;
+            // SECOND: record new positions
+            const lastRects = new Map();
+            agents.forEach((el) => {
+              lastRects.set(el, el.getBoundingClientRect());
+            });
+
+            // FLIP
+            agents.forEach((el) => {
+              const first = firstRects.get(el);
+              const last = lastRects.get(el);
+
+              const dx = first.left - last.left;
+              const dy = first.top - last.top;
+
+              if (dx || dy) {
+                el.style.transform = `translate(${dx}px, ${dy}px)`;
+
+                requestAnimationFrame(() => {
+                  el.style.transition =
+                    "transform 0.35s cubic-bezier(0.22, 1, 0.36, 1)";
+                  el.style.transform = "";
+                });
+
+                setTimeout(() => {
+                  el.style.transition = "";
+                }, 350);
+              }
+            });
+
+            // ENTER animation
+            requestAnimationFrame(() => {
+              agents.forEach((agent) => {
+                if (!agent.classList.contains("hide")) {
+                  agent.classList.remove("enter");
+                }
+              });
+            });
+          }, 180);
+        });
       });
-    });
-  </script>
+    </script>
   </body>
 </html>

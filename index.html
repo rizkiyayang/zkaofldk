@@ -275,14 +275,20 @@
         width: 48px;
         height: 48px;
         border-radius: 16px;
-        background: rgba(255, 255, 255, 0.32);
-        font-size: 25px;
+        background: rgba(255, 255, 255, 0.82);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        box-shadow:
+          0 6px 16px rgba(255, 95, 162, 0.18),
+          inset 0 1px 0 rgba(255, 255, 255, 0.7);
       }
 
       .choice-icon img {
         width: 28px;
         height: 28px;
         object-fit: contain;
+        filter: drop-shadow(0 0 6px rgba(255, 95, 162, 0.22));
+        transition: transform 0.25s ease;
       }
 
       .choice-label {
@@ -455,12 +461,17 @@
             href="https://saweria.co/Cameliazanindya"
             class="support choice-card"
           >
-            <span class="choice-icon">💖</span>
+            <span class="choice-icon">
+              <img
+                src="img/saweria.png"
+                alt="Saweria"
+              />
+            </span>
             <span>
               <span class="choice-label">Donate live</span>
               <span class="choice-title">Kirim Saweria</span>
               <span class="choice-hint"
-                >Untuk support, request, atau say hi.</span
+                >Support, request, atau top up game.</span
               >
             </span>
           </a>
@@ -474,13 +485,19 @@
             href="https://sociabuzz.com/zkaofldk/tribe"
             class="support choice-card"
           >
-            <span class="choice-icon">💖</span>
+            <span class="choice-icon">
+              <img
+                src="img/sociabuzz.png"
+                alt="Sociabuzz"
+                style="width: 36px; height: 36px"
+              />
+            </span>
             <span>
               <span class="choice-label">Donate live</span>
               <span class="choice-title">Kirim Sociabuzz
               </span>
               <span class="choice-hint"
-                >Untuk support, request, atau say hi.</span
+                >Untuk support.</span
               >
             </span>
           </a>
@@ -505,23 +522,23 @@
           <a href="https://www.lita.game/user/27947254" class="iconed">
             <div class="text">
               Mabar lewat Lita
-              <span class="sub">Alternatif buat cari teammate.</span>
+              <span class="sub">buat mabar diluar live.</span>
             </div>
           </a>
         </li>
         <li>
           <a href="/setup/" class="iconed">
             <div class="text">
-              My Streaming Setup
-              <span class="sub">Gear & tools yang aku pakai.</span>
+              Spek PC aku
+              <span class="sub">dan alat yang aku pakai.</span>
             </div>
           </a>
         </li>
         <li>
           <a href="/jajan/" class="iconed">
             <div class="text">
-              Jajan Sambil Streaming
-              <span class="sub">Snack & comfort list.</span>
+              Jajanan
+              <span class="sub">rekomendasiin jajanan enak dong.</span>
             </div>
           </a>
         </li>
