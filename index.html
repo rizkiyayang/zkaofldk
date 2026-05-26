@@ -516,25 +516,59 @@
       }
 
       .merged-links a {
-        padding: 12px 14px;
+        padding: 14px 16px;
         font-size: 14px;
-        border-radius: 20px;
+        border-radius: 22px;
+
         background: linear-gradient(
           180deg,
-          rgba(255, 245, 250, 0.96),
-          rgba(255, 236, 245, 0.9)
+          rgba(255, 250, 253, 1),
+          rgba(255, 238, 246, 1)
         );
-        border: 1px solid rgba(255, 95, 162, 0.16);
-        backdrop-filter: blur(8px);
+
+        border: 1px solid rgba(255, 95, 162, 0.22);
+
         box-shadow:
-          0 6px 16px rgba(255, 182, 213, 0.22),
-          0 1px 0 rgba(255, 255, 255, 0.7) inset;
+          0 10px 22px rgba(255, 95, 162, 0.12),
+          0 2px 0 rgba(255, 255, 255, 0.7) inset;
+
+        transition:
+          transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+          box-shadow 0.28s ease,
+          border-color 0.28s ease;
+      }
+      .merged-links a:hover {
+        transform: translateY(-4px) scale(1.02);
+
+        border-color: rgba(255, 95, 162, 0.38);
+
+        box-shadow:
+          0 18px 34px rgba(255, 95, 162, 0.2),
+          0 0 18px rgba(255, 95, 162, 0.12);
+      }
+      .merged-links .text {
+        font-weight: 700;
+        font-size: 15px;
+        color: #5a2a3c;
       }
       .merged-links .sub {
         font-size: 12px;
         opacity: 0.62;
       }
+      .shop-card-image::after {
+        content: "";
+        position: absolute;
+        inset: 0;
 
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.18),
+          transparent 45%
+        );
+      }
+      .merged-links li {
+        margin: 10px 0;
+      }
       @keyframes mergedReveal {
         0% {
           opacity: 0;
@@ -1367,9 +1401,7 @@
 
             <div class="shop-card-content">
               <span class="text">Spek PC Aku</span>
-              <span class="sub"
-                >PC, gear, mic, dan alat yang aku pakai buat live.</span
-              >
+              <span class="sub">PC, alat, dan rekomendasi.</span>
             </div>
           </a>
         </li>
