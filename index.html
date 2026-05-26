@@ -1460,67 +1460,72 @@
 
       .testimonial {
         margin-top: 24px;
-        padding: 20px 14px 14px;
+        padding: 20px 16px;
         background: #fff0f6;
         border-radius: 16px;
-        font-size: 14px;
         box-shadow: 0 4px 12px rgba(255, 182, 213, 0.25);
-        overflow: hidden;
-        position: relative;
-        min-height: 100px;
-      }
-      .testimonial p {
-        opacity: 0;
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 50%;
-        transform: translateY(-50%);
-        animation: slideTesti 12s infinite;
+        max-height: 120px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        text-align: left;
+
+        scrollbar-width: none;
+        -ms-overflow-style: none;
       }
 
-      .testimonial p:nth-child(2) {
-        animation-delay: 0s;
-      }
-      .testimonial p:nth-child(3) {
-        animation-delay: 3s;
-      }
-      .testimonial p:nth-child(4) {
-        animation-delay: 6s;
-      }
-      .testimonial p:nth-child(5) {
-        animation-delay: 9s;
+      .testimonial::-webkit-scrollbar {
+        display: none;
       }
 
-      @keyframes slideTesti {
-        0% {
-          opacity: 0;
-          transform: translateY(10px);
-        }
-        5% {
-          opacity: 1;
-          transform: translateY(0);
-        }
-        25% {
-          opacity: 1;
-          transform: translateY(0);
-        }
-        30% {
-          opacity: 0;
-          transform: translateY(-10px);
-        }
-        100% {
-          opacity: 0;
-        }
+      .testimonial-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 14px;
       }
 
-      .testimonial p:first-child {
-        position: static;
-        transform: none;
-        opacity: 1;
-        animation: none;
-        margin-bottom: 10px;
+      .testimonial-item {
+        padding-bottom: 12px;
+        border-bottom: 1px solid rgba(255, 95, 162, 0.12);
       }
+
+      .testimonial-item:last-child {
+        border-bottom: 0;
+        padding-bottom: 0;
+      }
+
+      .testimonial-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 4px;
+      }
+
+      .testimonial-name {
+        font-size: 14px;
+        font-weight: 700;
+        color: #5a2a3c;
+      }
+
+      .testimonial-time {
+        font-size: 11px;
+        color: #b86b8f;
+      }
+
+      .testimonial-stars {
+        font-size: 12px;
+        color: #ffb800;
+        letter-spacing: 1px;
+        margin-bottom: 5px;
+      }
+
+      .testimonial-text {
+        font-size: 13px;
+        line-height: 1.5;
+        color: #8a4b64;
+      }
+
       .footer {
         margin-top: 36px;
         font-size: 14px;
@@ -1908,25 +1913,335 @@
       </ul>
       <!-- Testimoni -->
       <div class="testimonial">
-        <p style="font-weight: 700; margin-bottom: 10px">
-          ⭐ 5.0 katanya yang udah mabar
-        </p>
+        <div class="testimonial-list">
+          <!-- COPY BLOCK INI UNTUK TAMBAH TESTIMONI -->
+          <div class="testimonial-item">
+            <div class="testimonial-top">
+              <div class="testimonial-name">flotirta_</div>
+              <div class="testimonial-time">3-6 2:14</div>
+            </div>
 
-        <p style="font-size: 14px; color: #8a4b64; margin-bottom: 8px">
-          “ggwp, seru banget mabar nya 😭💖”
-        </p>
+            <div class="testimonial-stars">★★★★★</div>
 
-        <p style="font-size: 14px; color: #8a4b64; margin-bottom: 8px">
-          “makasih buat carry nya kak 😭🙏”
-        </p>
+            <div class="testimonial-text">
+              makasii kakak, have a nice day kaka. baik banget kakak nya.
+            </div>
+          </div>
 
-        <p style="font-size: 14px; color: #8a4b64; margin-bottom: 8px">
-          “baik banget, ga toxic sama sekali”
-        </p>
+          <div class="testimonial-item">
+            <div class="testimonial-top">
+              <div class="testimonial-name">ThomasAd</div>
+              <div class="testimonial-time">4-22 23:59</div>
+            </div>
 
-        <p style="font-size: 14px; color: #8a4b64">
-          “fun banget, pengen mabar lagi 😆”
-        </p>
+            <div class="testimonial-stars">★★★★★</div>
+
+            <div class="testimonial-text">
+              thank you, gara gara kamu, aku gold ~
+            </div>
+          </div>
+
+          <div class="testimonial-item">
+            <div class="testimonial-top">
+              <div class="testimonial-name">Paradoxx</div>
+              <div class="testimonial-time">2-15 10:56</div>
+            </div>
+
+            <div class="testimonial-stars">★★★★★</div>
+
+            <div class="testimonial-text">makasih untuk carry nya kak😁</div>
+          </div>
+
+          <div class="testimonial-item">
+            <div class="testimonial-top">
+              <div class="testimonial-name">Ulasan Anonim</div>
+              <div class="testimonial-time">5-19 22:15</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <div class="testimonial-text">gg</div>
+          </div>
+          <div class="testimonial-item">
+            <div class="testimonial-top">
+              <div class="testimonial-name">indra🕷️</div>
+              <div class="testimonial-time">5-17 17:23</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <div class="testimonial-text">gg,jago banget</div>
+          </div>
+          <div class="testimonial-item">
+            <div class="testimonial-top">
+              <div class="testimonial-name">A I I L Y</div>
+              <div class="testimonial-time">5-3 13:21</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <div class="testimonial-text">ggwp</div>
+          </div>
+          <div class="testimonial-item">
+            <div class="testimonial-top">
+              <div class="testimonial-name">Lita24112659</div>
+              <div class="testimonial-time">4-27 16:28</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <div class="testimonial-text">gg</div>
+          </div>
+          <div class="testimonial-item">
+            <div class="testimonial-top">
+              <div class="testimonial-name">Ulasan Anonim</div>
+              <div class="testimonial-time">4-23 23:05</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <div class="testimonial-text">GG</div>
+          </div>
+          <div class="testimonial-item">
+            <div class="testimonial-top">
+              <div class="testimonial-name">ThomasAd</div>
+              <div class="testimonial-time">4-22 23:59</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <div class="testimonial-text">
+              thank you, gara gara kamu, aku gold ~
+            </div>
+          </div>
+          <div class="testimonial-item">
+            <div class="testimonial-top">
+              <div class="testimonial-name">AlexxX3</div>
+              <div class="testimonial-time">4-13 23:47</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <div class="testimonial-text">gg</div>
+          </div>
+          <div class="testimonial-item">
+            <div class="testimonial-top">
+              <div class="testimonial-name">flotirta_</div>
+              <div class="testimonial-time">4-6 23:28</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <div class="testimonial-text">
+              makasii kakak sudah temenin review skinn, kakak nya lucu wkwkwkw,
+              semoga ngga turun iron lagi ya kak, makasih banyak kakak cantikk,
+              have a nice day kak, puas x main sama kakak wkwkw
+            </div>
+          </div>
+          <div class="testimonial-item">
+            <div class="testimonial-top">
+              <div class="testimonial-name">Ulasan Anonim</div>
+              <div class="testimonial-time">3-29 0:41</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <div class="testimonial-text">gg</div>
+          </div>
+          <div class="testimonial-item">
+            <div class="testimonial-top">
+              <div class="testimonial-name">kaleee37</div>
+              <div class="testimonial-time">3-23 23:17</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <div class="testimonial-text">aaasikkk baikk</div>
+          </div>
+          <div class="testimonial-item">
+            <div class="testimonial-top">
+              <div class="testimonial-name">BryanAlvero</div>
+              <div class="testimonial-time">3-14 1:41</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <div class="testimonial-text">sangat mantap</div>
+          </div>
+          <div class="testimonial-item">
+            <div class="testimonial-top">
+              <div class="testimonial-name">Ulasan Anonim</div>
+              <div class="testimonial-time">3-12 2:46</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <div class="testimonial-text">GGWP</div>
+          </div>
+          <div class="testimonial-item">
+            <div class="testimonial-top">
+              <div class="testimonial-name">Ulasan Anonim</div>
+              <div class="testimonial-time">3-12 0:58</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <div class="testimonial-text">Ggwp</div>
+          </div>
+          <div class="testimonial-item">
+            <div class="testimonial-top">
+              <div class="testimonial-name">Ulasan Anonim</div>
+              <div class="testimonial-time">3-9 23:08</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <div class="testimonial-text">Fun loh</div>
+          </div>
+          <div class="testimonial-item">
+            <div class="testimonial-top">
+              <div class="testimonial-name">Ulasan Anonim</div>
+              <div class="testimonial-time">3-9 22:28</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <div class="testimonial-text">HAVEFUN</div>
+          </div>
+          <div class="testimonial-item">
+            <div class="testimonial-top">
+              <div class="testimonial-name">flotirta_</div>
+              <div class="testimonial-time">3-6 2:14</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <div class="testimonial-text">
+              makasii kakak, have a nice day kaka. baik banget kakak nya, lucu
+              juga hahaha. makasih banget kakak.
+            </div>
+          </div>
+          <div class="testimonial-item">
+            <div class="testimonial-top">
+              <div class="testimonial-name">Paradoxx</div>
+              <div class="testimonial-time">2-15 10:56</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <div class="testimonial-text">makasih untuk carry nya kak😁</div>
+          </div>
+          <div class="testimonial-item">
+            <div class="testimonial-top">
+              <div class="testimonial-name">IT Was Kenn</div>
+              <div class="testimonial-time">2-5 1:28</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <div class="testimonial-text">🤯🤯🤯🤯👻</div>
+          </div>
+          <div class="testimonial-item">
+            <div class="testimonial-top">
+              <div class="testimonial-name">IT Was Kenn</div>
+              <div class="testimonial-time">2-5 0:18</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <div class="testimonial-text">Gg banget cantik</div>
+          </div>
+          <div class="testimonial-item">
+            <div class="testimonial-top">
+              <div class="testimonial-name">IT Was Kenn</div>
+              <div class="testimonial-time">2-4 23:37</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <div class="testimonial-text">GG banget kamuu</div>
+          </div>
+          <div class="testimonial-item">
+            <div class="testimonial-top">
+              <div class="testimonial-name">IT Was Kenn</div>
+              <div class="testimonial-time">2-4 23:04</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <div class="testimonial-text">Gg kamuu</div>
+          </div>
+          <div class="testimonial-item">
+            <div class="testimonial-top">
+              <div class="testimonial-name">Lita21452850</div>
+              <div class="testimonial-time">2-2 21:59</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <div class="testimonial-text">ggwp</div>
+          </div>
+          <div class="testimonial-item">
+            <div class="testimonial-top">
+              <div class="testimonial-name">MI4WWWWWWO</div>
+              <div class="testimonial-time">1-25 2:17</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <div class="testimonial-text">gg</div>
+          </div>
+          <div class="testimonial-item">
+            <div class="testimonial-top">
+              <div class="testimonial-name">Anawaru</div>
+              <div class="testimonial-time">1-22 18:22</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <div class="testimonial-text">good banget</div>
+          </div>
+          <!-- <div class="testimonial-item">
+            <div class="testimonial-top">
+              <div class="testimonial-name">Nama User 28</div>
+              <div class="testimonial-time">5-29 09:14</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <div class="testimonial-text">isi review disini</div>
+          </div>
+          <div class="testimonial-item">
+            <div class="testimonial-top">
+              <div class="testimonial-name">Nama User 29</div>
+              <div class="testimonial-time">5-29 13:31</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <div class="testimonial-text">isi review disini</div>
+          </div>
+          <div class="testimonial-item">
+            <div class="testimonial-top">
+              <div class="testimonial-name">Nama User 30</div>
+              <div class="testimonial-time">5-29 18:58</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <div class="testimonial-text">isi review disini</div>
+          </div>
+          <div class="testimonial-item">
+            <div class="testimonial-top">
+              <div class="testimonial-name">Nama User 31</div>
+              <div class="testimonial-time">5-30 08:47</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <div class="testimonial-text">isi review disini</div>
+          </div>
+          <div class="testimonial-item">
+            <div class="testimonial-top">
+              <div class="testimonial-name">Nama User 32</div>
+              <div class="testimonial-time">5-30 13:33</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <div class="testimonial-text">isi review disini</div>
+          </div>
+          <div class="testimonial-item">
+            <div class="testimonial-top">
+              <div class="testimonial-name">Nama User 33</div>
+              <div class="testimonial-time">5-30 19:15</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <div class="testimonial-text">isi review disini</div>
+          </div>
+          <div class="testimonial-item">
+            <div class="testimonial-top">
+              <div class="testimonial-name">Nama User 34</div>
+              <div class="testimonial-time">5-31 09:22</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <div class="testimonial-text">isi review disini</div>
+          </div>
+          <div class="testimonial-item">
+            <div class="testimonial-top">
+              <div class="testimonial-name">Nama User 35</div>
+              <div class="testimonial-time">5-31 13:55</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <div class="testimonial-text">isi review disini</div>
+          </div>
+          <div class="testimonial-item">
+            <div class="testimonial-top">
+              <div class="testimonial-name">Nama User 36</div>
+              <div class="testimonial-time">5-31 18:41</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <div class="testimonial-text">isi review disini</div>
+          </div>
+          <div class="testimonial-item">
+            <div class="testimonial-top">
+              <div class="testimonial-name">Nama User 37</div>
+              <div class="testimonial-time">6-1 09:11</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <div class="testimonial-text">isi review disini</div>
+          </div>
+          <div class="testimonial-item">
+            <div class="testimonial-top">
+              <div class="testimonial-name">Nama User 38</div>
+              <div class="testimonial-time">6-1 15:24</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <div class="testimonial-text">isi review disini</div>
+          </div> -->
+        </div>
       </div>
 
       <!-- Agent Showcase -->
@@ -1956,144 +2271,69 @@
         </div>
         <div class="agent-big-grid">
           <!-- Duelist -->
-          <a
-            href="https://playvalorant.com/id-id/agents/yoru/"
-            target="_blank"
-            class="agent-card"
-            data-role="duelist"
-          >
+          <a class="agent-card" data-role="duelist">
             <img src="img/yoru.avif" />
             <div class="agent-name">YORU</div>
           </a>
-          <a
-            href="https://playvalorant.com/id-id/agents/reyna/"
-            target="_blank"
-            class="agent-card"
-            data-role="duelist"
-          >
+          <a class="agent-card" data-role="duelist">
             <img src="img/reyna.avif" />
             <div class="agent-name">REYNA</div>
           </a>
-          <a
-            href="https://playvalorant.com/id-id/agents/iso/"
-            target="_blank"
-            class="agent-card"
-            data-role="duelist"
-          >
+          <a class="agent-card" data-role="duelist">
             <img src="img/iso.avif" />
             <div class="agent-name">ISO</div>
           </a>
-          <a
-            href="https://playvalorant.com/id-id/agents/raze/"
-            target="_blank"
-            class="agent-card"
-            data-role="duelist"
-          >
+          <a class="agent-card" data-role="duelist">
             <img src="img/raze.avif" />
             <div class="agent-name">RAZE</div>
           </a>
-          <a
-            href="https://playvalorant.com/id-id/agents/phoenix/"
-            target="_blank"
-            class="agent-card"
-            data-role="duelist"
-          >
+          <a class="agent-card" data-role="duelist">
             <img src="img/phoenix.avif" />
             <div class="agent-name">PHOENIX</div>
           </a>
-          <a
-            href="https://playvalorant.com/id-id/agents/neon/"
-            target="_blank"
-            class="agent-card"
-            data-role="duelist"
-          >
+          <a class="agent-card" data-role="duelist">
             <img src="img/neon.avif" />
             <div class="agent-name">NEON</div>
           </a>
 
           <!-- Initiator -->
-          <a
-            href="https://playvalorant.com/id-id/agents/fade/"
-            target="_blank"
-            class="agent-card"
-            data-role="initiator"
-          >
+          <a class="agent-card" data-role="initiator">
             <img src="img/fade.avif" />
             <div class="agent-name">FADE</div>
           </a>
-          <a
-            href="https://playvalorant.com/id-id/agents/sova/"
-            target="_blank"
-            class="agent-card"
-            data-role="initiator"
-          >
+          <a class="agent-card" data-role="initiator">
             <img src="img/sova.avif" />
             <div class="agent-name">SOVA</div>
           </a>
 
           <!-- Controller -->
-          <a
-            href="https://playvalorant.com/id-id/agents/clove/"
-            target="_blank"
-            class="agent-card"
-            data-role="controller"
-          >
+          <a class="agent-card" data-role="controller">
             <img src="img/clove.avif" />
             <div class="agent-name">CLOVE</div>
           </a>
-          <a
-            href="https://playvalorant.com/id-id/agents/omen/"
-            target="_blank"
-            class="agent-card"
-            data-role="controller"
-          >
+          <a class="agent-card" data-role="controller">
             <img src="img/omen.avif" />
             <div class="agent-name">OMEN</div>
           </a>
-          <a
-            href="https://playvalorant.com/id-id/agents/miks/"
-            target="_blank"
-            class="agent-card"
-            data-role="controller"
-          >
+          <a class="agent-card" data-role="controller">
             <img src="img/miks.avif" />
             <div class="agent-name">MIKS</div>
           </a>
-          <a
-            href="https://playvalorant.com/id-id/agents/brimstone/"
-            target="_blank"
-            class="agent-card"
-            data-role="controller"
-          >
+          <a class="agent-card" data-role="controller">
             <img src="img/brimstone.avif" />
             <div class="agent-name">BRIMSTONE</div>
           </a>
-          <a
-            href="https://playvalorant.com/id-id/agents/viper/"
-            target="_blank"
-            class="agent-card"
-            data-role="controller"
-          >
+          <a class="agent-card" data-role="controller">
             <img src="img/viper.avif" />
             <div class="agent-name">VIPER</div>
           </a>
 
           <!-- Sentinel -->
-          <a
-            href="https://playvalorant.com/id-id/agents/sage/"
-            target="_blank"
-            class="agent-card"
-            data-role="sentinel"
-          >
+          <a class="agent-card" data-role="sentinel">
             <img src="img/sage.avif" />
             <div class="agent-name">SAGE</div>
           </a>
-          <a
-            href="https://playvalorant.com/id-id/agents/killjoy/"
-            target="_blank"
-            class="agent-card"
-            data-role="sentinel"
-          >
+          <a class="agent-card" data-role="sentinel">
             <img src="img/killjoy.avif" />
             <div class="agent-name">KILLJOY</div>
           </a>
@@ -2288,6 +2528,75 @@
           if (e.target === donateModal) {
             donateModal.classList.remove("active");
           }
+        });
+      }
+
+      const testimonialBox = document.querySelector(".testimonial");
+      const testimonialList = document.querySelector(".testimonial-list");
+
+      if (testimonialBox && testimonialList) {
+        const originalItems = Array.from(testimonialList.children);
+
+        const shuffledItems = [...originalItems].sort(
+          () => Math.random() - 0.5,
+        );
+
+        testimonialList.innerHTML = "";
+
+        for (let i = 0; i < 3; i++) {
+          shuffledItems.forEach((item) => {
+            testimonialList.appendChild(item.cloneNode(true));
+          });
+        }
+
+        const oneSetHeight = testimonialList.scrollHeight / 3;
+
+        let autoScroll;
+        let currentScroll = oneSetHeight;
+
+        testimonialBox.scrollTop = currentScroll;
+
+        const normalizeScroll = () => {
+          if (currentScroll >= oneSetHeight * 2) {
+            currentScroll -= oneSetHeight;
+          }
+
+          if (currentScroll <= 0) {
+            currentScroll += oneSetHeight;
+          }
+
+          testimonialBox.scrollTop = currentScroll;
+        };
+
+        const startAutoScroll = () => {
+          clearInterval(autoScroll);
+
+          autoScroll = setInterval(() => {
+            currentScroll += 0.6;
+
+            normalizeScroll();
+          }, 22);
+        };
+
+        const stopAutoScroll = () => {
+          clearInterval(autoScroll);
+        };
+
+        startAutoScroll();
+
+        testimonialBox.addEventListener("mouseenter", () => {
+          currentScroll = testimonialBox.scrollTop;
+          stopAutoScroll();
+        });
+
+        testimonialBox.addEventListener("scroll", () => {
+          currentScroll = testimonialBox.scrollTop;
+          normalizeScroll();
+        });
+
+        testimonialBox.addEventListener("mouseleave", () => {
+          currentScroll = testimonialBox.scrollTop;
+          startAutoScroll();
         });
       }
 
