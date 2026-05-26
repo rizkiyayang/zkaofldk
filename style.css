@@ -1843,12 +1843,21 @@ a {
   }
 
   .affiliate-card {
-    min-width: 76vw;
+    width: 148px;
+    min-width: 148px;
+    max-width: 148px;
+  }
+
+  .affiliate-image-wrap {
+    height: 190px;
   }
 }
 
 .affiliate-card {
-  min-width: 220px;
+  width: 185px;
+  min-width: 185px;
+  max-width: 185px;
+
   flex-shrink: 0;
 
   scroll-snap-align: start;
@@ -1885,7 +1894,7 @@ a {
 
 .affiliate-image-wrap {
   width: 100%;
-  height: 210px;
+  height: 250px;
   overflow: hidden;
 }
 
