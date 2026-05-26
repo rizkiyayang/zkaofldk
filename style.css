@@ -1135,7 +1135,7 @@ a {
   .links a.choice-card {
     grid-template-columns: 42px 1fr;
     gap: 10px;
-    min-height: 82px;
+    min-height: 54px;
   }
   .choice-icon {
     width: 42px;
