@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>COKELAT MANIS</title>
     <link rel="icon" type="image/x-icon" href="img/icon.jpg" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css"
+    />
 
     <style>
       :root {
@@ -94,8 +98,10 @@
         height: 88px;
         border-radius: 50%;
         object-fit: cover;
-        border: 4px solid rgba(255, 255, 255, 0.92);
-        box-shadow: 0 10px 24px rgba(255, 95, 162, 0.2);
+        border: 4px solid rgba(255, 95, 162, 0.34);
+        box-shadow:
+          0 10px 24px rgba(255, 95, 162, 0.24),
+          0 0 18px rgba(255, 95, 162, 0.16);
         margin: 2px 0 0;
         flex-shrink: 0;
       }
@@ -192,9 +198,9 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 6px;
+        gap: 8px;
 
-        min-height: 86px;
+        min-height: 96px;
 
         background: linear-gradient(135deg, #ff4fa3, #ff8fc2);
 
@@ -210,14 +216,44 @@
           supportBreath 2.2s ease-in-out infinite,
           supportFloat 2.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
       }
-      .links a.support:hover {
-        animation-play-state: paused;
+      .links a.support::after {
+        content: "";
 
-        transform: translateY(-6px) scale(1.04);
+        position: absolute;
+        inset: 0;
+
+        background: linear-gradient(
+          120deg,
+          transparent 20%,
+          rgba(255, 255, 255, 0.42) 50%,
+          transparent 80%
+        );
+
+        transform: translateX(-120%);
+
+        transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+
+        pointer-events: none;
+      }
+      .links a.support:hover {
+        animation: supportHoverMove 0.9s cubic-bezier(0.22, 1, 0.36, 1) infinite
+          alternate;
 
         box-shadow:
-          0 24px 46px rgba(255, 95, 162, 0.54),
-          0 0 36px rgba(255, 95, 162, 0.34);
+          0 28px 54px rgba(255, 95, 162, 0.58),
+          0 0 40px rgba(255, 95, 162, 0.36);
+      }
+      .links a.support:hover::after {
+        transform: translateX(120%);
+      }
+
+      .links a.support:hover .choice-title {
+        transform: translateY(-1px) scale(1.02);
+      }
+
+      .links a.support:hover .choice-hint {
+        transform: translateY(1px);
+        opacity: 0.96;
       }
       @keyframes supportBreath {
         0%,
@@ -241,6 +277,16 @@
 
         50% {
           transform: translateY(-4px) scale(1.02);
+        }
+      }
+
+      @keyframes supportHoverMove {
+        0% {
+          transform: translateY(-6px) scale(1.035) rotate(-0.6deg);
+        }
+
+        100% {
+          transform: translateY(-10px) scale(1.05) rotate(0.6deg);
         }
       }
       /* Page Load Animation */
@@ -454,11 +500,12 @@
 
       .choice-title {
         display: block;
-        font-size: 18px;
+        font-size: 19px;
         font-weight: 800;
         line-height: 1;
         text-align: center;
         color: #fff;
+        transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
         text-shadow: 0 2px 12px rgba(255, 255, 255, 0.28);
       }
 
@@ -468,6 +515,9 @@
         font-weight: 600;
         line-height: 1.4;
         color: rgba(255, 255, 255, 0.88);
+        transition:
+          transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+          opacity 0.28s ease;
         text-shadow: 0 2px 10px rgba(255, 255, 255, 0.18);
       }
 
@@ -497,6 +547,7 @@
         opacity: 0;
         transform: translateY(14px);
         animation: mergedReveal 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards !important;
+        margin: 12px 0;
       }
 
       .merged-links li:nth-child(1) {
@@ -516,45 +567,164 @@
       }
 
       .merged-links a {
-        padding: 14px 16px;
-        font-size: 14px;
-        border-radius: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+
+        padding: 15px 16px;
+        border-radius: 26px;
 
         background: linear-gradient(
           180deg,
-          rgba(255, 250, 253, 1),
-          rgba(255, 238, 246, 1)
+          rgba(255, 255, 255, 0.96),
+          rgba(255, 242, 248, 0.95)
         );
 
-        border: 1px solid rgba(255, 95, 162, 0.22);
+        border: 1px solid rgba(255, 95, 162, 0.14);
 
         box-shadow:
-          0 10px 22px rgba(255, 95, 162, 0.12),
-          0 2px 0 rgba(255, 255, 255, 0.7) inset;
+          0 10px 24px rgba(255, 95, 162, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.8);
+
+        position: relative;
+        overflow: hidden;
 
         transition:
           transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
           box-shadow 0.28s ease,
           border-color 0.28s ease;
       }
-      .merged-links a:hover {
-        transform: translateY(-4px) scale(1.02);
 
-        border-color: rgba(255, 95, 162, 0.38);
+      .merged-links a::after {
+        content: "";
+
+        position: absolute;
+        inset: 0;
+
+        background: linear-gradient(
+          120deg,
+          transparent 20%,
+          rgba(255, 255, 255, 0.42) 50%,
+          transparent 80%
+        );
+
+        transform: translateX(-120%);
+
+        transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+
+        pointer-events: none;
+      }
+
+      .merged-links a:hover {
+        transform: translateY(-4px) scale(1.015);
+
+        border-color: rgba(255, 95, 162, 0.28);
 
         box-shadow:
-          0 18px 34px rgba(255, 95, 162, 0.2),
-          0 0 18px rgba(255, 95, 162, 0.12);
+          0 18px 38px rgba(255, 95, 162, 0.18),
+          0 0 18px rgba(255, 95, 162, 0.1);
+
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 1),
+          rgba(255, 240, 247, 0.98)
+        );
       }
+
+      .merged-links a:hover::after {
+        transform: translateX(120%);
+      }
+
+      .modern-left {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        min-width: 0;
+      }
+      .shop-card .modern-left {
+        flex: 1;
+      }
+
+      .modern-icon {
+        width: 54px;
+        height: 54px;
+
+        border-radius: 18px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.92),
+          rgba(255, 240, 247, 0.92)
+        );
+
+        border: 1px solid rgba(255, 95, 162, 0.12);
+
+        box-shadow:
+          0 8px 20px rgba(255, 95, 162, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.9);
+
+        flex-shrink: 0;
+      }
+
+      .modern-icon i {
+        font-size: 24px;
+        color: #ff5fa2;
+      }
+
+      .modern-content {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+      }
+
       .merged-links .text {
         font-weight: 700;
-        font-size: 15px;
-        color: #5a2a3c;
+        font-size: 16px;
+        color: #4a2233;
+        line-height: 1.1;
       }
+
       .merged-links .sub {
-        font-size: 12px;
-        opacity: 0.62;
+        margin-top: 4px;
+        font-size: 14px;
+        color: #8a4b64;
+        opacity: 0.9;
       }
+
+      .modern-arrow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 38px;
+        height: 38px;
+
+        border-radius: 999px;
+
+        background: rgba(255, 95, 162, 0.08);
+
+        flex-shrink: 0;
+
+        transition:
+          transform 0.25s ease,
+          background 0.25s ease;
+      }
+
+      .modern-arrow i {
+        font-size: 24px;
+        color: #ff7ab6;
+      }
+
+      .merged-links a:hover .modern-arrow {
+        transform: translateX(4px);
+        background: rgba(255, 95, 162, 0.14);
+      }
+
       .shop-card-image::after {
         content: "";
         position: absolute;
@@ -565,9 +735,6 @@
           rgba(0, 0, 0, 0.18),
           transparent 45%
         );
-      }
-      .merged-links li {
-        margin: 10px 0;
       }
       @keyframes mergedReveal {
         0% {
@@ -586,8 +753,9 @@
         align-items: center;
         justify-content: center;
         padding: 18px;
-        background: rgba(255, 228, 241, 0.28);
-        /* backdrop-filter removed to prevent popup rendering bugs */
+        background: rgba(255, 228, 241, 0.38);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
         opacity: 0;
         pointer-events: none;
         transition: opacity 0.25s ease;
@@ -664,34 +832,70 @@
         color: #8a4b64;
       }
       .donate-option {
+        position: relative;
+
         display: flex;
         align-items: center;
         gap: 14px;
+
         min-height: 92px;
-        padding: 14px 16px;
-        border-radius: 20px;
+        padding: 16px 18px;
+
+        border-radius: 24px;
         text-decoration: none;
+
         background: linear-gradient(
           180deg,
           rgba(255, 255, 255, 0.98),
-          rgba(255, 248, 252, 0.95)
+          rgba(255, 244, 249, 0.96)
         );
+
         border: 1px solid rgba(255, 95, 162, 0.16);
+
         color: #5a2a3c;
+
         box-shadow:
-          0 10px 22px rgba(255, 95, 162, 0.12),
-          inset 0 1px 0 rgba(255, 255, 255, 0.9);
+          0 12px 28px rgba(255, 95, 162, 0.12),
+          inset 0 1px 0 rgba(255, 255, 255, 0.95);
+
         transition:
-          transform 0.22s cubic-bezier(0.22, 1.2, 0.36, 1),
-          box-shadow 0.22s ease,
-          border-color 0.22s ease;
+          transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+          box-shadow 0.28s ease,
+          border-color 0.28s ease,
+          background 0.28s ease;
+
+        overflow: hidden;
+      }
+
+      .donate-option::after {
+        content: "";
+
+        position: absolute;
+        inset: 0;
+
+        background: linear-gradient(
+          120deg,
+          transparent 20%,
+          rgba(255, 255, 255, 0.38) 50%,
+          transparent 80%
+        );
+
+        transform: translateX(-120%);
+
+        transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+
+        pointer-events: none;
       }
 
       .donate-option img {
-        width: 58px;
-        height: 58px;
+        width: 62px;
+        height: 62px;
         object-fit: contain;
         flex-shrink: 0;
+
+        filter: drop-shadow(0 6px 12px rgba(255, 95, 162, 0.12));
+
+        transition: transform 0.28s ease;
       }
 
       .donate-option div {
@@ -700,24 +904,42 @@
 
       .donate-option strong {
         display: block;
-        font-size: 16px;
-        line-height: 1.2;
+        font-size: 18px;
+        line-height: 1.15;
+        font-weight: 800;
       }
 
       .donate-option span {
         display: block;
-        margin-top: 4px;
-        font-size: 12px;
+        margin-top: 5px;
+        font-size: 13px;
         line-height: 1.45;
         color: #8a4b64;
       }
 
       .donate-option:hover {
-        transform: translateY(-2px) scale(1.01);
-        border-color: rgba(255, 95, 162, 0.24);
+        transform: translateY(-4px) scale(1.015);
+
+        border-color: rgba(255, 95, 162, 0.28);
+
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 1),
+          rgba(255, 240, 247, 0.98)
+        );
+
         box-shadow:
-          0 16px 30px rgba(255, 95, 162, 0.18),
-          inset 0 1px 0 rgba(255, 255, 255, 0.92);
+          0 20px 38px rgba(255, 95, 162, 0.18),
+          0 0 18px rgba(255, 95, 162, 0.12),
+          inset 0 1px 0 rgba(255, 255, 255, 0.98);
+      }
+
+      .donate-option:hover::after {
+        transform: translateX(120%);
+      }
+
+      .donate-option:hover img {
+        transform: scale(1.06);
       }
       .donate-close {
         margin-top: 16px;
@@ -1248,28 +1470,60 @@
       }
       .shop-card {
         display: block;
+        position: relative;
+        flex-direction: column !important;
+
         overflow: hidden;
         padding: 0 !important;
-        border-radius: 24px !important;
-        text-align: left !important;
-        background: linear-gradient(
-          180deg,
-          rgba(255, 248, 252, 0.98),
-          rgba(255, 240, 247, 0.94)
-        ) !important;
+
+        border-radius: 26px !important;
+
+        background: rgba(255, 255, 255, 0.96) !important;
+        border: 1px solid rgba(255, 95, 162, 0.14);
+
+        box-shadow:
+          0 8px 20px rgba(255, 95, 162, 0.08),
+          inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        transition:
+          transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+          box-shadow 0.28s ease,
+          border-color 0.28s ease;
       }
 
+      .shop-card::after {
+        content: "";
+
+        position: absolute;
+        inset: 0;
+
+        background: linear-gradient(
+          120deg,
+          transparent 20%,
+          rgba(255, 255, 255, 0.3) 50%,
+          transparent 80%
+        );
+
+        transform: translateX(-120%);
+
+        transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+
+        pointer-events: none;
+
+        z-index: 3;
+      }
       .shop-card-image {
         position: relative;
         width: 100%;
-        aspect-ratio: 16 / 9;
+        height: 270px;
         overflow: hidden;
+        display: block;
       }
 
       .shop-card-image img {
         width: 100%;
         height: 100%;
         object-fit: cover;
+        object-position: center top;
         display: block;
         transition: transform 0.35s ease;
       }
@@ -1279,9 +1533,64 @@
       }
 
       .shop-card-content {
-        padding: 16px 18px 18px;
+        width: 100%;
+        padding: 1px 18px 16px;
+
+        display: flex;
         align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+
+        box-sizing: border-box;
+      }
+      .shop-card:hover {
+        transform: translateY(-4px) scale(1.015);
+
+        border-color: rgba(255, 95, 162, 0.28);
+
+        box-shadow:
+          0 16px 30px rgba(255, 95, 162, 0.14),
+          0 0 18px rgba(255, 95, 162, 0.1);
+      }
+
+      .shop-card:hover::after {
+        transform: translateX(120%);
+      }
+      .shop-card .modern-left {
+        align-items: center;
+      }
+
+      .shop-card .modern-content {
+        justify-content: center;
+      }
+      .shop-card-info {
+        width: 100%;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
         text-align: center;
+      }
+
+      .shop-card .text {
+        display: block;
+
+        font-size: 16px;
+        font-weight: 800;
+        line-height: 1.1;
+
+        color: #4a2233;
+      }
+
+      .shop-card .sub {
+        display: block;
+
+        margin-top: 4px;
+
+        font-size: 14px;
+        color: #8a4b64;
       }
 
       .live-pill {
@@ -1386,10 +1695,22 @@
 
       <ul class="links secondary-links merged-links">
         <li>
-          <a href="https://www.lita.game/user/27947254" class="iconed">
-            <div class="text">
-              Mabar lewat Lita
-              <span class="sub">buat mabar diluar live.</span>
+          <a href="https://www.lita.game/user/27947254">
+            <div class="modern-left">
+              <div class="modern-icon">
+                <i class="ri-gamepad-line"></i>
+              </div>
+
+              <div class="modern-content">
+                <div class="text">
+                  Mabar lewat Lita
+                  <span class="sub">buat mabar diluar live.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="modern-arrow">
+              <i class="ri-arrow-right-s-line"></i>
             </div>
           </a>
         </li>
@@ -1398,29 +1719,63 @@
             <div class="shop-card-image">
               <img src="img/setup.jpeg" alt="Spek PC Aku" />
             </div>
-
             <div class="shop-card-content">
-              <span class="text">Spek PC Aku</span>
-              <span class="sub">PC, alat, dan rekomendasi.</span>
+              <div class="modern-left">
+                <div class="modern-icon">
+                  <i class="ri-computer-line"></i>
+                </div>
+
+                <div class="modern-content">
+                  <span class="text">Spek PC Aku</span>
+                  <span class="sub">PC, alat, dan rekomendasi.</span>
+                </div>
+              </div>
+
+              <div class="modern-arrow">
+                <i class="ri-arrow-right-s-line"></i>
+              </div>
             </div>
           </a>
         </li>
         <li>
-          <a href="/jajan/" class="iconed">
-            <div class="text">
-              Jajanan
-              <span class="sub">rekomendasiin jajanan enak dong.</span>
+          <a href="/jajan/">
+            <div class="modern-left">
+              <div class="modern-icon">
+                <i class="ri-cake-3-line"></i>
+              </div>
+
+              <div class="modern-content">
+                <div class="text">
+                  Jajanan
+                  <span class="sub">rekomendasiin jajanan enak dong.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="modern-arrow">
+              <i class="ri-arrow-right-s-line"></i>
             </div>
           </a>
         </li>
         <li>
           <a
             href="https://wa.me/6289519133146?text=Halo%20kak,%20kami%20tertarik%20untuk%20kerja%20sama%20endorsement."
-            class="iconed"
           >
-            <div class="text">
-              Kerja Sama & Endorsement
-              <span class="sub">Untuk brand atau business inquiries.</span>
+            <div class="modern-left">
+              <div class="modern-icon">
+                <i class="ri-hand-heart-line"></i>
+              </div>
+
+              <div class="modern-content">
+                <div class="text">
+                  Kerja Sama & Endorsement
+                  <span class="sub">Untuk brand atau business inquiries.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="modern-arrow">
+              <i class="ri-arrow-right-s-line"></i>
             </div>
           </a>
         </li>
