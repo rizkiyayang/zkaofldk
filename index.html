@@ -7,6 +7,9 @@
     <link rel="icon" type="image/x-icon" href="img/icon.jpg" />
 
     <style>
+      :root {
+        --ease-apple: cubic-bezier(0.22, 1, 0.36, 1);
+      }
       body {
         font-family: "Poppins", Arial, sans-serif;
         text-align: center;
@@ -17,11 +20,13 @@
         min-height: 100vh;
         display: flex;
         justify-content: center;
-        align-items: center;
+        align-items: flex-start;
       }
       h1 {
-        font-size: 30px;
-        margin-bottom: 6px;
+        font-size: 24px;
+        line-height: 1;
+        letter-spacing: -0.5px;
+        margin: 0;
         font-weight: 700;
       }
       h2 {
@@ -31,6 +36,7 @@
         font-weight: 400;
         color: #8a4b64;
       }
+
       .links {
         list-style: none;
         padding: 0;
@@ -82,6 +88,76 @@
         max-width: 480px;
         animation: fadeInUp 1.1s cubic-bezier(0.22, 1.1, 0.36, 1) forwards;
       }
+
+      .profile-avatar {
+        width: 88px;
+        height: 88px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid rgba(255, 255, 255, 0.92);
+        box-shadow: 0 10px 24px rgba(255, 95, 162, 0.2);
+        margin: 2px 0 0;
+        flex-shrink: 0;
+      }
+
+      .username {
+        display: block;
+        font-size: 13px;
+        font-weight: 500;
+        color: #b86b8f;
+        margin: 1px 0 0;
+        letter-spacing: 0.1px;
+      }
+
+      .profile-bio {
+        font-size: 13px;
+        line-height: 1.35;
+        color: #8a4b64;
+      }
+
+      .profile-bio-full {
+        margin: -2px 0 14px;
+        text-align: center;
+      }
+      .intro {
+        max-width: 360px;
+        margin: 0 auto 22px;
+        font-size: 13px;
+        line-height: 1.6;
+        color: #8a4b64;
+      }
+      .price {
+        width: min(100%, 360px);
+        margin: 0 auto 18px;
+        display: grid;
+        gap: 8px;
+      }
+      .price-row {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 14px;
+        padding: 10px 2px;
+        border-bottom: 1px solid rgba(90, 42, 60, 0.12);
+        color: #5a2a3c;
+      }
+      .price-row:last-of-type {
+        border-bottom: 0;
+      }
+      .price-row strong {
+        font-size: 18px;
+      }
+      .price-row span {
+        font-size: 13px;
+        color: #8a4b64;
+        text-align: right;
+      }
+      .slot-note {
+        margin: 8px 0 0;
+        color: #8a4b64;
+        font-size: 12px;
+      }
+
       @keyframes pulseGlow {
         0% {
           transform: scale(1);
@@ -110,16 +186,63 @@
       }
 
       .links a.support {
-        background: linear-gradient(135deg, #ff5fa2, #ff9fc7);
-        color: #ffffff;
-        animation: pulseGlow 2.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
-      }
+        position: relative;
 
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+
+        min-height: 86px;
+
+        background: linear-gradient(135deg, #ff4fa3, #ff8fc2);
+
+        color: #fff;
+
+        box-shadow:
+          0 10px 24px rgba(255, 95, 162, 0.34),
+          0 0 22px rgba(255, 95, 162, 0.18);
+
+        overflow: hidden;
+
+        animation:
+          supportBreath 2.2s ease-in-out infinite,
+          supportFloat 2.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+      }
       .links a.support:hover {
         animation-play-state: paused;
-        transform: scale(1.06);
-      }
 
+        transform: translateY(-6px) scale(1.04);
+
+        box-shadow:
+          0 24px 46px rgba(255, 95, 162, 0.54),
+          0 0 36px rgba(255, 95, 162, 0.34);
+      }
+      @keyframes supportBreath {
+        0%,
+        100% {
+          box-shadow:
+            0 10px 24px rgba(255, 95, 162, 0.34),
+            0 0 18px rgba(255, 95, 162, 0.18);
+        }
+
+        50% {
+          box-shadow:
+            0 24px 46px rgba(255, 95, 162, 0.62),
+            0 0 46px rgba(255, 95, 162, 0.42);
+        }
+      }
+      @keyframes supportFloat {
+        0%,
+        100% {
+          transform: translateY(0) scale(1);
+        }
+
+        50% {
+          transform: translateY(-4px) scale(1.02);
+        }
+      }
       /* Page Load Animation */
       @keyframes fadeInUp {
         0% {
@@ -163,24 +286,50 @@
       }
 
       .header-glass {
-        padding: 8px 0 18px;
-        margin-bottom: 6px;
-        position: relative;
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 0 14px;
+        margin-bottom: 2px;
+        text-align: left;
       }
 
       .header-glass::before {
         content: none;
       }
 
+      .profile-right {
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .header-top {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .header-icons {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 2px;
+      }
+
       .header-icons a {
         display: inline-flex;
-        padding: 12px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.8);
-        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-        transition:
-          transform 0.25s cubic-bezier(0.22, 1.2, 0.36, 1),
-          box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+        align-items: center;
+        justify-content: center;
+        width: 22px;
+        height: 22px;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        padding: 0;
+        transition: transform 0.25s cubic-bezier(0.22, 1.2, 0.36, 1);
       }
 
       .header-icons a:hover {
@@ -199,14 +348,17 @@
       }
 
       .header-icons img {
-        width: 22px;
-        height: 22px;
+        width: 20px;
+        height: 20px;
         filter: invert(35%) sepia(80%) saturate(600%) hue-rotate(300deg);
         transition: transform 0.3s cubic-bezier(0.22, 1.2, 0.36, 1);
       }
 
       .header-title {
-        margin-top: 10px;
+        margin-top: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
         animation: fadeInUp 1s cubic-bezier(0.22, 1.2, 0.36, 1) forwards;
       }
 
@@ -259,14 +411,13 @@
       }
 
       .links a.choice-card {
-        display: grid;
-        grid-template-columns: 48px 1fr;
+        display: flex;
         align-items: center;
-        gap: 12px;
-        min-height: 86px;
-        padding: 16px;
-        border-radius: 22px;
-        text-align: left;
+        justify-content: center;
+        min-height: 54px;
+        padding: 10px 18px;
+        border-radius: 20px;
+        text-align: center;
       }
 
       .choice-icon {
@@ -305,16 +456,19 @@
         display: block;
         font-size: 18px;
         font-weight: 800;
-        line-height: 1.25;
+        line-height: 1;
+        text-align: center;
+        color: #fff;
+        text-shadow: 0 2px 12px rgba(255, 255, 255, 0.28);
       }
 
       .choice-hint {
         display: block;
-        margin-top: 5px;
         font-size: 12px;
-        font-weight: 500;
+        font-weight: 600;
         line-height: 1.4;
-        opacity: 0.82;
+        color: rgba(255, 255, 255, 0.88);
+        text-shadow: 0 2px 10px rgba(255, 255, 255, 0.18);
       }
 
       .links a.mabar-main {
@@ -391,6 +545,172 @@
           transform: translateY(0) scale(1);
         }
       }
+      .donate-modal {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 18px;
+        background: rgba(255, 228, 241, 0.28);
+        /* backdrop-filter removed to prevent popup rendering bugs */
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s ease;
+        z-index: 99999;
+      }
+      .donate-modal.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .donate-sheet {
+        width: 100%;
+
+        position: relative;
+        overflow: visible;
+        max-width: 350px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.96),
+          rgba(255, 244, 249, 0.96)
+        );
+        border-radius: 22px;
+        padding: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.72);
+        box-shadow:
+          0 18px 44px rgba(255, 95, 162, 0.18),
+          inset 0 1px 0 rgba(255, 255, 255, 0.82);
+        transform: translateY(18px) scale(0.94);
+        transition:
+          transform 0.34s cubic-bezier(0.22, 1.2, 0.36, 1),
+          opacity 0.25s ease;
+      }
+      .donate-sheet::before {
+        content: "";
+        position: absolute;
+        inset: -80px;
+        background: radial-gradient(
+          circle,
+          rgba(255, 145, 190, 0.16),
+          transparent 65%
+        );
+        z-index: 0;
+      }
+
+      .donate-sheet > * {
+        position: relative;
+        z-index: 1;
+      }
+      .donate-options {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .donate-modal.active .donate-sheet {
+        transform: translateY(0) scale(1);
+      }
+      .donate-head {
+        text-align: center;
+        margin-bottom: 18px;
+      }
+
+      .donate-head h3 {
+        margin: 0;
+        font-size: 24px;
+        line-height: 1.1;
+        color: #5a2a3c;
+      }
+
+      .donate-head p {
+        margin: 8px 0 0;
+        font-size: 13px;
+        line-height: 1.45;
+        color: #8a4b64;
+      }
+      .donate-option {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        min-height: 92px;
+        padding: 14px 16px;
+        border-radius: 20px;
+        text-decoration: none;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.98),
+          rgba(255, 248, 252, 0.95)
+        );
+        border: 1px solid rgba(255, 95, 162, 0.16);
+        color: #5a2a3c;
+        box-shadow:
+          0 10px 22px rgba(255, 95, 162, 0.12),
+          inset 0 1px 0 rgba(255, 255, 255, 0.9);
+        transition:
+          transform 0.22s cubic-bezier(0.22, 1.2, 0.36, 1),
+          box-shadow 0.22s ease,
+          border-color 0.22s ease;
+      }
+
+      .donate-option img {
+        width: 58px;
+        height: 58px;
+        object-fit: contain;
+        flex-shrink: 0;
+      }
+
+      .donate-option div {
+        text-align: left;
+      }
+
+      .donate-option strong {
+        display: block;
+        font-size: 16px;
+        line-height: 1.2;
+      }
+
+      .donate-option span {
+        display: block;
+        margin-top: 4px;
+        font-size: 12px;
+        line-height: 1.45;
+        color: #8a4b64;
+      }
+
+      .donate-option:hover {
+        transform: translateY(-2px) scale(1.01);
+        border-color: rgba(255, 95, 162, 0.24);
+        box-shadow:
+          0 16px 30px rgba(255, 95, 162, 0.18),
+          inset 0 1px 0 rgba(255, 255, 255, 0.92);
+      }
+      .donate-close {
+        margin-top: 16px;
+        width: 100%;
+        border: 1px solid rgba(255, 95, 162, 0.12);
+        border-radius: 18px;
+        padding: 13px;
+        background: rgba(255, 255, 255, 0.72);
+        backdrop-filter: blur(10px);
+        color: #7a3d58;
+        font-size: 14px;
+        font-weight: 700;
+        box-shadow:
+          0 8px 18px rgba(255, 95, 162, 0.08),
+          inset 0 1px 0 rgba(255, 255, 255, 0.7);
+        cursor: pointer;
+        transition:
+          transform 0.18s ease,
+          box-shadow 0.2s ease,
+          background 0.2s ease;
+      }
+
+      .donate-close:hover {
+        background: rgba(255, 255, 255, 0.9);
+        transform: translateY(-1px);
+        box-shadow: 0 12px 24px rgba(255, 95, 162, 0.12);
+      }
       @media (max-width: 380px) {
         body {
           padding: 18px;
@@ -408,6 +728,560 @@
         .choice-title {
           font-size: 17px;
         }
+        .header-glass {
+          gap: 12px;
+        }
+
+        .profile-avatar {
+          width: 76px;
+          height: 76px;
+        }
+
+        h1 {
+          font-size: 24px;
+        }
+      }
+      .roles {
+        margin-top: 18px;
+        padding: 12px;
+        background: #fff7fb;
+        border-radius: 14px;
+        font-size: 14px;
+        box-shadow: 0 4px 10px rgba(255, 182, 213, 0.2);
+      }
+
+      .role-icons {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        margin: 10px 0 6px;
+      }
+
+      .role-icons img {
+        width: 32px;
+        height: 32px;
+        object-fit: contain;
+        background: linear-gradient(135deg, #ff7ab6, #ff4fa3);
+        padding: 6px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(255, 95, 162, 0.35);
+        filter: brightness(1.1);
+        transition:
+          transform 0.25s var(--ease-apple),
+          box-shadow 0.25s var(--ease-apple);
+        cursor: pointer;
+      }
+
+      .role-icons img:hover {
+        transform: translateY(-2px) scale(1.08);
+        box-shadow: 0 8px 18px rgba(255, 95, 162, 0.5);
+      }
+
+      .role-icons img.active {
+        outline: 2px solid #ff4fa3;
+        transform: scale(1.1);
+      }
+
+      .agent-card {
+        opacity: 1;
+        transform: scale(1);
+        transition:
+          transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+          opacity 0.25s ease;
+        will-change: transform;
+      }
+
+      .agent-card.hide {
+        display: none;
+      }
+
+      .agent-card.show {
+        animation: cardIn 0.4s var(--ease-apple);
+      }
+
+      .agent-card.exit {
+        opacity: 0;
+        transform: scale(0.85);
+        transition:
+          opacity 0.25s var(--ease-apple),
+          transform 0.25s var(--ease-apple);
+      }
+
+      .agent-card.enter {
+        opacity: 0;
+        transform: scale(0.95) translateY(8px);
+        transition:
+          opacity 0.25s ease,
+          transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      @keyframes cardIn {
+        0% {
+          opacity: 0;
+          transform: translateY(14px) scale(0.95);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      .agent-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+        margin-top: 8px;
+      }
+
+      .agent-grid img {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        object-fit: cover;
+        transition: transform 0.2s ease;
+      }
+
+      .agent-grid img:hover {
+        transform: scale(1.15);
+      }
+
+      .agent-showcase {
+        margin-top: 30px;
+      }
+
+      .agent-card {
+        position: relative;
+        border-radius: 14px;
+        overflow: hidden;
+        background: #ffffff;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+        text-decoration: none;
+        color: inherit;
+        cursor: pointer;
+        transition:
+          transform 0.25s var(--ease-apple),
+          box-shadow 0.25s var(--ease-apple);
+      }
+
+      .agent-card img {
+        width: 100%;
+        height: 160px;
+        object-fit: cover;
+        background: #1c1f2b;
+        transition: transform 0.35s var(--ease-apple);
+      }
+      .agent-card:hover img {
+        transform: scale(1.06);
+        filter: brightness(1.05);
+      }
+
+      .agent-name {
+        position: static;
+        background: none;
+        color: #222;
+        font-weight: 700;
+        font-size: 13px;
+        padding: 6px 8px;
+        text-align: left;
+      }
+
+      .agent-big-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+
+      @media (min-width: 480px) {
+        .agent-big-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+
+      .map-showcase {
+        margin-top: 32px;
+      }
+
+      .map-big-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      @media (min-width: 480px) {
+        .map-big-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      .map-card {
+        border-radius: 14px;
+        overflow: hidden;
+        background: #ffffff;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+        display: flex;
+        flex-direction: column;
+        transition:
+          transform 0.25s var(--ease-apple),
+          box-shadow 0.25s var(--ease-apple);
+      }
+      .map-card:hover {
+        transform: translateY(-6px) scale(1.02);
+        box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+      }
+
+      .map-card img {
+        width: 100%;
+        aspect-ratio: 16/9;
+        object-fit: contain;
+        background: #eae6dd;
+        transition: transform 0.35s var(--ease-apple);
+      }
+
+      .map-name {
+        font-size: 13px;
+        font-weight: 700;
+        padding: 8px;
+        text-align: left;
+        color: #222;
+      }
+      .map-desc {
+        font-size: 10px;
+        color: #666;
+        padding: 0 8px 10px;
+        text-align: left;
+        line-height: 1.3;
+      }
+      /* Removed duplicate .section-title block */
+
+      .role-spacing {
+        margin-bottom: 10px;
+      }
+
+      .team-showcase {
+        margin-top: 24px;
+      }
+
+      .agent-showcase,
+      .map-showcase,
+      .weapon-showcase,
+      .team-showcase {
+        background: transparent;
+        padding: 0;
+        border-radius: 0;
+      }
+
+      .agent-showcase,
+      .map-showcase,
+      .weapon-showcase,
+      .team-showcase {
+        margin-top: 28px;
+      }
+
+      .weapon-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      @media (min-width: 480px) {
+        .weapon-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      .team-card {
+        border-radius: 18px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 10px;
+        padding: 18px 16px;
+
+        transition:
+          transform 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+          box-shadow 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+
+        transform: translateZ(0);
+        will-change: transform;
+
+        text-decoration: none;
+        color: inherit;
+        cursor: pointer;
+      }
+      .team-card img {
+        width: 84px;
+        height: 84px;
+        object-fit: contain;
+        border-radius: 16px;
+        background: #2b0d2b;
+        padding: 12px;
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+      }
+
+      .team-name {
+        font-size: 16px;
+        font-weight: 700;
+        color: #2b1a24;
+        letter-spacing: 0.4px;
+      }
+      .team-sub {
+        font-size: 12px;
+        color: #a06b85;
+        letter-spacing: 0.3px;
+        font-weight: 500;
+      }
+
+      .team-card:hover {
+        transform: translateY(-6px) scale(1.025);
+      }
+      .team-card img {
+        transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      .team-card:hover img {
+        transform: scale(1.06);
+      }
+      .agent-card:hover {
+        transform: translateY(-6px) scale(1.04);
+        box-shadow: 0 12px 26px rgba(0, 0, 0, 0.15);
+      }
+      .weapon-card {
+        background: #ffffff;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+        display: flex;
+        flex-direction: column;
+        border-radius: 12px;
+        transition:
+          transform 0.25s var(--ease-apple),
+          box-shadow 0.25s var(--ease-apple);
+      }
+      .weapon-card:hover {
+        transform: translateY(-6px) scale(1.04);
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.18);
+      }
+      .weapon-card img {
+        width: 100%;
+        aspect-ratio: 16/9;
+        object-fit: contain;
+        background: #eae6dd;
+        transition: transform 0.35s var(--ease-apple);
+      }
+      .weapon-name {
+        font-size: 12px;
+        font-weight: 700;
+        padding: 6px 6px 2px;
+        color: #222;
+        text-align: left;
+      }
+      .weapon-desc {
+        font-size: 10px;
+        color: #666;
+        padding: 0 6px 8px;
+        text-align: left;
+        line-height: 1.3;
+      }
+
+      .testimonial {
+        margin-top: 24px;
+        padding: 20px 14px 14px;
+        background: #fff0f6;
+        border-radius: 16px;
+        font-size: 14px;
+        box-shadow: 0 4px 12px rgba(255, 182, 213, 0.25);
+        overflow: hidden;
+        position: relative;
+        min-height: 100px;
+      }
+      .testimonial p {
+        opacity: 0;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        animation: slideTesti 12s infinite;
+      }
+
+      .testimonial p:nth-child(2) {
+        animation-delay: 0s;
+      }
+      .testimonial p:nth-child(3) {
+        animation-delay: 3s;
+      }
+      .testimonial p:nth-child(4) {
+        animation-delay: 6s;
+      }
+      .testimonial p:nth-child(5) {
+        animation-delay: 9s;
+      }
+
+      @keyframes slideTesti {
+        0% {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        5% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        25% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        30% {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+
+      .testimonial p:first-child {
+        position: static;
+        transform: none;
+        opacity: 1;
+        animation: none;
+        margin-bottom: 10px;
+      }
+      .footer {
+        margin-top: 36px;
+        font-size: 14px;
+        color: #8a4b64;
+      }
+      .footer a {
+        color: #ff5fa2;
+        text-decoration: none;
+        margin: 0 6px;
+        font-weight: 600;
+      }
+      .container {
+        width: 100%;
+        max-width: 480px;
+      }
+      .section-title {
+        font-weight: 700;
+        margin-bottom: 14px;
+        font-size: 17px;
+        text-align: center;
+        letter-spacing: 0.4px;
+        color: #5a2a3c;
+        position: relative;
+      }
+
+      .section-title::after {
+        content: "";
+        display: block;
+        width: 40px;
+        height: 3px;
+        background: linear-gradient(90deg, #ff7ab6, #ff4fa3);
+        margin: 6px auto 0;
+        border-radius: 999px;
+      }
+      .map-card img,
+      .weapon-card img {
+        transition: transform 0.35s var(--ease-apple);
+      }
+
+      .map-card:hover img,
+      .weapon-card:hover img {
+        transform: scale(1.05);
+      }
+      .weapon-card:hover img {
+        transform: scale(1.05);
+      }
+      .agent-card:hover,
+      .weapon-card:hover {
+        box-shadow:
+          0 14px 28px rgba(0, 0, 0, 0.18),
+          0 0 12px rgba(255, 95, 162, 0.25);
+      }
+
+      .agent-card:active,
+      .weapon-card:active,
+      .map-card:active {
+        transform: scale(0.97);
+      }
+      .links a.support {
+        letter-spacing: 0.5px;
+      }
+      .ribbon {
+        font-size: 48px;
+        margin-bottom: 8px;
+      }
+      .shop-card {
+        display: block;
+        overflow: hidden;
+        padding: 0 !important;
+        border-radius: 24px !important;
+        text-align: left !important;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 248, 252, 0.98),
+          rgba(255, 240, 247, 0.94)
+        ) !important;
+      }
+
+      .shop-card-image {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        overflow: hidden;
+      }
+
+      .shop-card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.35s ease;
+      }
+
+      .shop-card:hover .shop-card-image img {
+        transform: scale(1.05);
+      }
+
+      .shop-card-content {
+        padding: 16px 18px 18px;
+        align-items: center;
+        text-align: center;
+      }
+
+      .live-pill {
+        position: absolute;
+        top: 10px;
+        right: 12px;
+
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.6px;
+
+        color: white;
+        background: #ff3b6b;
+
+        padding: 4px 7px;
+        border-radius: 999px;
+
+        box-shadow:
+          0 0 12px rgba(255, 59, 107, 0.55),
+          0 0 24px rgba(255, 59, 107, 0.25);
+
+        animation: livePulse 1s ease infinite;
+      }
+      @keyframes livePulse {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+
+        50% {
+          transform: scale(1.08);
+          opacity: 0.92;
+        }
       }
     </style>
   </head>
@@ -415,104 +1289,63 @@
     <div class="container">
       <!-- Header -->
       <div class="header-glass">
-        <div
-          style="
-            font-size: 48px;
-            margin-bottom: 6px;
-            animation: floatSoft 5s ease-in-out infinite;
-          "
-        >
-          🎀
-        </div>
+        <img src="img/icon.jpg" alt="COKELAT MANIS" class="profile-avatar" />
 
-        <div
-          class="header-icons"
-          style="display: flex; justify-content: center; gap: 16px"
-        >
-          <a href="https://www.instagram.com/zkaofldk">
-            <img
-              src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg"
-              alt="Instagram"
-            />
-          </a>
-          <a href="https://www.tiktok.com/@zkaofldk">
-            <img
-              src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg"
-              alt="TikTok"
-            />
-          </a>
-          <a href="https://discord.gg/CVur7k6wsE">
-            <img
-              src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg"
-              alt="Discord"
-            />
-          </a>
-        </div>
+        <div class="profile-right">
+          <div class="header-top">
+            <div class="header-title">
+              <h1>COKELAT MANIS</h1>
+              <span class="username">@zkaofldk</span>
+            </div>
 
-        <div class="header-title">
-          <h1>COKELAT MANIS</h1>
-          <h2>Live TikTok tiap hari</h2>
+            <div class="header-icons">
+              <a href="https://www.instagram.com/zkaofldk">
+                <img
+                  src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg"
+                  alt="Instagram"
+                />
+              </a>
+              <a href="https://www.tiktok.com/@zkaofldk">
+                <img
+                  src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg"
+                  alt="TikTok"
+                />
+              </a>
+              <a href="https://discord.gg/CVur7k6wsE">
+                <img
+                  src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg"
+                  alt="Discord"
+                />
+              </a>
+            </div>
+          </div>
         </div>
       </div>
+      <p class="profile-bio profile-bio-full">
+        Cewek jago valo 🎀 Live tiap hari, mabar valorant
+      </p>
+      <div class="price">
+        <div class="price-row">
+          <strong>20k</strong>
+          <span>VIP sampe end live</span>
+        </div>
+        <div class="price-row">
+          <strong>10k</strong>
+          <span>request senjata 1 match</span>
+        </div>
+        <div class="price-row">
+          <strong>20k</strong>
+          <span>request agent 1 match</span>
+        </div>
+      </div>
+      <p class="slot-note">Khusus saat live aktif. Slot terbatas.</p>
 
       <ul class="links choice-list">
         <li>
-          <a
-            href="https://saweria.co/Cameliazanindya"
-            class="support choice-card"
-          >
-            <span class="choice-icon">
-              <img
-                src="img/saweria.png"
-                alt="Saweria"
-              />
-            </span>
-            <span>
-              <span class="choice-label">Donate live</span>
-              <span class="choice-title">Kirim Saweria</span>
-              <span class="choice-hint"
-                >Support, request, atau top up game.</span
-              >
-            </span>
-          </a>
-        </li>
-
-
-
-      <ul class="links choice-list">
-        <li>
-          <a
-            href="https://sociabuzz.com/zkaofldk/tribe"
-            class="support choice-card"
-          >
-            <span class="choice-icon">
-              <img
-                src="img/sociabuzz.png"
-                alt="Sociabuzz"
-                style="width: 36px; height: 36px"
-              />
-            </span>
-            <span>
-              <span class="choice-label">Donate live</span>
-              <span class="choice-title">Kirim Sociabuzz
-              </span>
-              <span class="choice-hint"
-                >Untuk support.</span
-              >
-            </span>
-          </a>
-        </li>
-        
-        <li>
-          <a href="/mabar/" class="mabar-main choice-card">
-            <span class="choice-icon">
-              <img src="img/valorant.png" alt="Valorant" />
-            </span>
-            <span>
-              <span class="choice-label">Mau mabar?</span>
-              <span class="choice-title">Join Live Mabar Valorant</span>
-              <span class="choice-hint">mabar atau req agent.</span>
-            </span>
+          <a href="#" class="support choice-card donate-trigger">
+            <span class="live-pill">Live</span>
+            <span class="choice-title">Donate Live</span>
+            <span class="choice-hint">Support • VIP • Request</span>
           </a>
         </li>
       </ul>
@@ -527,10 +1360,16 @@
           </a>
         </li>
         <li>
-          <a href="/setup/" class="iconed">
-            <div class="text">
-              Spek PC aku
-              <span class="sub">dan alat yang aku pakai.</span>
+          <a href="/setup/" class="shop-card">
+            <div class="shop-card-image">
+              <img src="img/setup.jpeg" alt="Spek PC Aku" />
+            </div>
+
+            <div class="shop-card-content">
+              <span class="text">Spek PC Aku</span>
+              <span class="sub"
+                >PC, gear, mic, dan alat yang aku pakai buat live.</span
+              >
             </div>
           </a>
         </li>
@@ -554,10 +1393,357 @@
           </a>
         </li>
       </ul>
+      <!-- Testimoni -->
+      <div class="testimonial">
+        <p style="font-weight: 700; margin-bottom: 10px">
+          ⭐ 5.0 rating • yang udah mabar bilang gini:
+        </p>
 
-      <!-- Share footer -->
-      <div class="footer">
-        <h2>Thank you for visiting 💗</h2>
+        <p style="font-size: 14px; color: #8a4b64; margin-bottom: 8px">
+          “ggwp, seru banget mabar nya 😭💖”
+        </p>
+
+        <p style="font-size: 14px; color: #8a4b64; margin-bottom: 8px">
+          “makasih buat carry nya kak 😭🙏”
+        </p>
+
+        <p style="font-size: 14px; color: #8a4b64; margin-bottom: 8px">
+          “baik banget, ga toxic sama sekali”
+        </p>
+
+        <p style="font-size: 14px; color: #8a4b64">
+          “fun banget, pengen mabar lagi 😆”
+        </p>
+      </div>
+
+      <!-- Favorite Team -->
+      <div class="team-showcase">
+        <p class="section-title">Team Favorit</p>
+        <a href="https://pprx.team/" target="_blank" class="team-card">
+          <img src="img/prx.jpg" />
+          <div class="team-text">
+            <div class="team-name">Paper Rex (PRX)</div>
+            <div class="team-sub">Play like ranked, win like pro</div>
+          </div>
+        </a>
+      </div>
+
+      <!-- Agent Showcase -->
+      <div class="agent-showcase">
+        <p class="section-title">Role & Agent Pool</p>
+        <div class="role-icons role-spacing">
+          <div>
+            <img src="img/all.png" data-role="all" class="active" />
+            <div style="font-size: 10px; margin-top: 4px">All</div>
+          </div>
+          <div>
+            <img src="img/duelist.png" data-role="duelist" />
+            <div style="font-size: 10px; margin-top: 4px">Duelist</div>
+          </div>
+          <div>
+            <img src="img/initiator.png" data-role="initiator" />
+            <div style="font-size: 10px; margin-top: 4px">Initiator</div>
+          </div>
+          <div>
+            <img src="img/controller.png" data-role="controller" />
+            <div style="font-size: 10px; margin-top: 4px">Controller</div>
+          </div>
+          <div>
+            <img src="img/sentinel.png" data-role="sentinel" />
+            <div style="font-size: 10px; margin-top: 4px">Sentinel</div>
+          </div>
+        </div>
+        <div class="agent-big-grid">
+          <!-- Duelist -->
+          <a
+            href="https://playvalorant.com/id-id/agents/yoru/"
+            target="_blank"
+            class="agent-card"
+            data-role="duelist"
+          >
+            <img src="img/yoru.avif" />
+            <div class="agent-name">YORU</div>
+          </a>
+          <a
+            href="https://playvalorant.com/id-id/agents/reyna/"
+            target="_blank"
+            class="agent-card"
+            data-role="duelist"
+          >
+            <img src="img/reyna.avif" />
+            <div class="agent-name">REYNA</div>
+          </a>
+          <a
+            href="https://playvalorant.com/id-id/agents/iso/"
+            target="_blank"
+            class="agent-card"
+            data-role="duelist"
+          >
+            <img src="img/iso.avif" />
+            <div class="agent-name">ISO</div>
+          </a>
+          <a
+            href="https://playvalorant.com/id-id/agents/raze/"
+            target="_blank"
+            class="agent-card"
+            data-role="duelist"
+          >
+            <img src="img/raze.avif" />
+            <div class="agent-name">RAZE</div>
+          </a>
+          <a
+            href="https://playvalorant.com/id-id/agents/phoenix/"
+            target="_blank"
+            class="agent-card"
+            data-role="duelist"
+          >
+            <img src="img/phoenix.avif" />
+            <div class="agent-name">PHOENIX</div>
+          </a>
+          <a
+            href="https://playvalorant.com/id-id/agents/neon/"
+            target="_blank"
+            class="agent-card"
+            data-role="duelist"
+          >
+            <img src="img/neon.avif" />
+            <div class="agent-name">NEON</div>
+          </a>
+
+          <!-- Initiator -->
+          <a
+            href="https://playvalorant.com/id-id/agents/fade/"
+            target="_blank"
+            class="agent-card"
+            data-role="initiator"
+          >
+            <img src="img/fade.avif" />
+            <div class="agent-name">FADE</div>
+          </a>
+          <a
+            href="https://playvalorant.com/id-id/agents/sova/"
+            target="_blank"
+            class="agent-card"
+            data-role="initiator"
+          >
+            <img src="img/sova.avif" />
+            <div class="agent-name">SOVA</div>
+          </a>
+
+          <!-- Controller -->
+          <a
+            href="https://playvalorant.com/id-id/agents/clove/"
+            target="_blank"
+            class="agent-card"
+            data-role="controller"
+          >
+            <img src="img/clove.avif" />
+            <div class="agent-name">CLOVE</div>
+          </a>
+          <a
+            href="https://playvalorant.com/id-id/agents/omen/"
+            target="_blank"
+            class="agent-card"
+            data-role="controller"
+          >
+            <img src="img/omen.avif" />
+            <div class="agent-name">OMEN</div>
+          </a>
+          <a
+            href="https://playvalorant.com/id-id/agents/miks/"
+            target="_blank"
+            class="agent-card"
+            data-role="controller"
+          >
+            <img src="img/miks.avif" />
+            <div class="agent-name">MIKS</div>
+          </a>
+          <a
+            href="https://playvalorant.com/id-id/agents/brimstone/"
+            target="_blank"
+            class="agent-card"
+            data-role="controller"
+          >
+            <img src="img/brimstone.avif" />
+            <div class="agent-name">BRIMSTONE</div>
+          </a>
+          <a
+            href="https://playvalorant.com/id-id/agents/viper/"
+            target="_blank"
+            class="agent-card"
+            data-role="controller"
+          >
+            <img src="img/viper.avif" />
+            <div class="agent-name">VIPER</div>
+          </a>
+
+          <!-- Sentinel -->
+          <a
+            href="https://playvalorant.com/id-id/agents/sage/"
+            target="_blank"
+            class="agent-card"
+            data-role="sentinel"
+          >
+            <img src="img/sage.avif" />
+            <div class="agent-name">SAGE</div>
+          </a>
+          <a
+            href="https://playvalorant.com/id-id/agents/killjoy/"
+            target="_blank"
+            class="agent-card"
+            data-role="sentinel"
+          >
+            <img src="img/killjoy.avif" />
+            <div class="agent-name">KILLJOY</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Favorite Map -->
+      <div class="map-showcase">
+        <p class="section-title">Map Favorit</p>
+        <div class="map-big-grid">
+          <div class="map-card">
+            <img src="img/sunset.avif" />
+            <div class="map-name">SUNSET</div>
+            <div class="map-desc">
+              Clear 1 sudut, mati dari arah yang gak kepikiran.
+            </div>
+          </div>
+          <div class="map-card">
+            <img src="img/bind.avif" />
+            <div class="map-name">BIND</div>
+            <div class="map-desc">
+              Denger TP? bingung harus rotate atau diem aja.
+            </div>
+          </div>
+          <div class="map-card">
+            <img src="img/abyss.avif" />
+            <div class="map-name">ABYSS</div>
+            <div class="map-desc">Belum war, udah jatuh duluan.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Favorite Weapons -->
+      <div class="weapon-showcase">
+        <p class="section-title">Senjata Favorit</p>
+        <div class="weapon-grid">
+          <div class="weapon-card">
+            <img src="img/ghost.avif" />
+            <div class="weapon-name">GHOST</div>
+            <div class="weapon-desc">
+              Dibilang eco, tapi kok bisa one tap terus?
+            </div>
+          </div>
+          <div class="weapon-card">
+            <img src="img/bucky.avif" />
+            <div class="weapon-name">BUCKY</div>
+            <div class="weapon-desc">
+              Ngumpet di corner = langsung kena ceramah di all chat.
+            </div>
+          </div>
+          <div class="weapon-card">
+            <img src="img/spectre.avif" />
+            <div class="weapon-name">SPECTRE</div>
+            <div class="weapon-desc">
+              Katanya jelek… tapi tiap eco selalu kepake juga.
+            </div>
+          </div>
+          <div class="weapon-card">
+            <img src="img/ares.avif" />
+            <div class="weapon-name">ARES</div>
+            <div class="weapon-desc">
+              Murah, spam dikit… musuh langsung toxic.
+            </div>
+          </div>
+          <div class="weapon-card">
+            <img src="img/vandal.avif" />
+            <div class="weapon-name">VANDAL</div>
+            <div class="weapon-desc">
+              Miss 10 peluru, tapi 1 headshot langsung lupa dosa.
+            </div>
+          </div>
+          <div class="weapon-card">
+            <img src="img/phantom.avif" />
+            <div class="weapon-name">PHANTOM</div>
+            <div class="weapon-desc">Spray enak… tapi kok ga mati-mati ya?</div>
+          </div>
+          <div class="weapon-card">
+            <img src="img/operator.avif" />
+            <div class="weapon-name">OPERATOR</div>
+            <div class="weapon-desc">
+              Miss sekali, langsung dikejar 5 orang.
+            </div>
+          </div>
+          <div class="weapon-card">
+            <img src="img/odin.avif" />
+            <div class="weapon-name">ODIN</div>
+            <div class="weapon-desc">Menang? iya. Dihina? juga iya.</div>
+          </div>
+        </div>
+      </div>
+      <!-- Affiliate Wingman -->
+      <div style="margin-top: 32px">
+        <p
+          style="
+            font-size: 13px;
+            color: #8a4b64;
+            margin-bottom: 14px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 600;
+          "
+        >
+          my little wingman 🧸
+        </p>
+        <a href="https://s.shopee.co.id/W2AvFWQER" target="_blank">
+          <img
+            src="img/wingman.JPG"
+            style="
+              width: 68%;
+              display: block;
+              margin: 0 auto;
+              border-radius: 14px;
+              background: #fff0f6;
+              padding: 12px;
+              box-shadow:
+                0 10px 24px rgba(0, 0, 0, 0.12),
+                0 0 14px rgba(255, 95, 162, 0.2);
+              transition:
+                transform 0.25s var(--ease-apple),
+                box-shadow 0.25s var(--ease-apple);
+            "
+          />
+        </a>
+      </div>
+    </div>
+    <div class="donate-modal" id="donateModal">
+      <div class="donate-sheet">
+        <div class="donate-head">
+          <h3>Donate Live</h3>
+          <p>Pilih platform untuk support live stream.</p>
+        </div>
+
+        <div class="donate-options">
+          <a href="https://saweria.co/Cameliazanindya" class="donate-option">
+            <img src="img/saweria.png" alt="Saweria" />
+            <div>
+              <strong>Saweria</strong>
+              <span>Support, request, atau top up game.</span>
+            </div>
+          </a>
+
+          <a href="https://sociabuzz.com/zkaofldk/tribe" class="donate-option">
+            <img src="img/sociabuzz.png" alt="Sociabuzz" />
+            <div>
+              <strong>Sociabuzz</strong>
+              <span>Untuk support live stream.</span>
+            </div>
+          </a>
+        </div>
+
+        <button class="donate-close" id="closeDonateModal">Tutup</button>
       </div>
     </div>
     <script>
@@ -566,6 +1752,106 @@
           el.classList.remove("release");
           void el.offsetWidth;
           el.classList.add("release");
+        });
+      });
+
+      const donateTrigger = document.querySelector(".donate-trigger");
+      const donateModal = document.getElementById("donateModal");
+      const closeDonateModal = document.getElementById("closeDonateModal");
+
+      if (donateTrigger && donateModal && closeDonateModal) {
+        donateTrigger.addEventListener("click", (e) => {
+          e.preventDefault();
+          donateModal.classList.add("active");
+        });
+
+        closeDonateModal.addEventListener("click", () => {
+          donateModal.classList.remove("active");
+        });
+
+        donateModal.addEventListener("click", (e) => {
+          if (e.target === donateModal) {
+            donateModal.classList.remove("active");
+          }
+        });
+      }
+
+      // ROLE FILTER
+      const roleIcons = document.querySelectorAll(".role-icons img");
+      const agents = document.querySelectorAll(".agent-card");
+
+      roleIcons.forEach((icon) => {
+        icon.addEventListener("click", () => {
+          if (icon.classList.contains("active")) return;
+
+          roleIcons.forEach((i) => i.classList.remove("active"));
+          icon.classList.add("active");
+
+          const role = icon.dataset.role;
+
+          const firstRects = new Map();
+          agents.forEach((el) => {
+            firstRects.set(el, el.getBoundingClientRect());
+          });
+
+          agents.forEach((agent) => {
+            const agentRole = agent.dataset.role;
+
+            if (!(role === "all" || role === agentRole)) {
+              agent.classList.add("exit");
+            }
+          });
+
+          setTimeout(() => {
+            agents.forEach((agent) => {
+              const agentRole = agent.dataset.role;
+
+              if (role === "all" || role === agentRole) {
+                agent.classList.remove("hide", "exit");
+                agent.classList.add("enter");
+              } else {
+                agent.classList.remove("exit");
+                agent.classList.add("hide");
+              }
+            });
+
+            document.body.offsetHeight;
+
+            const lastRects = new Map();
+            agents.forEach((el) => {
+              lastRects.set(el, el.getBoundingClientRect());
+            });
+
+            agents.forEach((el) => {
+              const first = firstRects.get(el);
+              const last = lastRects.get(el);
+
+              const dx = first.left - last.left;
+              const dy = first.top - last.top;
+
+              if (dx || dy) {
+                el.style.transform = `translate(${dx}px, ${dy}px)`;
+
+                requestAnimationFrame(() => {
+                  el.style.transition =
+                    "transform 0.35s cubic-bezier(0.22, 1, 0.36, 1)";
+                  el.style.transform = "";
+                });
+
+                setTimeout(() => {
+                  el.style.transition = "";
+                }, 350);
+              }
+            });
+
+            requestAnimationFrame(() => {
+              agents.forEach((agent) => {
+                if (!agent.classList.contains("hide")) {
+                  agent.classList.remove("enter");
+                }
+              });
+            });
+          }, 180);
         });
       });
     </script>
