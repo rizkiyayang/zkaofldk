@@ -5,7 +5,7 @@ body {
   font-family: "Poppins", Arial, sans-serif;
   text-align: center;
   margin: 0;
-  padding: 24px;
+  padding: 24px 34px;
   background: linear-gradient(180deg, #ffe4f1, #fff);
   color: #5a2a3c;
   min-height: 100vh;
@@ -1130,7 +1130,7 @@ a {
 }
 @media (max-width: 380px) {
   body {
-    padding: 18px;
+    padding: 18px 24px;
   }
   .links a.choice-card {
     grid-template-columns: 42px 1fr;
@@ -1199,47 +1199,25 @@ a {
   transform: scale(1.1);
 }
 
-.agent-card {
-  opacity: 1;
-  transform: scale(1);
-  transition:
-    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.25s ease;
-  will-change: transform;
-}
-
 .agent-card.hide {
   display: none;
 }
 
 .agent-card.show {
-  animation: cardIn 0.4s var(--ease-apple);
+  animation: agentCardReveal 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.agent-card.exit {
-  opacity: 0;
-  transform: scale(0.85);
-  transition:
-    opacity 0.25s var(--ease-apple),
-    transform 0.25s var(--ease-apple);
-}
-
-.agent-card.enter {
-  opacity: 0;
-  transform: scale(0.95) translateY(8px);
-  transition:
-    opacity 0.25s ease,
-    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-@keyframes cardIn {
+@keyframes agentCardReveal {
   0% {
     opacity: 0;
-    transform: translateY(14px) scale(0.95);
+    transform: translateY(18px);
+    filter: blur(8px);
   }
+
   100% {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
+    filter: blur(0);
   }
 }
 
@@ -1270,7 +1248,7 @@ a {
 .agent-card {
   position: relative;
   border-radius: 14px;
-  overflow: hidden;
+  overflow: visible;
   background: #ffffff;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
   text-decoration: none;
@@ -1283,9 +1261,10 @@ a {
 
 .agent-card img {
   width: 100%;
-  height: 160px;
+  height: 176px;
   object-fit: cover;
   background: #1c1f2b;
+  border-radius: 14px 14px 0 0;
   transition: transform 0.35s var(--ease-apple);
 }
 .agent-card:hover img {
@@ -1304,15 +1283,28 @@ a {
 }
 
 .agent-big-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-}
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 14px;
+  perspective: 1000px;
 
-@media (min-width: 480px) {
-  .agent-big-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
+  width: 100%;
+  min-width: 0;
+
+  overflow-x: auto;
+  overflow-y: visible;
+
+  scroll-behavior: smooth;
+
+  scrollbar-width: none;
+
+  -webkit-overflow-scrolling: touch;
+
+  padding: 18px 0 34px;
+  margin: -18px 0 -34px;
+
+  box-sizing: border-box;
 }
 
 .map-showcase {
@@ -1320,20 +1312,29 @@ a {
 }
 
 .map-big-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+  display: flex;
+  gap: 14px;
+
+  overflow-x: auto;
+  overflow-y: visible;
+
+  scroll-behavior: smooth;
+
+  scrollbar-width: none;
+
+  -webkit-overflow-scrolling: touch;
+
+  padding: 18px 0 34px;
+  margin: -18px 0 -34px;
 }
 
-@media (min-width: 480px) {
-  .map-big-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
+.map-big-grid::-webkit-scrollbar {
+  display: none;
 }
 
 .map-card {
   border-radius: 14px;
-  overflow: hidden;
+  overflow: visible;
   background: #ffffff;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
   display: flex;
@@ -1344,7 +1345,10 @@ a {
 }
 .map-card:hover {
   transform: translateY(-6px) scale(1.02);
+  transform-origin: center center;
   box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+  position: relative;
+  z-index: 20;
 }
 
 .map-card img {
@@ -1352,6 +1356,7 @@ a {
   aspect-ratio: 16/9;
   object-fit: contain;
   background: #eae6dd;
+  border-radius: 14px 14px 0 0;
   transition: transform 0.35s var(--ease-apple);
 }
 
@@ -1375,35 +1380,33 @@ a {
   margin-bottom: 10px;
 }
 
-.agent-showcase,
-.map-showcase,
-.weapon-showcase {
-  background: transparent;
-  padding: 0;
-  border-radius: 0;
-}
-
-.agent-showcase,
-.map-showcase,
-.weapon-showcase {
-  margin-top: 28px;
-}
-
 .weapon-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+  display: flex;
+  gap: 14px;
+
+  overflow-x: auto;
+  overflow-y: visible;
+
+  scroll-behavior: smooth;
+
+  scrollbar-width: none;
+
+  -webkit-overflow-scrolling: touch;
+
+  padding: 18px 0 34px;
+  margin: -18px 0 -34px;
 }
 
-@media (min-width: 480px) {
-  .weapon-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
+.weapon-grid::-webkit-scrollbar {
+  display: none;
 }
 
 .agent-card:hover {
-  transform: translateY(-6px) scale(1.04);
+  transform: translateY(-6px) scale(1.025);
+  transform-origin: center center;
   box-shadow: 0 12px 26px rgba(0, 0, 0, 0.15);
+  position: relative;
+  z-index: 20;
 }
 .weapon-card {
   background: #ffffff;
@@ -1411,19 +1414,24 @@ a {
   display: flex;
   flex-direction: column;
   border-radius: 12px;
+  overflow: visible;
   transition:
     transform 0.25s var(--ease-apple),
     box-shadow 0.25s var(--ease-apple);
 }
 .weapon-card:hover {
-  transform: translateY(-6px) scale(1.04);
+  transform: translateY(-6px) scale(1.02);
+  transform-origin: center center;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.18);
+  position: relative;
+  z-index: 20;
 }
 .weapon-card img {
   width: 100%;
   aspect-ratio: 16/9;
   object-fit: contain;
   background: #eae6dd;
+  border-radius: 14px 14px 0 0;
   transition: transform 0.35s var(--ease-apple);
 }
 .weapon-name {
@@ -1509,21 +1517,6 @@ a {
   color: #8a4b64;
 }
 
-.footer {
-  margin-top: 36px;
-  font-size: 14px;
-  color: #8a4b64;
-}
-.footer a {
-  color: #ff5fa2;
-  text-decoration: none;
-  margin: 0 6px;
-  font-weight: 600;
-}
-.container {
-  width: 100%;
-  max-width: 480px;
-}
 .section-title {
   font-weight: 700;
   margin-bottom: 14px;
@@ -1552,23 +1545,14 @@ a {
 .weapon-card:hover img {
   transform: scale(1.05);
 }
-.weapon-card:hover img {
-  transform: scale(1.05);
-}
-.agent-card:hover,
-.weapon-card:hover {
-  box-shadow:
-    0 14px 28px rgba(0, 0, 0, 0.18),
-    0 0 12px rgba(255, 95, 162, 0.25);
+
+.agent-card:active {
+  transform: translateY(-3px) scale(0.98);
 }
 
-.agent-card:active,
 .weapon-card:active,
 .map-card:active {
-  transform: scale(0.97);
-}
-.links a.support {
-  letter-spacing: 0.5px;
+  transform: scale(0.98);
 }
 .ribbon {
   font-size: 48px;
@@ -1750,14 +1734,12 @@ a {
   gap: 14px;
   cursor: grab;
   overflow-x: auto;
-  overflow-y: hidden;
+  overflow-y: visible;
   overscroll-behavior-x: contain;
-  touch-action: pan-x;
-
-  scroll-snap-type: x mandatory;
+  scroll-snap-type: x proximity;
   -webkit-overflow-scrolling: touch;
 
-  padding: 4px 24px 8px;
+  padding: 4px 0 8px;
   box-sizing: border-box;
 
   scroll-behavior: smooth;
@@ -1775,12 +1757,18 @@ a {
 .affiliate-wrapper {
   position: relative;
   width: 100%;
-  overflow: hidden;
+  overflow: visible;
+  isolation: isolate;
+
+  padding: 18px 0 34px;
+  margin: -18px 0 -34px;
+
+  box-sizing: border-box;
 }
 
 .affiliate-nav {
   position: absolute;
-  top: 50%;
+  top: 42%;
   transform: translateY(-50%);
 
   width: 42px;
@@ -1802,7 +1790,7 @@ a {
 
   cursor: pointer;
 
-  z-index: 5;
+  z-index: 50;
 
   transition:
     transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
@@ -1825,21 +1813,13 @@ a {
   color: #ff5fa2;
 }
 
-.affiliate-prev {
-  left: -12px;
-}
-
-.affiliate-next {
-  right: -12px;
-}
-
 @media (max-width: 768px) {
   .affiliate-nav {
     display: none;
   }
 
   .affiliate-carousel {
-    padding: 4px 18px 8px;
+    padding: 4px 0 8px;
   }
 
   .affiliate-card {
@@ -1865,7 +1845,7 @@ a {
   text-decoration: none;
 
   border-radius: 24px;
-  overflow: hidden;
+  overflow: visible;
 
   background: linear-gradient(
     180deg,
@@ -1886,16 +1866,21 @@ a {
 
 .affiliate-card:hover {
   transform: translateY(-4px) scale(1.015);
+  transform-origin: center center;
 
   box-shadow:
     0 18px 36px rgba(255, 95, 162, 0.16),
     0 0 18px rgba(255, 95, 162, 0.08);
+
+  position: relative;
+  z-index: 20;
 }
 
 .affiliate-image-wrap {
   width: 100%;
   height: 250px;
   overflow: hidden;
+  border-radius: 24px 24px 0 0;
 }
 
 .affiliate-image-wrap img {
@@ -1926,4 +1911,196 @@ a {
   font-size: 12px;
   line-height: 1.45;
   color: #8a4b64;
+}
+
+.agent-big-grid .agent-card {
+  flex: 0 0 auto;
+  width: 116px;
+  min-width: 116px;
+
+  transition:
+    transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.28s ease;
+}
+.carousel-shell {
+  position: relative;
+  overflow: visible;
+  isolation: isolate;
+  padding: 8px 18px 20px;
+  margin: 0 -18px;
+}
+
+.infinite-carousel {
+  display: flex;
+  gap: 14px;
+
+  overflow-x: auto;
+  overflow-y: visible;
+
+  scroll-behavior: smooth;
+  scroll-snap-type: x proximity;
+
+  scrollbar-width: none;
+
+  padding: 18px 0 34px;
+  margin: -18px 0 -34px;
+
+  cursor: grab;
+
+  -webkit-overflow-scrolling: touch;
+}
+
+.infinite-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.infinite-carousel.dragging {
+  cursor: grabbing;
+  scroll-behavior: auto;
+}
+
+.carousel-nav {
+  position: absolute;
+  top: 52%;
+  transform: translateY(-50%);
+
+  width: 42px;
+  height: 42px;
+
+  border: none;
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow:
+    0 10px 24px rgba(255, 95, 162, 0.18),
+    0 0 12px rgba(255, 95, 162, 0.08);
+
+  cursor: pointer;
+  z-index: 50;
+
+  opacity: 1;
+  pointer-events: auto;
+
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.carousel-nav i {
+  font-size: 24px;
+  color: #ff5fa2;
+}
+
+.carousel-nav.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.affiliate-nav.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.affiliate-prev {
+  left: -10px;
+}
+
+.affiliate-next {
+  right: -10px;
+}
+.carousel-prev {
+  left: 4px;
+}
+
+.carousel-next {
+  right: 4px;
+}
+
+.infinite-carousel > * {
+  flex-shrink: 0;
+  scroll-snap-align: start;
+}
+
+.map-big-grid .map-card {
+  width: 180px;
+  flex-shrink: 0;
+}
+
+.weapon-grid .weapon-card {
+  width: 176px;
+  flex-shrink: 0;
+}
+
+.weapon-grid .weapon-card img {
+  height: 98px;
+  object-fit: contain;
+}
+
+.agent-big-grid::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .carousel-nav {
+    display: none;
+  }
+
+  .agent-big-grid .agent-card {
+    width: 116px;
+  }
+
+  .agent-big-grid .agent-card img {
+    height: 170px;
+    object-fit: cover;
+    object-position: top;
+  }
+
+  .agent-name {
+    font-size: 12px;
+    padding: 7px 8px;
+  }
+
+  .map-big-grid .map-card {
+    width: 145px;
+  }
+
+  .weapon-grid .weapon-card {
+    width: 142px;
+  }
+
+  .weapon-grid .weapon-card img {
+    height: 86px;
+  }
+
+  .affiliate-card {
+    width: 148px;
+    min-width: 148px;
+    max-width: 148px;
+
+    border-radius: 18px;
+  }
+
+  .affiliate-image-wrap {
+    height: 205px;
+  }
+
+  .affiliate-info {
+    padding: 10px 10px 12px;
+  }
+
+  .affiliate-name {
+    font-size: 13px;
+  }
+
+  .affiliate-sub {
+    font-size: 11px;
+    margin-top: 3px;
+    line-height: 1.35;
+  }
 }
