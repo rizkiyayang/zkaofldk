@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>COKELAT MANIS</title>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
     <link rel="stylesheet" href="style.css" />
 
     <link rel="icon" type="image/x-icon" href="img/icon.jpg" />
@@ -17,9 +19,25 @@
       <!-- Header -->
       <div class="header-glass">
         <div class="avatar-wrap">
-          <img src="img/icon.jpg" alt="COKELAT MANIS" class="profile-avatar" />
+          <picture
+            ><source srcset="img/icon.webp" type="image/webp" />
+            <img
+              src="img/icon.jpg"
+              alt="COKELAT MANIS"
+              class="profile-avatar"
+              decoding="async"
+              loading="eager"
+              fetchpriority="high"
+          /></picture>
 
-          <img src="img/prx.jpg" class="avatar-prx-overlay" />
+          <picture
+            ><source srcset="img/prx.webp" type="image/webp" />
+            <img
+              src="img/prx.jpg"
+              class="avatar-prx-overlay"
+              decoding="async"
+              loading="eager"
+          /></picture>
         </div>
 
         <div class="profile-right">
@@ -34,18 +52,24 @@
                 <img
                   src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg"
                   alt="Instagram"
+                  decoding="async"
+                  loading="lazy"
                 />
               </a>
               <a href="https://www.tiktok.com/@zkaofldk">
                 <img
                   src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg"
                   alt="TikTok"
+                  decoding="async"
+                  loading="lazy"
                 />
               </a>
               <a href="https://discord.gg/CVur7k6wsE">
                 <img
                   src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg"
                   alt="Discord"
+                  decoding="async"
+                  loading="lazy"
                 />
               </a>
             </div>
@@ -106,10 +130,37 @@
             </div>
           </a>
         </li>
+        <!-- <li>
+          <a href="/univ/">
+            <div class="modern-left">
+              <div class="modern-icon">
+                <i class="ri-graduation-cap-line"></i>
+              </div>
+
+              <div class="modern-content">
+                <div class="text">
+                  UNIV Ujian Nasional Valorant
+                  <span class="sub">tes rank otak valorant kamu.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="modern-arrow">
+              <i class="ri-arrow-right-s-line"></i>
+            </div>
+          </a>
+        </li> -->
         <li>
           <a href="/setup/" class="shop-card">
             <div class="shop-card-image">
-              <img src="img/setup.jpeg" alt="Spek PC Aku" />
+              <picture
+                ><source srcset="img/setup.webp" type="image/webp" />
+                <img
+                  src="img/setup.jpeg"
+                  alt="Spek PC Aku"
+                  decoding="async"
+                  loading="lazy"
+              /></picture>
             </div>
             <div class="shop-card-content">
               <div class="modern-left">
@@ -510,23 +561,59 @@
         <p class="section-title">Role & Agent Pool</p>
         <div class="role-icons role-spacing">
           <div>
-            <img src="img/all.png" data-role="all" class="active" />
+            <picture
+              ><source srcset="img/all.webp" type="image/webp" />
+              <img
+                src="img/all.png"
+                data-role="all"
+                class="active"
+                decoding="async"
+                loading="lazy"
+            /></picture>
             <div style="font-size: 10px; margin-top: 4px">All</div>
           </div>
           <div>
-            <img src="img/duelist.png" data-role="duelist" />
+            <picture
+              ><source srcset="img/duelist.webp" type="image/webp" />
+              <img
+                src="img/duelist.png"
+                data-role="duelist"
+                decoding="async"
+                loading="lazy"
+            /></picture>
             <div style="font-size: 10px; margin-top: 4px">Duelist</div>
           </div>
           <div>
-            <img src="img/initiator.png" data-role="initiator" />
+            <picture
+              ><source srcset="img/initiator.webp" type="image/webp" />
+              <img
+                src="img/initiator.png"
+                data-role="initiator"
+                decoding="async"
+                loading="lazy"
+            /></picture>
             <div style="font-size: 10px; margin-top: 4px">Initiator</div>
           </div>
           <div>
-            <img src="img/controller.png" data-role="controller" />
+            <picture
+              ><source srcset="img/controller.webp" type="image/webp" />
+              <img
+                src="img/controller.png"
+                data-role="controller"
+                decoding="async"
+                loading="lazy"
+            /></picture>
             <div style="font-size: 10px; margin-top: 4px">Controller</div>
           </div>
           <div>
-            <img src="img/sentinel.png" data-role="sentinel" />
+            <picture
+              ><source srcset="img/sentinel.webp" type="image/webp" />
+              <img
+                src="img/sentinel.png"
+                data-role="sentinel"
+                decoding="async"
+                loading="lazy"
+            /></picture>
             <div style="font-size: 10px; margin-top: 4px">Sentinel</div>
           </div>
         </div>
@@ -548,69 +635,69 @@
           <div class="agent-big-grid" id="agentCarousel">
             <!-- Duelist -->
             <a class="agent-card" data-role="duelist">
-              <img src="img/yoru.avif" />
+              <img src="img/yoru.avif" decoding="async" loading="lazy" />
               <div class="agent-name">YORU</div>
             </a>
             <a class="agent-card" data-role="duelist">
-              <img src="img/reyna.avif" />
+              <img src="img/reyna.avif" decoding="async" loading="lazy" />
               <div class="agent-name">REYNA</div>
             </a>
             <a class="agent-card" data-role="duelist">
-              <img src="img/iso.avif" />
+              <img src="img/iso.avif" decoding="async" loading="lazy" />
               <div class="agent-name">ISO</div>
             </a>
             <a class="agent-card" data-role="duelist">
-              <img src="img/raze.avif" />
+              <img src="img/raze.avif" decoding="async" loading="lazy" />
               <div class="agent-name">RAZE</div>
             </a>
             <a class="agent-card" data-role="duelist">
-              <img src="img/phoenix.avif" />
+              <img src="img/phoenix.avif" decoding="async" loading="lazy" />
               <div class="agent-name">PHOENIX</div>
             </a>
             <a class="agent-card" data-role="duelist">
-              <img src="img/neon.avif" />
+              <img src="img/neon.avif" decoding="async" loading="lazy" />
               <div class="agent-name">NEON</div>
             </a>
 
             <!-- Initiator -->
             <a class="agent-card" data-role="initiator">
-              <img src="img/fade.avif" />
+              <img src="img/fade.avif" decoding="async" loading="lazy" />
               <div class="agent-name">FADE</div>
             </a>
             <a class="agent-card" data-role="initiator">
-              <img src="img/sova.avif" />
+              <img src="img/sova.avif" decoding="async" loading="lazy" />
               <div class="agent-name">SOVA</div>
             </a>
 
             <!-- Controller -->
             <a class="agent-card" data-role="controller">
-              <img src="img/clove.avif" />
+              <img src="img/clove.avif" decoding="async" loading="lazy" />
               <div class="agent-name">CLOVE</div>
             </a>
             <a class="agent-card" data-role="controller">
-              <img src="img/omen.avif" />
+              <img src="img/omen.avif" decoding="async" loading="lazy" />
               <div class="agent-name">OMEN</div>
             </a>
             <a class="agent-card" data-role="controller">
-              <img src="img/miks.avif" />
+              <img src="img/miks.avif" decoding="async" loading="lazy" />
               <div class="agent-name">MIKS</div>
             </a>
             <a class="agent-card" data-role="controller">
-              <img src="img/brimstone.avif" />
+              <img src="img/brimstone.avif" decoding="async" loading="lazy" />
               <div class="agent-name">BRIMSTONE</div>
             </a>
             <a class="agent-card" data-role="controller">
-              <img src="img/viper.avif" />
+              <img src="img/viper.avif" decoding="async" loading="lazy" />
               <div class="agent-name">VIPER</div>
             </a>
 
             <!-- Sentinel -->
             <a class="agent-card" data-role="sentinel">
-              <img src="img/sage.avif" />
+              <img src="img/sage.avif" decoding="async" loading="lazy" />
               <div class="agent-name">SAGE</div>
             </a>
             <a class="agent-card" data-role="sentinel">
-              <img src="img/killjoy.avif" />
+              <img src="img/killjoy.avif" decoding="async" loading="lazy" />
               <div class="agent-name">KILLJOY</div>
             </a>
           </div>
@@ -631,21 +718,21 @@
 
           <div class="map-big-grid" id="mapCarousel">
             <div class="map-card">
-              <img src="img/sunset.avif" />
+              <img src="img/sunset.avif" decoding="async" loading="lazy" />
               <div class="map-name">SUNSET</div>
               <div class="map-desc">
                 Clear 1 sudut, mati dari arah yang gak kepikiran.
               </div>
             </div>
             <div class="map-card">
-              <img src="img/bind.avif" />
+              <img src="img/bind.avif" decoding="async" loading="lazy" />
               <div class="map-name">BIND</div>
               <div class="map-desc">
                 Denger TP? bingung harus rotate atau diem aja.
               </div>
             </div>
             <div class="map-card">
-              <img src="img/abyss.avif" />
+              <img src="img/abyss.avif" decoding="async" loading="lazy" />
               <div class="map-name">ABYSS</div>
               <div class="map-desc">Belum war, udah jatuh duluan.</div>
             </div>
@@ -673,56 +760,56 @@
 
           <div class="weapon-grid" id="weaponCarousel">
             <div class="weapon-card">
-              <img src="img/ghost.avif" />
+              <img src="img/ghost.avif" decoding="async" loading="lazy" />
               <div class="weapon-name">GHOST</div>
               <div class="weapon-desc">
                 Dibilang eco, tapi kok bisa one tap terus?
               </div>
             </div>
             <div class="weapon-card">
-              <img src="img/bucky.avif" />
+              <img src="img/bucky.avif" decoding="async" loading="lazy" />
               <div class="weapon-name">BUCKY</div>
               <div class="weapon-desc">
                 Ngumpet di corner = langsung kena ceramah di all chat.
               </div>
             </div>
             <div class="weapon-card">
-              <img src="img/spectre.avif" />
+              <img src="img/spectre.avif" decoding="async" loading="lazy" />
               <div class="weapon-name">SPECTRE</div>
               <div class="weapon-desc">
                 Katanya jelek… tapi tiap eco selalu kepake juga.
               </div>
             </div>
             <div class="weapon-card">
-              <img src="img/ares.avif" />
+              <img src="img/ares.avif" decoding="async" loading="lazy" />
               <div class="weapon-name">ARES</div>
               <div class="weapon-desc">
                 Murah, spam dikit… musuh langsung toxic.
               </div>
             </div>
             <div class="weapon-card">
-              <img src="img/vandal.avif" />
+              <img src="img/vandal.avif" decoding="async" loading="lazy" />
               <div class="weapon-name">VANDAL</div>
               <div class="weapon-desc">
                 Miss 10 peluru, tapi 1 headshot langsung lupa dosa.
               </div>
             </div>
             <div class="weapon-card">
-              <img src="img/phantom.avif" />
+              <img src="img/phantom.avif" decoding="async" loading="lazy" />
               <div class="weapon-name">PHANTOM</div>
               <div class="weapon-desc">
                 Spray enak… tapi kok ga mati-mati ya?
               </div>
             </div>
             <div class="weapon-card">
-              <img src="img/operator.avif" />
+              <img src="img/operator.avif" decoding="async" loading="lazy" />
               <div class="weapon-name">OPERATOR</div>
               <div class="weapon-desc">
                 Miss sekali, langsung dikejar 5 orang.
               </div>
             </div>
             <div class="weapon-card">
-              <img src="img/odin.avif" />
+              <img src="img/odin.avif" decoding="async" loading="lazy" />
               <div class="weapon-name">ODIN</div>
               <div class="weapon-desc">Menang? iya. Dihina? juga iya.</div>
             </div>
@@ -744,7 +831,7 @@
           my little wingman 🧸
         </p>
         <a href="https://s.shopee.co.id/W2AvFWQER" target="_blank">
-          <img
+          <picture><source srcset="img/wingman.webp" type="image/webp"><img
             src="img/wingman.JPG"
             style="
               width: 68%;
@@ -759,8 +846,8 @@
               transition:
                 transform 0.25s var(--ease-apple),
                 box-shadow 0.25s var(--ease-apple);
-            "
-          />
+            " decoding="async" loading="lazy"
+          /></picture>
         </a>
       </div> -->
       <!-- Affiliate Carousel -->
@@ -780,7 +867,10 @@
               class="affiliate-card"
             >
               <div class="affiliate-image-wrap">
-                <img src="img/wingman.JPG" />
+                <picture
+                  ><source srcset="img/wingman.webp" type="image/webp" />
+                  <img src="img/wingman.JPG" decoding="async" loading="lazy"
+                /></picture>
               </div>
               <div class="affiliate-info">
                 <div class="affiliate-name">Wingman Flex</div>
@@ -793,7 +883,10 @@
               class="affiliate-card"
             >
               <div class="affiliate-image-wrap">
-                <img src="img/teneneng.png" />
+                <picture
+                  ><source srcset="img/teneneng.webp" type="image/webp" />
+                  <img src="img/teneneng.png" decoding="async" loading="lazy"
+                /></picture>
               </div>
               <div class="affiliate-info">
                 <div class="affiliate-name">Teneneng</div>
@@ -806,7 +899,10 @@
               class="affiliate-card"
             >
               <div class="affiliate-image-wrap">
-                <img src="img/cincinsage.png" />
+                <picture
+                  ><source srcset="img/cincinsage.webp" type="image/webp" />
+                  <img src="img/cincinsage.png" decoding="async" loading="lazy"
+                /></picture>
               </div>
               <div class="affiliate-info">
                 <div class="affiliate-name">Cincin Sage</div>
@@ -819,7 +915,13 @@
               class="affiliate-card"
             >
               <div class="affiliate-image-wrap">
-                <img src="img/keycapssage.png" />
+                <picture
+                  ><source srcset="img/keycapssage.webp" type="image/webp" />
+                  <img
+                    src="img/keycapssage.png"
+                    decoding="async"
+                    loading="lazy"
+                /></picture>
               </div>
               <div class="affiliate-info">
                 <div class="affiliate-name">Keycaps Valorant</div>
@@ -832,7 +934,10 @@
               class="affiliate-card"
             >
               <div class="affiliate-image-wrap">
-                <img src="img/legosage.png" />
+                <picture
+                  ><source srcset="img/legosage.webp" type="image/webp" />
+                  <img src="img/legosage.png" decoding="async" loading="lazy"
+                /></picture>
               </div>
               <div class="affiliate-info">
                 <div class="affiliate-name">Lego Valorant</div>
@@ -845,7 +950,10 @@
               class="affiliate-card"
             >
               <div class="affiliate-image-wrap">
-                <img src="img/sageboneka.png" />
+                <picture
+                  ><source srcset="img/sageboneka.webp" type="image/webp" />
+                  <img src="img/sageboneka.png" decoding="async" loading="lazy"
+                /></picture>
               </div>
               <div class="affiliate-info">
                 <div class="affiliate-name">Boneka Valorant</div>
@@ -858,7 +966,10 @@
               class="affiliate-card"
             >
               <div class="affiliate-image-wrap">
-                <img src="img/bear.png" />
+                <picture
+                  ><source srcset="img/bear.webp" type="image/webp" />
+                  <img src="img/bear.png" decoding="async" loading="lazy"
+                /></picture>
               </div>
               <div class="affiliate-info">
                 <div class="affiliate-name">Tactibear Flex</div>
@@ -871,7 +982,13 @@
               class="affiliate-card"
             >
               <div class="affiliate-image-wrap">
-                <img src="img/chambercard.png" />
+                <picture
+                  ><source srcset="img/chambercard.webp" type="image/webp" />
+                  <img
+                    src="img/chambercard.png"
+                    decoding="async"
+                    loading="lazy"
+                /></picture>
               </div>
               <div class="affiliate-info">
                 <div class="affiliate-name">Stiker Kartu</div>
@@ -891,7 +1008,14 @@
 
         <div class="donate-options">
           <a href="https://saweria.co/Cokelatmanistiktok" class="donate-option">
-            <img src="img/saweria.png" alt="Saweria" />
+            <picture
+              ><source srcset="img/saweria.webp" type="image/webp" />
+              <img
+                src="img/saweria.png"
+                alt="Saweria"
+                decoding="async"
+                loading="lazy"
+            /></picture>
             <div>
               <strong>Saweria</strong>
               <span>Support, request, atau top up game.</span>
@@ -899,7 +1023,14 @@
           </a>
 
           <a href="https://sociabuzz.com/zkaofldk/tribe" class="donate-option">
-            <img src="img/sociabuzz.png" alt="Sociabuzz" />
+            <picture
+              ><source srcset="img/sociabuzz.webp" type="image/webp" />
+              <img
+                src="img/sociabuzz.png"
+                alt="Sociabuzz"
+                decoding="async"
+                loading="lazy"
+            /></picture>
             <div>
               <strong>Sociabuzz</strong>
               <span>Untuk support live stream.</span>
