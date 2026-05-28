@@ -1731,7 +1731,7 @@ a {
 
 .affiliate-carousel {
   display: flex;
-  gap: 14px;
+  gap: 12px;
   cursor: grab;
   overflow-x: auto;
   overflow-y: visible;
@@ -2079,9 +2079,11 @@ a {
   }
 
   .affiliate-card {
-    width: 148px;
-    min-width: 148px;
-    max-width: 148px;
+    width: 136px;
+
+    min-width: 136px;
+
+    max-width: 136px;
 
     border-radius: 18px;
   }
