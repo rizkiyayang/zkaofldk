@@ -496,6 +496,34 @@ a:hover img {
   transform: scale(1.15);
 }
 
+.avatar-wrap picture,
+.header-icons picture,
+.role-icons picture {
+  display: contents;
+}
+
+.shop-card-image picture,
+.affiliate-image-wrap picture,
+.pc-showcase picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.donate-option picture {
+  display: block;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+}
+
+.agent-card picture,
+.map-card picture,
+.weapon-card picture {
+  display: block;
+  width: 100%;
+}
+
 .header-glass {
   display: flex;
   gap: 16px;
