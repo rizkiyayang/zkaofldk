@@ -1340,7 +1340,7 @@ function returnToStartForPaymentChange(message) {
   elements.localPreview.classList.add("hidden");
   elements.paymentStatus.textContent = "Pending";
   elements.paymentInstructions.innerHTML = "";
-  setPaymentMessage("Ujian otomatis terbuka setelah pembayaran sukses.");
+  setPaymentMessage("");
   setStartMessage(message || "Silakan pilih metode pembayaran baru.");
   syncAmountPreset();
   elements.startPanel.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -1438,6 +1438,8 @@ function isQrisPayment(payment = {}) {
 function renderPayment(payment = {}, amount = 0) {
   const isQris = isQrisPayment(payment);
   const acquirer = paymentField(payment, "acquirer", "bank");
+  const billerCode = paymentField(payment, "billerCode", "biller_code");
+  const billKey = paymentField(payment, "billKey", "bill_key");
   const orderId = paymentField(payment, "orderId", "order_id") || state.orderId;
   const qrImageUrl = paymentField(
     payment,
@@ -1453,6 +1455,8 @@ function renderPayment(payment = {}, amount = 0) {
     "va_number",
     "permataVaNumber",
     "permata_va_number",
+    "paymentCode",
+    "payment_code",
   );
   const qrSrc = isQris
     ? qrisProxyUrl() || qrImageUrl || ""
@@ -1509,6 +1513,33 @@ function renderPayment(payment = {}, amount = 0) {
       </div>
     `
     : "";
+  const mandiriBill = billKey || billerCode
+    ? `
+      <div class="payment-line payment-line-va">
+        <div class="payment-line-main">
+          <span>Mandiri bill key</span>
+          <button class="payment-code-button" data-copy="${escapeHtml(billKey)}" type="button">
+            <span>${escapeHtml(billKey || "-")}</span>
+            <small>tap untuk salin</small>
+          </button>
+        </div>
+        <button class="payment-copy" data-copy="${escapeHtml(billKey)}" type="button">Salin</button>
+      </div>
+      <div class="payment-line">
+        <div class="payment-line-main">
+          <span>Biller code</span>
+          <strong>${escapeHtml(billerCode || "-")}</strong>
+        </div>
+      </div>
+    `
+    : "";
+  const missingCode = !isQris && !vaNumber && !billKey && !billerCode
+    ? `
+      <div class="payment-qr-fallback">
+        Kode bayar belum dikirim Midtrans. Klik Cek Status, atau pakai Ganti Metode untuk buat checkout baru.
+      </div>
+    `
+    : "";
   const helper = isQris
     ? "Scan QRIS dinamis ini dari e-wallet atau mobile banking."
     : "Tap nomor VA atau tombol Salin, lalu bayar sesuai bank yang dipilih.";
@@ -1520,6 +1551,8 @@ function renderPayment(payment = {}, amount = 0) {
       ${qrFallback}
       ${qrString}
       ${va}
+      ${mandiriBill}
+      ${missingCode}
       <div class="payment-line">
         <div class="payment-line-main">
           <span>Order ID</span>
@@ -1584,7 +1617,11 @@ elements.startForm.addEventListener("submit", async (event) => {
     elements.paymentPanel.classList.remove("hidden");
     elements.paymentStatus.textContent = data.status || "pending";
     renderPayment(state.payment, amount);
-    saveCheckoutSession({ status: data.status || "pending" });
+    saveCheckoutSession({
+      channel,
+      payment: state.payment,
+      status: data.status || "pending",
+    });
     setStartMessage("Checkout siap. Selesaikan pembayaran dulu ya.");
     setPaymentMessage("Menunggu pembayaran. Halaman akan cek otomatis.");
     startAutoStatusCheck();
@@ -1686,7 +1723,21 @@ async function checkPaymentStatus(options = {}) {
     if (!response.ok) throw new Error(data.message || "Status belum bisa dicek");
 
     elements.paymentStatus.textContent = statusLabel(data.status);
-    saveCheckoutSession({ status: data.status });
+
+    if (data.channel) state.channel = data.channel;
+    if (data.amount) state.amount = Number(data.amount);
+
+    if (data.payment) {
+      state.payment = data.payment;
+      renderPayment(state.payment, state.amount);
+    }
+
+    saveCheckoutSession({
+      amount: state.amount,
+      channel: state.channel,
+      payment: state.payment,
+      status: data.status,
+    });
 
     if (data.paid && data.quizToken) {
       stopAutoStatusCheck();
@@ -1711,9 +1762,7 @@ async function checkPaymentStatus(options = {}) {
     }
 
     setPaymentMessage(
-      auto
-        ? "Belum lunas. Auto cek tetap berjalan."
-        : "Belum lunas. Kalau baru bayar, tunggu beberapa detik lalu cek lagi.",
+      auto ? "Menunggu pembayaran..." : "Belum lunas. Coba lagi sebentar.",
     );
   } catch (error) {
     setPaymentMessage(
@@ -1730,15 +1779,20 @@ async function checkPaymentStatus(options = {}) {
 
 elements.checkPayment.addEventListener("click", () => checkPaymentStatus());
 
-elements.changePayment.addEventListener("click", async () => {
+let isChangingPayment = false;
+
+async function changePaymentMethod(trigger = elements.changePayment) {
+  if (isChangingPayment) return;
+
   if (!state.orderId || !state.email || state.isLocalPreview) {
     returnToStartForPaymentChange("Silakan pilih metode pembayaran baru.");
     return;
   }
 
-  const previousLabel = elements.changePayment.innerHTML;
+  const previousLabel = trigger?.innerHTML || "";
+  isChangingPayment = true;
   stopAutoStatusCheck();
-  elements.changePayment.disabled = true;
+  if (trigger) trigger.disabled = true;
   elements.checkPayment.disabled = true;
   setPaymentMessage("Membatalkan checkout lama...");
 
@@ -1779,13 +1833,25 @@ elements.changePayment.addEventListener("click", async () => {
 
     returnToStartForPaymentChange("Checkout lama dibatalkan. Pilih metode baru ya.");
   } catch (error) {
-    setPaymentMessage(error.message, true);
-    startAutoStatusCheck();
+    returnToStartForPaymentChange(
+      "Pilih metode baru. Checkout lama belum bisa dibatalkan otomatis; jangan bayar invoice lama.",
+    );
   } finally {
-    elements.changePayment.disabled = false;
+    isChangingPayment = false;
+    if (trigger) {
+      trigger.disabled = false;
+      trigger.innerHTML = previousLabel;
+    }
     elements.checkPayment.disabled = false;
-    elements.changePayment.innerHTML = previousLabel;
   }
+}
+
+document.addEventListener("click", (event) => {
+  const trigger = event.target.closest("#changePayment");
+  if (!trigger) return;
+
+  event.preventDefault();
+  changePaymentMethod(trigger);
 });
 
 elements.localPreview.addEventListener("click", () => {
@@ -1830,6 +1896,7 @@ function restoreCheckoutSession() {
   } else {
     elements.paymentInstructions.innerHTML = `
       <div class="payment-box">
+        <p class="payment-helper">Memuat ulang instruksi pembayaran...</p>
         <div class="payment-line">
           <div class="payment-line-main">
             <span>Order ID</span>
