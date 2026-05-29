@@ -1,8 +1,8 @@
 import {
   MIN_UAS_AMOUNT,
-  chargeMidtrans,
   cleanEmail,
   cleanName,
+  createSnapTransaction,
   createOrderId,
   createQuizToken,
   extractPaymentInstructions,
@@ -13,7 +13,7 @@ import {
   supabaseRequest,
 } from "../server/uas-core.mjs";
 
-const CHANNELS = new Set(["qris", "bca", "bni", "bri"]);
+const LEGACY_CHANNELS = new Set(["snap", "qris", "bca", "bni", "bri"]);
 
 async function fetchHandler(request) {
   if (request.method !== "POST") {
@@ -25,14 +25,15 @@ async function fetchHandler(request) {
     const name = cleanName(body.name);
     const email = cleanEmail(body.email);
     const amount = parseAmount(body.amount);
-    const channel = String(body.channel || "qris").toLowerCase();
+    const requestedChannel = String(body.channel || "snap").toLowerCase();
+    const channel = "snap";
 
     if (!name) return json({ error: "name_required" }, 400);
     if (!isValidEmail(email)) return json({ error: "email_invalid" }, 400);
     if (amount < MIN_UAS_AMOUNT) {
       return json({ error: "amount_minimum", minimum: MIN_UAS_AMOUNT }, 400);
     }
-    if (!CHANNELS.has(channel)) {
+    if (!LEGACY_CHANNELS.has(requestedChannel)) {
       return json({ error: "channel_invalid" }, 400);
     }
 
@@ -65,9 +66,8 @@ async function fetchHandler(request) {
       prefer: "return=representation",
     });
 
-    const midtrans = await chargeMidtrans({
+    const midtrans = await createSnapTransaction({
       amount,
-      channel,
       email,
       name,
       orderId,

@@ -116,9 +116,23 @@ function midtransBaseUrl() {
     : "https://api.sandbox.midtrans.com";
 }
 
+function midtransSnapBaseUrl() {
+  const isProduction = process.env.MIDTRANS_IS_PRODUCTION === "true";
+  return isProduction
+    ? "https://app.midtrans.com"
+    : "https://app.sandbox.midtrans.com";
+}
+
 export function midtransAuthHeader() {
   const serverKey = requireEnv("MIDTRANS_SERVER_KEY");
   return `Basic ${Buffer.from(`${serverKey}:`).toString("base64")}`;
+}
+
+function siteUrl(path = "/uas/") {
+  return `${(process.env.SITE_URL || "https://zkaofldk.vercel.app").replace(
+    /\/$/,
+    "",
+  )}${path}`;
 }
 
 export async function chargeMidtrans({
@@ -186,6 +200,73 @@ export async function chargeMidtrans({
   }
 
   return data;
+}
+
+export async function createSnapTransaction({
+  amount,
+  email,
+  name,
+  orderId,
+}) {
+  const finishUrl = siteUrl("/uas/");
+  const payload = {
+    transaction_details: {
+      order_id: orderId,
+      gross_amount: amount,
+    },
+    customer_details: {
+      first_name: name,
+      email,
+    },
+    item_details: [
+      {
+        id: "uas-valorant",
+        name: "UAS Valorant",
+        price: amount,
+        quantity: 1,
+      },
+    ],
+    callbacks: {
+      finish: finishUrl,
+    },
+    expiry: {
+      duration: 60,
+      unit: "minutes",
+    },
+    metadata: {
+      source: "uas",
+    },
+  };
+
+  const headers = {
+    Accept: "application/json",
+    Authorization: midtransAuthHeader(),
+    "Content-Type": "application/json",
+  };
+
+  if (process.env.SITE_URL) {
+    headers["X-Override-Notification"] =
+      `${process.env.SITE_URL.replace(/\/$/, "")}/api/uas-midtrans-webhook`;
+  }
+
+  const response = await fetch(`${midtransSnapBaseUrl()}/snap/v1/transactions`, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(payload),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.error_messages?.join(" ") || data.status_message || "Midtrans Snap failed");
+  }
+
+  return {
+    ...data,
+    order_id: orderId,
+    payment_type: "snap",
+    transaction_status: "pending",
+  };
 }
 
 export async function getMidtransStatus(orderId) {
@@ -297,9 +378,12 @@ export function extractPaymentInstructions(midtransPayload) {
     expiryTime: midtransPayload.expiry_time || null,
     grossAmount: midtransPayload.gross_amount,
     orderId: midtransPayload.order_id,
-    paymentType: midtransPayload.payment_type,
+    paymentType:
+      midtransPayload.payment_type || (midtransPayload.redirect_url ? "snap" : null),
     qrImageUrl: qrisImageUrlFromPayload(midtransPayload),
     qrString: midtransPayload.qr_string || null,
+    redirectUrl: midtransPayload.redirect_url || null,
+    snapToken: midtransPayload.token || null,
     status: midtransPayload.transaction_status,
     transactionId: midtransPayload.transaction_id,
     vaNumber: virtualAccount.vaNumber,

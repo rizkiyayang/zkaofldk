@@ -35,8 +35,12 @@ async function fetchHandler(request) {
       !isPaidStatus(order.payment_status, order.fraud_status) &&
       !isFinalStatus(order.payment_status)
     ) {
-      const statusPayload = await getMidtransStatus(orderId);
-      order = await markPaidAndMaybeSendReceipt(orderId, statusPayload);
+      try {
+        const statusPayload = await getMidtransStatus(orderId);
+        order = await markPaidAndMaybeSendReceipt(orderId, statusPayload);
+      } catch (error) {
+        if (order.channel !== "snap") throw error;
+      }
     }
 
     const paid = isPaidStatus(order.payment_status, order.fraud_status);
