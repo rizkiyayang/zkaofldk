@@ -30,7 +30,10 @@ export function cleanName(value) {
 }
 
 export function cleanEmail(value) {
-  return String(value || "").trim().toLowerCase().slice(0, 120);
+  return String(value || "")
+    .trim()
+    .toLowerCase()
+    .slice(0, 120);
 }
 
 export function isValidEmail(email) {
@@ -207,8 +210,12 @@ export async function getMidtransStatus(orderId) {
 
 export function extractPaymentInstructions(midtransPayload) {
   const qrAction =
-    midtransPayload.actions?.find((action) => action.name === "generate-qr-code") ||
-    midtransPayload.actions?.find((action) => /qr-code/i.test(action.url || ""));
+    midtransPayload.actions?.find(
+      (action) => action.name === "generate-qr-code",
+    ) ||
+    midtransPayload.actions?.find((action) =>
+      /qr-code/i.test(action.url || ""),
+    );
   const va = midtransPayload.va_numbers?.[0] || null;
 
   return {
@@ -286,7 +293,7 @@ export async function sendReceipt(order) {
             <tr><td style="padding:4px 12px 4px 0">Nominal</td><td><strong>${amount}</strong></td></tr>
             <tr><td style="padding:4px 12px 4px 0">Status</td><td><strong>Lunas</strong></td></tr>
           </table>
-          <p>Semangat ujiannya. Jangan sampai flash sendiri.</p>
+          <p>Semangat ujiannya. Jangan sampai flash diri sendiri ya.</p>
         </div>
       `,
     }),
