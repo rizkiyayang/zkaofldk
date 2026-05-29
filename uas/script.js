@@ -57,6 +57,75 @@ const SKILL_QUESTIONS = Object.entries(SKILL_SOURCE).flatMap(
     })),
 );
 
+const ULTIMATE_VOICE_LINES = [
+  ["You Want To Play? Let's Play", "Chamber"],
+  ["They Are So Dead!", "Chamber"],
+  ["Joke's Over, You're Dead!", "Phoenix"],
+  ["Come On, Let's Go!", "Phoenix"],
+  ["It's You And Me!", "Iso"],
+  ["No Distractions!", "Iso"],
+  ["Open Up The Sky!", "Brimstone"],
+  ["Prepare For Hellfire!", "Brimstone"],
+  ["It's All You, Lil' Homie!", "Gekko"],
+  ["Oye! Monster On The Loose!", "Gekko"],
+  ["I've Got Your Trail!", "Skye"],
+  ["Seek Them Out!", "Skye"],
+  ["Nowhere To Run!", "Sova"],
+  ["I Am The Hunter!", "Sova"],
+  ["Get Out Of My Way!", "Jett"],
+  ["Watch This!", "Jett"],
+  ["I'll Handle This!", "Yoru"],
+  ["Who's Next!", "Yoru"],
+  ["They Will Cower!", "Reyna"],
+  ["The Hunt Begins!", "Reyna"],
+  ["Fire In The Hole!", "Raze"],
+  ["Here Comes The Party!", "Raze"],
+  ["Face Your Fear!", "Fade"],
+  ["Nightmare, Take Them!", "Fade"],
+  ["My Territory, My Rules!", "Deadlock"],
+  ["Pull Them To Their Grave!", "Deadlock"],
+  ["I Suggest You Move!", "Harbor"],
+  ["Let's Turn The Tide!", "Harbor"],
+  ["Into The Deep!", "Harbor"],
+  ["Let's Go!", "Breach"],
+  ["Off Your Feet!", "Breach"],
+  ["Initiated!", "Killjoy"],
+  ["You Should Run!", "Killjoy"],
+  ["Don't Get In My Way!", "Viper"],
+  ["Welcome To My World!", "Viper"],
+  ["You...Are...Powerless!", "KAY/O"],
+  ["No One Walks Away!", "KAY/O"],
+  ["Where Is Everyone Hiding!", "Cypher"],
+  ["I Know Exactly Where You Are!", "Cypher"],
+  ["You Are Divided!", "Astra"],
+  ["World Divided!", "Astra"],
+  ["Watch Them Run!", "Omen"],
+  ["Scatter!", "Omen"],
+  ["You Will Not Kill My Allies!", "Sage"],
+  ["Your Duty Is Not Over!", "Sage"],
+  ["Here We Go!", "Neon"],
+  ["Hey! I'm Pissed!", "Neon"],
+  ["Back, Like I Never Left!", "Clove"],
+  ["You've Had Your Fun, My Turn!", "Clove"],
+  ["This Is How It Ends!", "Tejo"],
+  ["Go Ahead, Stand Your Ground!", "Tejo"],
+  ["Line Them Up! I'm Going In!", "Waylay"],
+  ["One! By! One!", "Waylay"],
+  ["Turn It All To Dust!", "Veto"],
+  ["Not Another Step!", "Veto"],
+  ["Bring Me The Arsenal!", "Vyse"],
+  ["Adapt, Or Die!", "Vyse"],
+];
+
+const ULTIMATE_VOICE_QUESTIONS = ULTIMATE_VOICE_LINES.map(([line, answer]) => ({
+  id: `voice-${slugId(answer)}-${slugId(line)}`,
+  answer,
+  group: "skill",
+  badge: "Voice Line Ulti",
+  title: `"${line}" itu ulti siapa?`,
+  choicePool: SKILL_AGENT_NAMES,
+}));
+
 const MAP_NAMES = [
   "Abyss",
   "Ascent",
@@ -404,7 +473,7 @@ const AGENT_QUESTIONS = [
     };
   }),
   ...AGENT_NORMAL_IMAGES.map(([slug, answer]) => ({
-    id: `agent-normal-${slugId(answer)}`,
+    id: `agent-normal-custom-${slugId(answer)}`,
     answer,
     fakeAnswer: AGENT_TRAP_FAKE_BY_REAL[answer],
     group: "agent",
@@ -418,10 +487,8 @@ const AGENT_QUESTIONS = [
     points: 25,
     choicePool: AGENT_NAMES,
   })),
-  ...AGENT_NAMES.filter(
-    (answer) => !AGENT_NORMAL_IMAGES.some(([, normal]) => normal === answer),
-  ).map((answer) => ({
-    id: `agent-normal-${slugId(answer)}`,
+  ...AGENT_NAMES.map((answer) => ({
+    id: `agent-normal-full-${slugId(answer)}`,
     answer,
     fakeAnswer: AGENT_TRAP_FAKE_BY_REAL[answer],
     group: "agent",
@@ -443,6 +510,7 @@ const QUESTION_BANK = [
   ...MAP_QUESTIONS,
   ...MAP_GAMEPLAY_QUESTIONS,
   ...SKILL_QUESTIONS,
+  ...ULTIMATE_VOICE_QUESTIONS,
   ...RANK_QUESTIONS,
   {
     id: "map-bind",
@@ -767,14 +835,20 @@ const RANK_ICONS = {
 };
 
 const state = {
+  amount: 0,
   answers: {},
   answerTimer: null,
+  channel: "",
   isAdvancing: false,
   isLocalPreview: false,
   leaderboard: SAMPLE_LEADERBOARD,
   current: 0,
   email: "",
   orderId: "",
+  payment: null,
+  paymentPollAttempts: 0,
+  paymentPollInFlight: false,
+  paymentPollTimer: null,
   quizToken: "",
   visualSeed: "",
 };
@@ -1166,6 +1240,22 @@ function selectedChannel() {
   return new FormData(elements.startForm).get("channel") || "qris";
 }
 
+function preloadQuizImages(questions) {
+  const sources = [
+    ...new Set(
+      questions
+        .flatMap((question) => [question.image, question.revealImage])
+        .filter(Boolean),
+    ),
+  ];
+
+  sources.forEach((source) => {
+    const image = new Image();
+    image.decoding = "async";
+    image.src = source;
+  });
+}
+
 function syncAmountPreset() {
   const amount = Number(elements.amountInput.value || 0);
 
@@ -1187,11 +1277,120 @@ function setPaymentMessage(text, isError = false) {
   elements.paymentMessage.style.color = isError ? "#d92d67" : "";
 }
 
-function renderPayment(payment, amount) {
-  const qr = payment.qrImageUrl
+const CHECKOUT_STORAGE_KEY = "uas-checkout-session-v2";
+const FINAL_PAYMENT_STATUSES = new Set(["cancel", "deny", "expire", "failure"]);
+
+function readCheckoutSession() {
+  try {
+    return JSON.parse(window.localStorage?.getItem(CHECKOUT_STORAGE_KEY) || "null");
+  } catch {
+    return null;
+  }
+}
+
+function saveCheckoutSession(extra = {}) {
+  if (!state.orderId || !state.email) return;
+
+  try {
+    window.localStorage?.setItem(
+      CHECKOUT_STORAGE_KEY,
+      JSON.stringify({
+        amount: state.amount,
+        channel: state.channel,
+        email: state.email,
+        orderId: state.orderId,
+        payment: state.payment,
+        savedAt: Date.now(),
+        status: elements.paymentStatus.textContent || "pending",
+        ...extra,
+      }),
+    );
+  } catch {
+    // localStorage can be unavailable in private modes; checkout still works.
+  }
+}
+
+function clearCheckoutSession() {
+  try {
+    window.localStorage?.removeItem(CHECKOUT_STORAGE_KEY);
+  } catch {
+    // no-op
+  }
+}
+
+function qrisProxyUrl() {
+  if (!state.orderId || !state.email) return "";
+
+  return `/api/uas-qris?orderId=${encodeURIComponent(
+    state.orderId,
+  )}&email=${encodeURIComponent(state.email)}`;
+}
+
+async function copyText(value, button) {
+  const text = String(value || "");
+  if (!text) return;
+
+  try {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(text);
+    } else {
+      const input = document.createElement("textarea");
+      input.value = text;
+      input.setAttribute("readonly", "");
+      input.style.position = "fixed";
+      input.style.opacity = "0";
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand("copy");
+      input.remove();
+    }
+
+    if (button) {
+      const previous = button.innerHTML;
+      button.innerHTML = button.classList.contains("payment-code-button")
+        ? `<span>${escapeHtml(text)}</span><small>Tersalin</small>`
+        : "Tersalin";
+      window.setTimeout(() => {
+        button.innerHTML = previous;
+      }, 1200);
+    }
+  } catch {
+    if (button) button.innerHTML = "Gagal";
+  }
+}
+
+function bindPaymentCopies() {
+  elements.paymentInstructions.querySelectorAll("[data-copy]").forEach((button) => {
+    button.addEventListener("click", () => {
+      copyText(button.dataset.copy, button);
+    });
+  });
+}
+
+function renderPayment(payment = {}, amount = 0) {
+  const isQris = payment.paymentType === "qris";
+  const qrSrc = isQris ? qrisProxyUrl() || payment.qrImageUrl : "";
+  const qr = qrSrc
     ? `
       <div class="payment-qr">
-        <img src="${payment.qrImageUrl}" alt="QRIS pembayaran UAS Valorant" />
+        <img src="${escapeHtml(qrSrc)}" alt="QRIS pembayaran UAS Valorant" />
+      </div>
+    `
+    : isQris
+      ? `
+        <div class="payment-qr-fallback">
+          QRIS belum mengirim gambar. Pilih VA kalau ingin kode bayar yang bisa disalin.
+        </div>
+      `
+    : "";
+  const qrString = payment.qrString
+    ? `
+      <div class="payment-line payment-line-va">
+        <div class="payment-line-main">
+          <span>QR string</span>
+          <strong>Siap disalin kalau QR tidak tampil.</strong>
+        </div>
+        <button class="payment-copy" data-copy="${escapeHtml(payment.qrString)}" type="button">Salin</button>
       </div>
     `
     : "";
@@ -1199,26 +1398,45 @@ function renderPayment(payment, amount) {
   const va = payment.vaNumber
     ? `
       <div class="payment-line">
-        <span>${escapeHtml((payment.acquirer || "VA").toUpperCase())}</span>
-        <strong>${escapeHtml(payment.vaNumber)}</strong>
+        <div class="payment-line-main">
+          <span>${escapeHtml((payment.acquirer || "VA").toUpperCase())} Virtual Account</span>
+          <button class="payment-code-button" data-copy="${escapeHtml(payment.vaNumber)}" type="button">
+            <span>${escapeHtml(payment.vaNumber)}</span>
+            <small>tap untuk salin</small>
+          </button>
+        </div>
+        <button class="payment-copy" data-copy="${escapeHtml(payment.vaNumber)}" type="button">Salin</button>
       </div>
     `
     : "";
+  const helper = isQris
+    ? "Scan QRIS dinamis ini dari e-wallet atau mobile banking."
+    : "Tap nomor VA atau tombol Salin, lalu bayar sesuai bank yang dipilih.";
 
   elements.paymentInstructions.innerHTML = `
     <div class="payment-box">
+      <p class="payment-helper">${helper}</p>
       ${qr}
+      ${qrString}
       ${va}
       <div class="payment-line">
-        <span>Order ID</span>
-        <strong>${escapeHtml(payment.orderId || state.orderId)}</strong>
+        <div class="payment-line-main">
+          <span>Order ID</span>
+          <button class="payment-order-button" data-copy="${escapeHtml(payment.orderId || state.orderId)}" type="button">
+            ${escapeHtml(payment.orderId || state.orderId)}
+          </button>
+        </div>
+        <button class="payment-copy" data-copy="${escapeHtml(payment.orderId || state.orderId)}" type="button">Salin</button>
       </div>
       <div class="payment-line">
-        <span>Nominal</span>
-        <strong>${formatRupiah(amount)}</strong>
+        <div class="payment-line-main">
+          <span>Nominal</span>
+          <strong>${formatRupiah(amount)}</strong>
+        </div>
       </div>
     </div>
   `;
+  bindPaymentCopies();
 }
 
 elements.startForm.addEventListener("submit", async (event) => {
@@ -1255,14 +1473,20 @@ elements.startForm.addEventListener("submit", async (event) => {
 
     if (!response.ok) throw new Error(data.message || "Checkout gagal dibuat");
 
+    state.amount = amount;
+    state.channel = channel;
     state.email = email;
     state.orderId = data.orderId;
+    state.payment = data.payment || {};
     elements.startPanel.classList.add("hidden");
     elements.paymentPanel.classList.remove("hidden");
     elements.paymentStatus.textContent = data.status || "pending";
-    renderPayment(data.payment, amount);
+    renderPayment(state.payment, amount);
+    saveCheckoutSession({ status: data.status || "pending" });
     setStartMessage("Checkout siap. Selesaikan pembayaran dulu ya.");
-    setPaymentMessage("Klik cek status setelah bayar. Sistem juga menerima webhook Midtrans otomatis.");
+    setPaymentMessage("Menunggu pembayaran. Halaman akan cek otomatis.");
+    startAutoStatusCheck();
+    checkPaymentStatus({ auto: true, silent: true });
     elements.paymentPanel.scrollIntoView({ behavior: "smooth", block: "start" });
   } catch (error) {
     setStartMessage(error.message, true);
@@ -1286,14 +1510,63 @@ elements.startForm.addEventListener("submit", async (event) => {
   }
 });
 
-async function checkPaymentStatus() {
+function stopAutoStatusCheck() {
+  if (!state.paymentPollTimer) return;
+  window.clearTimeout(state.paymentPollTimer);
+  state.paymentPollTimer = null;
+}
+
+function startAutoStatusCheck() {
+  stopAutoStatusCheck();
+  state.paymentPollAttempts = 0;
+
+  const tick = async () => {
+    if (!state.orderId || elements.paymentPanel.classList.contains("hidden")) {
+      stopAutoStatusCheck();
+      return;
+    }
+
+    state.paymentPollAttempts += 1;
+    await checkPaymentStatus({ auto: true, silent: true });
+
+    if (!state.orderId || state.paymentPollAttempts >= 240) {
+      stopAutoStatusCheck();
+      return;
+    }
+
+    state.paymentPollTimer = window.setTimeout(tick, 3000);
+  };
+
+  state.paymentPollTimer = window.setTimeout(tick, 1200);
+}
+
+function statusLabel(status) {
+  const normalized = String(status || "").toLowerCase();
+  if (normalized === "settlement" || normalized === "capture") return "Lunas";
+  if (normalized === "pending" || normalized === "created") return "Pending";
+  if (normalized === "expire") return "Expired";
+  return status || "Pending";
+}
+
+async function checkPaymentStatus(options = {}) {
+  const silent = Boolean(options.silent);
+  const auto = Boolean(options.auto);
+
+  if (state.paymentPollInFlight) return;
+
   if (!state.orderId || !state.email) {
-    setPaymentMessage("Order belum dibuat.", true);
+    if (!silent) setPaymentMessage("Order belum dibuat.", true);
     return;
   }
 
-  elements.checkPayment.disabled = true;
-  setPaymentMessage("Mengecek status pembayaran...");
+  state.paymentPollInFlight = true;
+
+  if (auto) {
+    setPaymentMessage("Mengecek pembayaran otomatis...");
+  } else {
+    elements.checkPayment.disabled = true;
+    setPaymentMessage("Mengecek status pembayaran...");
+  }
 
   try {
     const response = await fetch(API.status, {
@@ -1310,22 +1583,50 @@ async function checkPaymentStatus() {
 
     if (!response.ok) throw new Error(data.message || "Status belum bisa dicek");
 
-    elements.paymentStatus.textContent = data.status;
+    elements.paymentStatus.textContent = statusLabel(data.status);
+    saveCheckoutSession({ status: data.status });
 
     if (data.paid && data.quizToken) {
+      stopAutoStatusCheck();
+      saveCheckoutSession({ quizToken: data.quizToken, status: data.status });
+      setPaymentMessage("Pembayaran sukses. Membuka ujian...");
       unlockQuiz(data.quizToken);
       return;
     }
 
-    setPaymentMessage("Belum lunas. Kalau baru bayar, tunggu beberapa detik lalu cek lagi.");
+    if (data.submitted) {
+      clearCheckoutSession();
+      stopAutoStatusCheck();
+      setPaymentMessage("Ujian dari pembayaran ini sudah pernah disubmit.", true);
+      return;
+    }
+
+    if (FINAL_PAYMENT_STATUSES.has(data.status)) {
+      clearCheckoutSession();
+      stopAutoStatusCheck();
+      setPaymentMessage("Checkout sudah tidak aktif. Buat checkout baru ya.", true);
+      return;
+    }
+
+    setPaymentMessage(
+      auto
+        ? "Belum lunas. Auto cek tetap berjalan."
+        : "Belum lunas. Kalau baru bayar, tunggu beberapa detik lalu cek lagi.",
+    );
   } catch (error) {
-    setPaymentMessage(error.message, true);
+    setPaymentMessage(
+      auto
+        ? "Auto cek belum berhasil. Tetap akan dicoba lagi."
+        : error.message,
+      !auto,
+    );
   } finally {
-    elements.checkPayment.disabled = false;
+    state.paymentPollInFlight = false;
+    if (!auto) elements.checkPayment.disabled = false;
   }
 }
 
-elements.checkPayment.addEventListener("click", checkPaymentStatus);
+elements.checkPayment.addEventListener("click", () => checkPaymentStatus());
 
 elements.localPreview.addEventListener("click", () => {
   unlockQuiz(`local-preview-${Date.now()}`, true);
@@ -1348,6 +1649,58 @@ elements.amountPresets.forEach((button) => {
 
 elements.amountInput.addEventListener("input", syncAmountPreset);
 
+function restoreCheckoutSession() {
+  const saved = readCheckoutSession();
+  if (!saved?.orderId || !saved?.email) return;
+
+  state.amount = Number(saved.amount || 0);
+  state.channel = saved.channel || "";
+  state.email = saved.email;
+  state.orderId = saved.orderId;
+  state.payment = saved.payment || null;
+
+  elements.introPanel.classList.add("hidden");
+  elements.leaderboardPanel.classList.add("hidden");
+  elements.startPanel.classList.add("hidden");
+  elements.paymentPanel.classList.remove("hidden");
+  elements.paymentStatus.textContent = statusLabel(saved.status);
+
+  if (state.payment) {
+    renderPayment(state.payment, state.amount);
+  } else {
+    elements.paymentInstructions.innerHTML = `
+      <div class="payment-box">
+        <div class="payment-line">
+          <div class="payment-line-main">
+            <span>Order ID</span>
+            <button class="payment-order-button" data-copy="${escapeHtml(state.orderId)}" type="button">
+              ${escapeHtml(state.orderId)}
+            </button>
+          </div>
+          <button class="payment-copy" data-copy="${escapeHtml(state.orderId)}" type="button">Salin</button>
+        </div>
+      </div>
+    `;
+    bindPaymentCopies();
+  }
+
+  setPaymentMessage("Melanjutkan checkout tersimpan. Halaman akan cek otomatis.");
+  startAutoStatusCheck();
+  checkPaymentStatus({ auto: true, silent: true });
+}
+
+window.addEventListener("focus", () => {
+  if (state.orderId && !elements.paymentPanel.classList.contains("hidden")) {
+    checkPaymentStatus({ auto: true, silent: true });
+  }
+});
+
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden && state.orderId && !elements.paymentPanel.classList.contains("hidden")) {
+    checkPaymentStatus({ auto: true, silent: true });
+  }
+});
+
 function questionMedia(question, answered) {
   if (!question.type) return "";
 
@@ -1360,10 +1713,12 @@ function questionMedia(question, answered) {
   const imageSrc = answered && question.revealImage ? question.revealImage : question.image;
   const imageStyle = questionImageStyle(question, answered);
   const imageStyleAttr = imageStyle ? ` style="${imageStyle}"` : "";
+  const loading = answered ? "lazy" : "eager";
+  const fetchPriority = answered ? "auto" : "high";
 
   return `
     <div class="question-media ${mediaClass} ${revealedClass}">
-      <img class="${imageClass}" src="${imageSrc}" alt="" decoding="async" loading="lazy"${imageStyleAttr} />
+      <img class="${imageClass}" src="${imageSrc}" alt="" decoding="async" loading="${loading}" fetchpriority="${fetchPriority}"${imageStyleAttr} />
     </div>
   `;
 }
@@ -1427,6 +1782,7 @@ function unlockQuiz(token, isLocalPreview = false) {
   state.isLocalPreview = isLocalPreview;
   state.visualSeed = `${Date.now()}:${Math.random()}`;
   QUIZ_QUESTIONS = selectQuizQuestions(token);
+  preloadQuizImages(QUIZ_QUESTIONS);
   elements.startPanel.classList.add("hidden");
   elements.paymentPanel.classList.add("hidden");
   elements.examPanel.classList.remove("hidden");
@@ -1450,7 +1806,7 @@ function renderResult(result) {
         <strong>${result.score}</strong>
       </div>
       <p class="result-copy">${formatDuration(result.durationSeconds)}</p>
-    </div>
+      </div>
 
     <div class="result-actions">
       <button class="primary-button" id="shareResult" type="button">
@@ -1545,6 +1901,8 @@ async function submitExam() {
     if (!response.ok) throw new Error(data.message || "Submit gagal");
 
     await loadLeaderboard();
+    clearCheckoutSession();
+    stopAutoStatusCheck();
     renderResult(data);
   } catch (error) {
     state.isAdvancing = false;
@@ -1556,3 +1914,4 @@ async function submitExam() {
 elements.refreshLeaderboard.addEventListener("click", loadLeaderboard);
 
 loadLeaderboard();
+restoreCheckoutSession();
