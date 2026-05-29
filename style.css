@@ -1,8 +1,15 @@
 :root {
   --ease-apple: cubic-bezier(0.22, 1, 0.36, 1);
+  --font-main: "Poppins", "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+}
+html {
+  font-size: 15px;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 body {
-  font-family: "Poppins", Arial, sans-serif;
+  font-family: var(--font-main);
+  line-height: 1.45;
   text-align: center;
   margin: 0;
   padding: 24px 34px;
@@ -14,17 +21,18 @@ body {
   align-items: flex-start;
 }
 h1 {
-  font-size: 24px;
-  line-height: 1;
-  letter-spacing: -0.5px;
+  font-size: 22px;
+  line-height: 1.08;
+  letter-spacing: 0;
   margin: 0;
-  font-weight: 700;
+  font-weight: 800;
 }
 h2 {
-  font-size: 16px;
+  font-size: 14px;
+  line-height: 1.35;
   margin-top: 0;
   margin-bottom: 8px;
-  font-weight: 400;
+  font-weight: 600;
   color: #8a4b64;
 }
 
@@ -44,7 +52,8 @@ h2 {
   color: #5a2a3c;
   text-decoration: none;
   border-radius: 999px;
-  font-size: 17px;
+  font-size: 15px;
+  line-height: 1.25;
   font-weight: 600;
   box-shadow: 0 6px 14px rgba(255, 182, 213, 0.45);
   transition:
@@ -963,6 +972,55 @@ a {
 .merged-links a:hover .modern-arrow {
   transform: translateX(4px);
   background: rgba(255, 95, 162, 0.14);
+}
+
+.merged-links a.lita-link {
+  background: linear-gradient(135deg, #ff4fa3, #ff86c2);
+  border-color: rgba(255, 255, 255, 0.52);
+  box-shadow:
+    0 14px 28px rgba(255, 79, 163, 0.28),
+    0 0 18px rgba(255, 95, 162, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+.merged-links a.lita-link::after {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.28),
+    transparent
+  );
+}
+
+.merged-links a.lita-link .modern-icon,
+.merged-links a.lita-link .modern-arrow {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.32);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.32),
+    0 8px 18px rgba(160, 20, 89, 0.14);
+}
+
+.merged-links a.lita-link .modern-icon i,
+.merged-links a.lita-link .modern-arrow i,
+.merged-links a.lita-link .text,
+.merged-links a.lita-link .sub {
+  color: #fff;
+}
+
+.merged-links a.lita-link .sub {
+  opacity: 0.86;
+}
+
+.merged-links a.lita-link:hover {
+  box-shadow:
+    0 18px 34px rgba(255, 79, 163, 0.34),
+    0 0 20px rgba(255, 95, 162, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+.merged-links a.lita-link:hover .modern-arrow {
+  background: rgba(255, 255, 255, 0.26);
 }
 
 .shop-card-image::after {
@@ -2124,6 +2182,71 @@ a {
 }
 
 @media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+
+  body {
+    padding: 18px 22px;
+  }
+
+  h1 {
+    font-size: 20px;
+    line-height: 1.1;
+  }
+
+  h2 {
+    font-size: 13px;
+    line-height: 1.35;
+  }
+
+  .profile-bio,
+  .profile-bio-full {
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  .links a {
+    padding: 13px 14px;
+    font-size: 14px;
+    line-height: 1.25;
+  }
+
+  .links a .sub,
+  .links a.valorant .sub {
+    font-size: 12px;
+    line-height: 1.35;
+  }
+
+  .choice-label {
+    font-size: 10px;
+  }
+
+  .choice-title {
+    font-size: 16px;
+    line-height: 1.08;
+  }
+
+  .merged-links .text,
+  .shop-card .text {
+    font-size: 15px;
+    line-height: 1.15;
+  }
+
+  .merged-links .sub,
+  .shop-card .sub {
+    font-size: 12px;
+    line-height: 1.35;
+  }
+
+  .section-title {
+    font-size: 15px;
+  }
+
+  .donate-head h3 {
+    font-size: 21px;
+  }
+
   .carousel-nav {
     display: none;
   }
@@ -2189,5 +2312,23 @@ a {
 
   .shop-card-image img {
     object-position: center center;
+  }
+}
+
+@media (max-width: 380px) {
+  body {
+    padding: 16px 18px;
+  }
+
+  h1 {
+    font-size: 19px;
+  }
+
+  .choice-title {
+    font-size: 15px;
+  }
+
+  .links a {
+    font-size: 13px;
   }
 }

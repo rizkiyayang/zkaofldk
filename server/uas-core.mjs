@@ -113,7 +113,7 @@ function midtransBaseUrl() {
     : "https://api.sandbox.midtrans.com";
 }
 
-function midtransAuthHeader() {
+export function midtransAuthHeader() {
   const serverKey = requireEnv("MIDTRANS_SERVER_KEY");
   return `Basic ${Buffer.from(`${serverKey}:`).toString("base64")}`;
 }
@@ -206,13 +206,14 @@ export async function getMidtransStatus(orderId) {
 }
 
 export function extractPaymentInstructions(midtransPayload) {
-  const qrAction = midtransPayload.actions?.find(
-    (action) => action.name === "generate-qr-code",
-  );
+  const qrAction =
+    midtransPayload.actions?.find((action) => action.name === "generate-qr-code") ||
+    midtransPayload.actions?.find((action) => /qr-code/i.test(action.url || ""));
   const va = midtransPayload.va_numbers?.[0] || null;
 
   return {
     acquirer: midtransPayload.acquirer || va?.bank || null,
+    expiryTime: midtransPayload.expiry_time || null,
     grossAmount: midtransPayload.gross_amount,
     orderId: midtransPayload.order_id,
     paymentType: midtransPayload.payment_type,

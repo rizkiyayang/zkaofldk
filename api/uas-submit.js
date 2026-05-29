@@ -35,7 +35,7 @@ async function fetchHandler(request) {
       return json({ error: "already_submitted" }, 409);
     }
 
-    const graded = gradeUasAnswers(body.answers);
+    const graded = gradeUasAnswers(body.answers, token);
     const now = new Date();
     const startedAt = order.quiz_started_at
       ? new Date(order.quiz_started_at)
