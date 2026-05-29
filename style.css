@@ -74,6 +74,52 @@ h2 {
   margin: 0 6px;
   font-weight: 600;
 }
+
+.site-footer {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 26px auto 4px;
+  padding: 10px 14px;
+  color: #8a4b64;
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.site-footer picture,
+.site-footer img {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+}
+
+.site-footer img {
+  display: block;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 8px 18px rgba(255, 95, 162, 0.16);
+}
+
+.site-footer div {
+  display: grid;
+  gap: 2px;
+  text-align: left;
+}
+
+.site-footer strong {
+  color: #5a2a3c;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.2px;
+}
+
+.site-footer span {
+  color: #a06078;
+  font-size: 11px;
+  font-weight: 800;
+}
 .container {
   width: 100%;
   max-width: 480px;
@@ -511,9 +557,10 @@ a:hover img {
 }
 
 .donate-option picture {
-  display: block;
-  width: 42px;
-  height: 42px;
+  display: grid;
+  width: 64px;
+  height: 64px;
+  place-items: center;
   flex-shrink: 0;
 }
 
@@ -1023,11 +1070,12 @@ a {
 .donate-option {
   position: relative;
 
-  display: flex;
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
   align-items: center;
-  gap: 14px;
+  gap: 16px;
 
-  min-height: 92px;
+  min-height: 104px;
   padding: 16px 18px;
 
   border-radius: 24px;
@@ -1077,8 +1125,8 @@ a {
 }
 
 .donate-option img {
-  width: 62px;
-  height: 62px;
+  width: 64px;
+  height: 64px;
   object-fit: contain;
   flex-shrink: 0;
 
@@ -1088,6 +1136,7 @@ a {
 }
 
 .donate-option div {
+  min-width: 0;
   text-align: left;
 }
 
