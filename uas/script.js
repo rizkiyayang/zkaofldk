@@ -1231,7 +1231,7 @@ function selectQuizQuestions(seedText) {
       ...gameplayMapQuestions,
       ...splashMapQuestions,
       ...pickQuestions("weapon", 1, seed),
-      ...pickQuestions("skin", 2, seed, { uniqueAnswer: true }),
+      ...pickQuestions("skin", 1, seed, { uniqueAnswer: true }),
       ...pickQuestions("rank", 1, seed, { uniqueAnswer: true }),
     ],
     `${seed}:basic-order`,
