@@ -1,5 +1,6 @@
 import {
   cleanEmail,
+  extractPaymentInstructions,
   findOrderByOrderId,
   getMidtransStatus,
   isFinalStatus,
@@ -47,8 +48,13 @@ async function fetchHandler(request) {
     }
 
     return json({
+      amount: order.amount,
+      channel: order.channel,
       paid,
       orderId,
+      payment: order.midtrans_payload
+        ? extractPaymentInstructions(order.midtrans_payload)
+        : null,
       quizToken: paid && !order.submitted_at ? order.quiz_token : null,
       status: order.payment_status,
       submitted: Boolean(order.submitted_at),

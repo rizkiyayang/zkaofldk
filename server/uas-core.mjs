@@ -229,27 +229,80 @@ export async function expireMidtransOrder(orderId) {
   return data;
 }
 
-export function extractPaymentInstructions(midtransPayload) {
+export function qrisImageUrlFromPayload(midtransPayload = {}) {
   const qrAction =
     midtransPayload.actions?.find(
-      (action) => action.name === "generate-qr-code",
+      (action) => action.name === "generate-qr-code" && action.url,
     ) ||
     midtransPayload.actions?.find((action) =>
       /qr-code/i.test(action.url || ""),
     );
-  const va = midtransPayload.va_numbers?.[0] || null;
+
+  if (qrAction?.url) return qrAction.url;
+
+  if (
+    midtransPayload.payment_type === "qris" &&
+    midtransPayload.transaction_id
+  ) {
+    return `${midtransBaseUrl()}/v2/qris/${encodeURIComponent(
+      midtransPayload.transaction_id,
+    )}/qr-code`;
+  }
+
+  return null;
+}
+
+function firstPresent(...values) {
+  return values.find((value) => value !== undefined && value !== null && value !== "") || null;
+}
+
+function extractVirtualAccount(midtransPayload = {}) {
+  const va = Array.isArray(midtransPayload.va_numbers)
+    ? midtransPayload.va_numbers.find((item) => item?.va_number)
+    : null;
+  const billKey = firstPresent(midtransPayload.bill_key, midtransPayload.billKey);
+  const billerCode = firstPresent(
+    midtransPayload.biller_code,
+    midtransPayload.billerCode,
+  );
 
   return {
-    acquirer: midtransPayload.acquirer || va?.bank || null,
+    acquirer: firstPresent(
+      midtransPayload.acquirer,
+      va?.bank,
+      midtransPayload.bank,
+      billerCode ? "mandiri" : null,
+    ),
+    billerCode,
+    billKey,
+    vaNumber: firstPresent(
+      va?.va_number,
+      midtransPayload.va_number,
+      midtransPayload.permata_va_number,
+      midtransPayload.bca_va_number,
+      midtransPayload.bni_va_number,
+      midtransPayload.bri_va_number,
+      midtransPayload.payment_code,
+    ),
+  };
+}
+
+export function extractPaymentInstructions(midtransPayload) {
+  const virtualAccount = extractVirtualAccount(midtransPayload);
+
+  return {
+    acquirer: virtualAccount.acquirer,
+    billerCode: virtualAccount.billerCode,
+    billKey: virtualAccount.billKey,
     expiryTime: midtransPayload.expiry_time || null,
     grossAmount: midtransPayload.gross_amount,
     orderId: midtransPayload.order_id,
     paymentType: midtransPayload.payment_type,
-    qrImageUrl: qrAction?.url || null,
+    qrImageUrl: qrisImageUrlFromPayload(midtransPayload),
     qrString: midtransPayload.qr_string || null,
     status: midtransPayload.transaction_status,
     transactionId: midtransPayload.transaction_id,
-    vaNumber: va?.va_number || midtransPayload.permata_va_number || null,
+    vaNumber: virtualAccount.vaNumber,
   };
 }
 
@@ -335,11 +388,22 @@ export async function sendReceipt(order) {
 
 export async function markPaidAndMaybeSendReceipt(orderId, payload) {
   const paid = isPaidStatus(payload.transaction_status, payload.fraud_status);
+  const currentOrder = await findOrderByOrderId(orderId).catch(() => null);
+  const existingPayload = currentOrder?.midtrans_payload || {};
+  const midtransPayload = {
+    ...existingPayload,
+    ...payload,
+    actions: payload.actions || existingPayload.actions || null,
+    permata_va_number:
+      payload.permata_va_number || existingPayload.permata_va_number || null,
+    qr_string: payload.qr_string || existingPayload.qr_string || null,
+    va_numbers: payload.va_numbers || existingPayload.va_numbers || null,
+  };
   const patch = {
-    fraud_status: payload.fraud_status || null,
-    midtrans_payload: payload,
-    midtrans_transaction_id: payload.transaction_id || null,
-    payment_status: payload.transaction_status || "pending",
+    fraud_status: midtransPayload.fraud_status || null,
+    midtrans_payload: midtransPayload,
+    midtrans_transaction_id: midtransPayload.transaction_id || null,
+    payment_status: midtransPayload.transaction_status || "pending",
   };
 
   if (paid) {

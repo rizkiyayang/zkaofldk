@@ -89,6 +89,7 @@ async function fetchHandler(request) {
 
     return json({
       amount,
+      channel,
       orderId,
       payment: extractPaymentInstructions(midtrans),
       status: midtrans.transaction_status || "pending",

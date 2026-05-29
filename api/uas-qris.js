@@ -2,6 +2,7 @@ import {
   cleanEmail,
   findOrderByOrderId,
   midtransAuthHeader,
+  qrisImageUrlFromPayload,
 } from "../server/uas-core.mjs";
 
 async function fetchHandler(request) {
@@ -24,19 +25,13 @@ async function fetchHandler(request) {
       return Response.json({ error: "order_not_found" }, { status: 404 });
     }
 
-    const qrAction =
-      order.midtrans_payload?.actions?.find(
-        (action) => action.name === "generate-qr-code" && action.url,
-      ) ||
-      order.midtrans_payload?.actions?.find((action) =>
-        /qr-code/i.test(action.url || ""),
-      );
+    const qrImageUrl = qrisImageUrlFromPayload(order.midtrans_payload);
 
-    if (!qrAction) {
+    if (!qrImageUrl) {
       return Response.json({ error: "qris_not_available" }, { status: 404 });
     }
 
-    const qrResponse = await fetch(qrAction.url, {
+    const qrResponse = await fetch(qrImageUrl, {
       headers: {
         Accept: "image/png,image/*",
         Authorization: midtransAuthHeader(),
