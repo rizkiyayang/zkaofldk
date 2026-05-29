@@ -111,7 +111,7 @@ const UAS_ULTIMATE_VOICE_QUESTIONS = UAS_ULTIMATE_VOICE_LINES.map(
   ([line, answer]) => ({
     id: `voice-${slugId(answer)}-${slugId(line)}`,
     answer,
-    group: "skill",
+    group: "voice",
     points: 10,
   }),
 );
@@ -419,6 +419,36 @@ const UAS_AGENT_QUESTIONS = [
   })),
 ];
 
+const UAS_WEAPON_NAMES = [
+  "Classic",
+  "Shorty",
+  "Frenzy",
+  "Ghost",
+  "Sheriff",
+  "Stinger",
+  "Spectre",
+  "Bucky",
+  "Judge",
+  "Bulldog",
+  "Guardian",
+  "Phantom",
+  "Vandal",
+  "Marshal",
+  "Outlaw",
+  "Operator",
+  "Ares",
+  "Odin",
+  "Melee",
+  "Bandit",
+];
+
+const UAS_WEAPON_QUESTIONS = UAS_WEAPON_NAMES.map((answer) => ({
+  id: `weapon-${slugId(answer)}`,
+  answer,
+  group: "weapon",
+  points: 10,
+}));
+
 export const UAS_QUESTION_BANK = [
   ...UAS_MAP_QUESTIONS,
   ...UAS_MAP_GAMEPLAY_QUESTIONS,
@@ -435,14 +465,7 @@ export const UAS_QUESTION_BANK = [
   { id: "viper-wall", answer: "Toxic Screen", group: "skill", points: 10 },
   { id: "reyna-dismiss", answer: "Dismiss", group: "skill", points: 10 },
   { id: "breach-flash", answer: "Flashpoint", group: "skill", points: 10 },
-  { id: "weapon-vandal", answer: "Vandal", group: "weapon", points: 10 },
-  { id: "weapon-phantom", answer: "Phantom", group: "weapon", points: 10 },
-  { id: "weapon-operator", answer: "Operator", group: "weapon", points: 10 },
-  { id: "weapon-ghost", answer: "Ghost", group: "weapon", points: 10 },
-  { id: "weapon-spectre", answer: "Spectre", group: "weapon", points: 10 },
-  { id: "weapon-bucky", answer: "Bucky", group: "weapon", points: 10 },
-  { id: "weapon-ares", answer: "Ares", group: "weapon", points: 10 },
-  { id: "weapon-odin", answer: "Odin", group: "weapon", points: 10 },
+  ...UAS_WEAPON_QUESTIONS,
   { id: "trailblazer-owner", answer: "Skye", group: "skill", points: 10 },
   ...UAS_SKIN_QUESTIONS,
   { id: "voice-chamber", answer: "Chamber", group: "voice", points: 10 },
@@ -541,10 +564,11 @@ export function selectUasQuestions(seedText) {
   const basicQuestions = shuffleWithSeed(
     [
       ...pickQuestions("skill", 1, seed),
+      ...pickQuestions("voice", 1, seed),
       ...gameplayMapQuestions,
       ...splashMapQuestions,
       ...pickQuestions("weapon", 1, seed),
-      ...pickQuestions("skin", 2, seed, { uniqueAnswer: true }),
+      ...pickQuestions("skin", 1, seed, { uniqueAnswer: true }),
       ...pickQuestions("rank", 1, seed, { uniqueAnswer: true }),
     ],
     `${seed}:basic-order`,
