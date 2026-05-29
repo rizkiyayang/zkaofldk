@@ -1,4 +1,5 @@
 const API = {
+  cancel: "/api/uas-cancel",
   leaderboard: "/api/uas-leaderboard",
   start: "/api/uas-start",
   status: "/api/uas-status",
@@ -856,6 +857,7 @@ const state = {
 const elements = {
   amountInput: document.getElementById("amountInput"),
   amountPresets: document.querySelectorAll(".amount-presets button"),
+  changePayment: document.getElementById("changePayment"),
   checkPayment: document.getElementById("checkPayment"),
   emailInput: document.getElementById("emailInput"),
   examPanel: document.getElementById("examPanel"),
@@ -1318,6 +1320,32 @@ function clearCheckoutSession() {
   }
 }
 
+function resetCheckoutState() {
+  state.orderId = "";
+  state.payment = null;
+  state.paymentPollAttempts = 0;
+  state.paymentPollInFlight = false;
+  state.quizToken = "";
+}
+
+function returnToStartForPaymentChange(message) {
+  stopAutoStatusCheck();
+  clearCheckoutSession();
+  resetCheckoutState();
+
+  elements.paymentPanel.classList.add("hidden");
+  elements.examPanel.classList.add("hidden");
+  elements.resultPanel.classList.add("hidden");
+  elements.startPanel.classList.remove("hidden");
+  elements.localPreview.classList.add("hidden");
+  elements.paymentStatus.textContent = "Pending";
+  elements.paymentInstructions.innerHTML = "";
+  setPaymentMessage("Ujian otomatis terbuka setelah pembayaran sukses.");
+  setStartMessage(message || "Silakan pilih metode pembayaran baru.");
+  syncAmountPreset();
+  elements.startPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
 function qrisProxyUrl() {
   if (!state.orderId || !state.email) return "";
 
@@ -1367,45 +1395,117 @@ function bindPaymentCopies() {
   });
 }
 
+function bindPaymentImages() {
+  elements.paymentInstructions.querySelectorAll("[data-qr-fallback]").forEach((image) => {
+    image.addEventListener("error", () => {
+      const target = document.getElementById(image.dataset.qrFallback);
+      image.closest(".payment-qr")?.classList.add("hidden");
+      target?.classList.remove("hidden");
+    });
+  });
+}
+
+function paymentField(payment, ...keys) {
+  for (const key of keys) {
+    if (payment?.[key] !== undefined && payment[key] !== null) {
+      return payment[key];
+    }
+  }
+
+  return "";
+}
+
+function isQrisPayment(payment = {}) {
+  const paymentType = String(
+    paymentField(payment, "paymentType", "payment_type"),
+  ).toLowerCase();
+
+  return (
+    paymentType === "qris" ||
+    state.channel === "qris" ||
+    Boolean(
+      paymentField(
+        payment,
+        "qrImageUrl",
+        "qr_image_url",
+        "qrCodeUrl",
+        "qr_code_url",
+      ) || paymentField(payment, "qrString", "qr_string"),
+    )
+  );
+}
+
 function renderPayment(payment = {}, amount = 0) {
-  const isQris = payment.paymentType === "qris";
-  const qrSrc = isQris ? qrisProxyUrl() || payment.qrImageUrl : "";
+  const isQris = isQrisPayment(payment);
+  const acquirer = paymentField(payment, "acquirer", "bank");
+  const orderId = paymentField(payment, "orderId", "order_id") || state.orderId;
+  const qrImageUrl = paymentField(
+    payment,
+    "qrImageUrl",
+    "qr_image_url",
+    "qrCodeUrl",
+    "qr_code_url",
+  );
+  const qrStringValue = paymentField(payment, "qrString", "qr_string");
+  const vaNumber = paymentField(
+    payment,
+    "vaNumber",
+    "va_number",
+    "permataVaNumber",
+    "permata_va_number",
+  );
+  const qrSrc = isQris
+    ? qrisProxyUrl() || qrImageUrl || ""
+    : "";
   const qr = qrSrc
     ? `
       <div class="payment-qr">
-        <img src="${escapeHtml(qrSrc)}" alt="QRIS pembayaran UAS Valorant" />
+        <img
+          src="${escapeHtml(qrSrc)}"
+          alt="QRIS pembayaran UAS Valorant"
+          data-qr-fallback="qrisFallback"
+          decoding="async"
+          loading="eager"
+        />
       </div>
     `
     : isQris
       ? `
-        <div class="payment-qr-fallback">
+        <div class="payment-qr-fallback" id="qrisFallback">
           QRIS belum mengirim gambar. Pilih VA kalau ingin kode bayar yang bisa disalin.
         </div>
       `
     : "";
-  const qrString = payment.qrString
+  const qrFallback = qrSrc && isQris
     ? `
-      <div class="payment-line payment-line-va">
+      <div class="payment-qr-fallback hidden" id="qrisFallback">
+        Barcode QRIS belum bisa dimuat dari Midtrans. Coba refresh checkout ini, atau pilih metode VA.
+      </div>
+    `
+    : "";
+  const qrString = qrStringValue
+    ? `
+      <div class="payment-line">
         <div class="payment-line-main">
           <span>QR string</span>
           <strong>Siap disalin kalau QR tidak tampil.</strong>
         </div>
-        <button class="payment-copy" data-copy="${escapeHtml(payment.qrString)}" type="button">Salin</button>
+        <button class="payment-copy" data-copy="${escapeHtml(qrStringValue)}" type="button">Salin</button>
       </div>
     `
     : "";
 
-  const va = payment.vaNumber
+  const va = vaNumber
     ? `
-      <div class="payment-line">
+      <div class="payment-line payment-line-va">
         <div class="payment-line-main">
-          <span>${escapeHtml((payment.acquirer || "VA").toUpperCase())} Virtual Account</span>
-          <button class="payment-code-button" data-copy="${escapeHtml(payment.vaNumber)}" type="button">
-            <span>${escapeHtml(payment.vaNumber)}</span>
+          <span>${escapeHtml((acquirer || "VA").toUpperCase())} Virtual Account</span>
+          <button class="payment-code-button" data-copy="${escapeHtml(vaNumber)}" type="button">
+            <span>${escapeHtml(vaNumber)}</span>
             <small>tap untuk salin</small>
           </button>
         </div>
-        <button class="payment-copy" data-copy="${escapeHtml(payment.vaNumber)}" type="button">Salin</button>
+        <button class="payment-copy" data-copy="${escapeHtml(vaNumber)}" type="button">Salin</button>
       </div>
     `
     : "";
@@ -1417,16 +1517,17 @@ function renderPayment(payment = {}, amount = 0) {
     <div class="payment-box">
       <p class="payment-helper">${helper}</p>
       ${qr}
+      ${qrFallback}
       ${qrString}
       ${va}
       <div class="payment-line">
         <div class="payment-line-main">
           <span>Order ID</span>
-          <button class="payment-order-button" data-copy="${escapeHtml(payment.orderId || state.orderId)}" type="button">
-            ${escapeHtml(payment.orderId || state.orderId)}
+          <button class="payment-order-button" data-copy="${escapeHtml(orderId)}" type="button">
+            ${escapeHtml(orderId)}
           </button>
         </div>
-        <button class="payment-copy" data-copy="${escapeHtml(payment.orderId || state.orderId)}" type="button">Salin</button>
+        <button class="payment-copy" data-copy="${escapeHtml(orderId)}" type="button">Salin</button>
       </div>
       <div class="payment-line">
         <div class="payment-line-main">
@@ -1437,6 +1538,7 @@ function renderPayment(payment = {}, amount = 0) {
     </div>
   `;
   bindPaymentCopies();
+  bindPaymentImages();
 }
 
 elements.startForm.addEventListener("submit", async (event) => {
@@ -1627,6 +1729,64 @@ async function checkPaymentStatus(options = {}) {
 }
 
 elements.checkPayment.addEventListener("click", () => checkPaymentStatus());
+
+elements.changePayment.addEventListener("click", async () => {
+  if (!state.orderId || !state.email || state.isLocalPreview) {
+    returnToStartForPaymentChange("Silakan pilih metode pembayaran baru.");
+    return;
+  }
+
+  const previousLabel = elements.changePayment.innerHTML;
+  stopAutoStatusCheck();
+  elements.changePayment.disabled = true;
+  elements.checkPayment.disabled = true;
+  setPaymentMessage("Membatalkan checkout lama...");
+
+  try {
+    const response = await fetch(API.cancel, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: state.email,
+        orderId: state.orderId,
+      }),
+    });
+    const data = await readResponseJson(response);
+
+    if (response.status === 409 && data.submitted) {
+      setPaymentMessage("Ujian dari pembayaran ini sudah pernah disubmit.", true);
+      clearCheckoutSession();
+      return;
+    }
+
+    if (response.status === 409 && data.paid && data.quizToken) {
+      setPaymentMessage("Pembayaran sudah sukses. Membuka ujian...");
+      unlockQuiz(data.quizToken);
+      return;
+    }
+
+    if (!response.ok) {
+      throw new Error(data.message || "Metode belum bisa diganti");
+    }
+
+    if (data.paid && data.quizToken) {
+      setPaymentMessage("Pembayaran sudah sukses. Membuka ujian...");
+      unlockQuiz(data.quizToken);
+      return;
+    }
+
+    returnToStartForPaymentChange("Checkout lama dibatalkan. Pilih metode baru ya.");
+  } catch (error) {
+    setPaymentMessage(error.message, true);
+    startAutoStatusCheck();
+  } finally {
+    elements.changePayment.disabled = false;
+    elements.checkPayment.disabled = false;
+    elements.changePayment.innerHTML = previousLabel;
+  }
+});
 
 elements.localPreview.addEventListener("click", () => {
   unlockQuiz(`local-preview-${Date.now()}`, true);
