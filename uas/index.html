@@ -6,8 +6,8 @@
     <title>UAS Valorant • Ujian Akhir Season Valorant</title>
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
-    <link rel="stylesheet" href="style.css" />
-    <link rel="icon" type="image/x-icon" href="../img/icon.jpg" />
+    <link rel="stylesheet" href="/uas/style.css" />
+    <link rel="icon" type="image/x-icon" href="/img/icon.jpg" />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css"
@@ -15,45 +15,10 @@
   </head>
   <body>
     <main class="container">
-      <header class="header-glass">
-        <a href="/" class="back-link" aria-label="Kembali">
-          <i class="ri-arrow-left-line"></i>
-        </a>
-
-        <div class="avatar-wrap">
-          <picture>
-            <source srcset="../img/icon.webp" type="image/webp" />
-            <img
-              src="../img/icon.jpg"
-              alt="COKELAT MANIS"
-              class="profile-avatar"
-              decoding="async"
-              fetchpriority="high"
-            />
-          </picture>
-        </div>
-
-        <div class="profile-right">
-          <h1>COKELAT MANIS</h1>
-          <span class="username">@zkaofldk</span>
-        </div>
-      </header>
-
-      <p class="profile-bio">UAS Valorant • Ujian Akhir Season Valorant</p>
-
       <section class="uas-card" id="introPanel">
-        <span class="live-pill">10 soal</span>
-        <p class="eyebrow">COKELAT MANIS EXAM</p>
-        <h2>UAS</h2>
-        <p>
-          Tes kecil buat ngukur seberapa Valorant otak kamu. Donasi minimal 10k,
-          sekali bayar untuk sekali submit.
-        </p>
-        <div class="mini-stats" aria-label="Format ujian">
-          <span>7 soal basic</span>
-          <span>3 agent susah</span>
-          <span>rank Iron-Radiant</span>
-        </div>
+        <h2>UAS Valorant</h2>
+        <p class="intro-subtitle">Ujian Akhir Season Valorant</p>
+        <p class="intro-note">Donate min 10k untuk mulai ujian.</p>
         <button class="primary-button" id="openStart" type="button">
           <i class="ri-graduation-cap-line"></i>
           Mulai Ujian
@@ -64,7 +29,6 @@
         <div class="section-head">
           <div>
             <p class="eyebrow">Highscore</p>
-            <h3>Rank Peserta</h3>
           </div>
           <button class="icon-button" id="refreshLeaderboard" type="button">
             <i class="ri-refresh-line"></i>
@@ -79,7 +43,6 @@
         <div class="section-head">
           <div>
             <p class="eyebrow">Daftar Ujian</p>
-            <h3>Masuk UAS</h3>
           </div>
           <span class="minimum-pill">min. 10k</span>
         </div>
@@ -103,59 +66,87 @@
             name="email"
             autocomplete="email"
             inputmode="email"
-            placeholder="buat struk pembayaran"
+            placeholder="nama@gmail.com"
             required
             type="email"
           />
         </label>
 
         <label>
-          <span>Donasi</span>
-          <input
-            id="amountInput"
-            name="amount"
-            inputmode="numeric"
-            min="10000"
-            placeholder="10000"
-            required
-            type="number"
-            value="10000"
-          />
+          <span>Donate seikhlasnya</span>
+          <div class="amount-control">
+            <span>Rp</span>
+            <input
+              id="amountInput"
+              name="amount"
+              inputmode="numeric"
+              min="10000"
+              placeholder="10000"
+              required
+              step="1000"
+              type="number"
+              value="10000"
+            />
+          </div>
         </label>
+
+        <div class="amount-presets" aria-label="Pilihan nominal donasi">
+          <button class="is-selected" data-amount="10000" type="button">
+            10k
+          </button>
+          <button data-amount="25000" type="button">25k</button>
+          <button data-amount="50000" type="button">50k</button>
+        </div>
 
         <div class="channel-picker" role="radiogroup" aria-label="Metode bayar">
           <label>
             <input checked name="channel" type="radio" value="qris" />
-            <span><i class="ri-qr-code-line"></i> QRIS</span>
+            <span>
+              <span class="channel-icon"><i class="ri-qr-code-line"></i></span>
+              <span class="channel-copy">
+                <strong>QRIS</strong>
+                <small>scan kode</small>
+              </span>
+            </span>
           </label>
           <label>
             <input name="channel" type="radio" value="bca" />
-            <span>BCA VA</span>
+            <span>
+              <span class="channel-icon"><i class="ri-bank-line"></i></span>
+              <span class="channel-copy">
+                <strong>BCA</strong>
+                <small>VA</small>
+              </span>
+            </span>
           </label>
           <label>
             <input name="channel" type="radio" value="bni" />
-            <span>BNI VA</span>
+            <span>
+              <span class="channel-icon"><i class="ri-bank-line"></i></span>
+              <span class="channel-copy">
+                <strong>BNI</strong>
+                <small>VA</small>
+              </span>
+            </span>
           </label>
           <label>
             <input name="channel" type="radio" value="bri" />
-            <span>BRI VA</span>
+            <span>
+              <span class="channel-icon"><i class="ri-bank-line"></i></span>
+              <span class="channel-copy">
+                <strong>BRI</strong>
+                <small>VA</small>
+              </span>
+            </span>
           </label>
         </div>
-
-        <details class="format-details">
-          <summary>Format ujian</summary>
-          <p>
-            7 soal tebak map, skill, senjata, skin, dan voice line. 3 soal
-            terakhir tebak agent gabungan dengan poin paling besar.
-          </p>
-        </details>
 
         <button class="primary-button" type="submit">
           <i class="ri-bank-card-line"></i>
           Bayar & Buka Ujian
         </button>
         <p class="form-note" id="startMessage">
-          Satu pembayaran hanya untuk satu kali submit.
+          Satu pembayaran untuk satu kali ujian.
         </p>
       </form>
 
@@ -186,32 +177,27 @@
         <div class="section-head">
           <div>
             <p class="eyebrow">Ruang Ujian</p>
-            <h3>UAS Dimulai</h3>
           </div>
           <span class="progress-pill" id="progressPill">1/10</span>
         </div>
 
         <div class="question-card" id="questionCard"></div>
-
-        <div class="exam-actions">
-          <button class="ghost-button" id="prevQuestion" type="button">
-            <i class="ri-arrow-left-s-line"></i>
-            Sebelumnya
-          </button>
-          <button class="primary-button" id="nextQuestion" type="button">
-            Lanjut
-            <i class="ri-arrow-right-s-line"></i>
-          </button>
-          <button class="primary-button hidden" id="submitExam" type="button">
-            <i class="ri-send-plane-line"></i>
-            Submit
-          </button>
-        </div>
       </section>
 
       <section class="result-card hidden" id="resultPanel"></section>
+
+      <footer class="site-footer" aria-label="Copyright">
+        <picture>
+          <source srcset="/img/icon.webp" type="image/webp" />
+          <img src="/img/icon.jpg" alt="COKELAT MANIS" decoding="async" loading="lazy" />
+        </picture>
+        <div>
+          <strong>COKELAT MANIS</strong>
+          <span>&copy; 2026 @zkaofldk</span>
+        </div>
+      </footer>
     </main>
 
-    <script src="script.js"></script>
+    <script src="/uas/script.js"></script>
   </body>
 </html>
