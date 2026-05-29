@@ -208,6 +208,27 @@ export async function getMidtransStatus(orderId) {
   return data;
 }
 
+export async function expireMidtransOrder(orderId) {
+  const response = await fetch(
+    `${midtransBaseUrl()}/v2/${encodeURIComponent(orderId)}/expire`,
+    {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        Authorization: midtransAuthHeader(),
+      },
+    },
+  );
+
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    throw new Error(data.status_message || "Midtrans expire failed");
+  }
+
+  return data;
+}
+
 export function extractPaymentInstructions(midtransPayload) {
   const qrAction =
     midtransPayload.actions?.find(
