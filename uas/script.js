@@ -1239,7 +1239,7 @@ async function loadLeaderboard() {
 }
 
 function selectedChannel() {
-  return new FormData(elements.startForm).get("channel") || "qris";
+  return "snap";
 }
 
 function preloadQuizImages(questions) {
@@ -1435,7 +1435,21 @@ function isQrisPayment(payment = {}) {
   );
 }
 
+function isSnapPayment(payment = {}) {
+  return Boolean(
+    paymentField(payment, "redirectUrl", "redirect_url") ||
+      paymentField(payment, "snapToken", "token") ||
+      String(paymentField(payment, "paymentType", "payment_type")).toLowerCase() === "snap",
+  );
+}
+
+function snapRedirectUrl(payment = {}) {
+  return paymentField(payment, "redirectUrl", "redirect_url");
+}
+
 function renderPayment(payment = {}, amount = 0) {
+  const redirectUrl = snapRedirectUrl(payment);
+  const isSnap = isSnapPayment(payment);
   const isQris = isQrisPayment(payment);
   const acquirer = paymentField(payment, "acquirer", "bank");
   const billerCode = paymentField(payment, "billerCode", "biller_code");
@@ -1540,6 +1554,34 @@ function renderPayment(payment = {}, amount = 0) {
       </div>
     `
     : "";
+  if (isSnap && redirectUrl) {
+    elements.paymentInstructions.innerHTML = `
+      <div class="payment-box">
+        <div class="payment-line">
+          <div class="payment-line-main">
+            <span>Order ID</span>
+            <button class="payment-order-button" data-copy="${escapeHtml(orderId)}" type="button">
+              ${escapeHtml(orderId)}
+            </button>
+          </div>
+          <button class="payment-copy" data-copy="${escapeHtml(orderId)}" type="button">Salin</button>
+        </div>
+        <div class="payment-line">
+          <div class="payment-line-main">
+            <span>Nominal</span>
+            <strong>${formatRupiah(amount)}</strong>
+          </div>
+        </div>
+        <a class="primary-button payment-redirect-button" href="${escapeHtml(redirectUrl)}" data-midtrans-redirect>
+          <i class="ri-external-link-line"></i>
+          Buka Checkout Midtrans
+        </a>
+      </div>
+    `;
+    bindPaymentCopies();
+    return;
+  }
+
   const helper = isQris
     ? "Scan QRIS dinamis ini dari e-wallet atau mobile banking."
     : "Tap nomor VA atau tombol Salin, lalu bayar sesuai bank yang dipilih.";
@@ -1572,6 +1614,15 @@ function renderPayment(payment = {}, amount = 0) {
   `;
   bindPaymentCopies();
   bindPaymentImages();
+}
+
+function redirectToMidtrans(payment = state.payment) {
+  const redirectUrl = snapRedirectUrl(payment);
+  if (!redirectUrl) return;
+
+  window.setTimeout(() => {
+    window.location.href = redirectUrl;
+  }, 300);
 }
 
 elements.startForm.addEventListener("submit", async (event) => {
@@ -1609,7 +1660,7 @@ elements.startForm.addEventListener("submit", async (event) => {
     if (!response.ok) throw new Error(data.message || "Checkout gagal dibuat");
 
     state.amount = amount;
-    state.channel = channel;
+    state.channel = data.channel || channel;
     state.email = email;
     state.orderId = data.orderId;
     state.payment = data.payment || {};
@@ -1622,11 +1673,12 @@ elements.startForm.addEventListener("submit", async (event) => {
       payment: state.payment,
       status: data.status || "pending",
     });
-    setStartMessage("Checkout siap. Selesaikan pembayaran dulu ya.");
-    setPaymentMessage("Menunggu pembayaran. Halaman akan cek otomatis.");
+    setStartMessage("Checkout siap. Lanjutkan pembayaran di Midtrans.");
+    setPaymentMessage("Mengalihkan ke Midtrans...");
     startAutoStatusCheck();
     checkPaymentStatus({ auto: true, silent: true });
     elements.paymentPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+    redirectToMidtrans(state.payment);
   } catch (error) {
     setStartMessage(error.message, true);
 
@@ -1847,6 +1899,12 @@ async function changePaymentMethod(trigger = elements.changePayment) {
 }
 
 document.addEventListener("click", (event) => {
+  const redirectTrigger = event.target.closest("[data-midtrans-redirect]");
+  if (redirectTrigger) {
+    saveCheckoutSession();
+    return;
+  }
+
   const trigger = event.target.closest("#changePayment");
   if (!trigger) return;
 

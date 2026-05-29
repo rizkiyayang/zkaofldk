@@ -212,6 +212,7 @@ h3,
   color: #fff;
   background: linear-gradient(135deg, var(--pink-strong), #ff78bd);
   box-shadow: 0 14px 28px rgba(255, 79, 163, 0.25);
+  text-decoration: none;
 }
 
 .ghost-button {
