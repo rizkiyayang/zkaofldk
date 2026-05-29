@@ -610,6 +610,41 @@ const AGENT_QUESTIONS = [
   })),
 ];
 
+const WEAPON_NAMES = [
+  "Classic",
+  "Shorty",
+  "Frenzy",
+  "Ghost",
+  "Sheriff",
+  "Stinger",
+  "Spectre",
+  "Bucky",
+  "Judge",
+  "Bulldog",
+  "Guardian",
+  "Phantom",
+  "Vandal",
+  "Marshal",
+  "Outlaw",
+  "Operator",
+  "Ares",
+  "Odin",
+  "Melee",
+  "Bandit",
+];
+
+const WEAPON_QUESTIONS = WEAPON_NAMES.map((answer) => ({
+  id: `weapon-${slugId(answer)}`,
+  answer,
+  group: "weapon",
+  type: "image",
+  badge: "Tebak Senjata",
+  title: "Senjata apa dari potongan gambar ini?",
+  image: `/img/${slugId(answer)}.avif`,
+  imageClass: "crop-weapon",
+  choicePool: WEAPON_NAMES,
+}));
+
 // Edit stok soal di sini. Kalau jawaban benar diubah, samakan juga di
 // /server/uas-quiz.mjs supaya scoring server tetap benar.
 const QUESTION_BANK = [
@@ -701,94 +736,7 @@ const QUESTION_BANK = [
     title: "Flash milik Breach yang ditembak lewat tembok namanya apa?",
     choices: ["Flashpoint", "Fault Line", "Aftershock", "Rolling Thunder"],
   },
-  {
-    id: "weapon-vandal",
-    answer: "Vandal",
-    group: "weapon",
-    type: "image",
-    badge: "Tebak Senjata",
-    title: "Senjata apa dari potongan gambar ini?",
-    image: "/img/vandal.avif",
-    imageClass: "crop-weapon",
-    choices: ["Vandal", "Phantom", "Bulldog", "Guardian"],
-  },
-  {
-    id: "weapon-phantom",
-    answer: "Phantom",
-    group: "weapon",
-    type: "image",
-    badge: "Tebak Senjata",
-    title: "Senjata apa dari potongan gambar ini?",
-    image: "/img/phantom.avif",
-    imageClass: "crop-weapon",
-    choices: ["Phantom", "Vandal", "Spectre", "Guardian"],
-  },
-  {
-    id: "weapon-operator",
-    answer: "Operator",
-    group: "weapon",
-    type: "image",
-    badge: "Tebak Senjata",
-    title: "Senjata apa dari potongan gambar ini?",
-    image: "/img/operator.avif",
-    imageClass: "crop-weapon",
-    choices: ["Operator", "Marshal", "Outlaw", "Guardian"],
-  },
-  {
-    id: "weapon-ghost",
-    answer: "Ghost",
-    group: "weapon",
-    type: "image",
-    badge: "Tebak Senjata",
-    title: "Senjata apa dari potongan gambar ini?",
-    image: "/img/ghost.avif",
-    imageClass: "crop-weapon",
-    choices: ["Ghost", "Classic", "Sheriff", "Frenzy"],
-  },
-  {
-    id: "weapon-spectre",
-    answer: "Spectre",
-    group: "weapon",
-    type: "image",
-    badge: "Tebak Senjata",
-    title: "Senjata apa dari potongan gambar ini?",
-    image: "/img/spectre.avif",
-    imageClass: "crop-weapon",
-    choices: ["Spectre", "Stinger", "Bulldog", "Ares"],
-  },
-  {
-    id: "weapon-bucky",
-    answer: "Bucky",
-    group: "weapon",
-    type: "image",
-    badge: "Tebak Senjata",
-    title: "Senjata apa dari potongan gambar ini?",
-    image: "/img/bucky.avif",
-    imageClass: "crop-weapon",
-    choices: ["Bucky", "Judge", "Shorty", "Ares"],
-  },
-  {
-    id: "weapon-ares",
-    answer: "Ares",
-    group: "weapon",
-    type: "image",
-    badge: "Tebak Senjata",
-    title: "Senjata apa dari potongan gambar ini?",
-    image: "/img/ares.avif",
-    imageClass: "crop-weapon",
-    choices: ["Ares", "Odin", "Spectre", "Bulldog"],
-  },
-  {
-    id: "weapon-odin",
-    answer: "Odin",
-    group: "weapon",
-    type: "image",
-    badge: "Tebak Senjata",
-    title: "Senjata apa dari potongan gambar ini?",
-    image: "/img/odin.avif",
-    imageClass: "crop-weapon",
-    choices: ["Odin", "Ares", "Operator", "Guardian"],
-  },
+  ...WEAPON_QUESTIONS,
   {
     id: "trailblazer-owner",
     answer: "Skye",
@@ -1172,7 +1120,7 @@ const AGENT_NORMAL_FOCUS_POINTS = [
 
 function questionImageStyle(question, answered) {
   if (answered) {
-    if (question.group === "agent") {
+    if (question.group === "agent" && question.variant === "normal") {
       return "transform:scale(1.15);transform-origin:center center";
     }
     return "";
