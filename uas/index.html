@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UAS Valorant • Ujian Akhir Season Valorant</title>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" type="image/x-icon" href="../img/icon.jpg" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css"
+    />
+  </head>
+  <body>
+    <main class="container">
+      <header class="header-glass">
+        <a href="/" class="back-link" aria-label="Kembali">
+          <i class="ri-arrow-left-line"></i>
+        </a>
+
+        <div class="avatar-wrap">
+          <picture>
+            <source srcset="../img/icon.webp" type="image/webp" />
+            <img
+              src="../img/icon.jpg"
+              alt="COKELAT MANIS"
+              class="profile-avatar"
+              decoding="async"
+              fetchpriority="high"
+            />
+          </picture>
+        </div>
+
+        <div class="profile-right">
+          <h1>COKELAT MANIS</h1>
+          <span class="username">@zkaofldk</span>
+        </div>
+      </header>
+
+      <p class="profile-bio">UAS Valorant • Ujian Akhir Season Valorant</p>
+
+      <section class="uas-card" id="introPanel">
+        <span class="live-pill">10 soal</span>
+        <p class="eyebrow">COKELAT MANIS EXAM</p>
+        <h2>UAS</h2>
+        <p>
+          Tes kecil buat ngukur seberapa Valorant otak kamu. Donasi minimal 10k,
+          sekali bayar untuk sekali submit.
+        </p>
+        <div class="mini-stats" aria-label="Format ujian">
+          <span>7 soal basic</span>
+          <span>3 agent susah</span>
+          <span>rank Iron-Radiant</span>
+        </div>
+        <button class="primary-button" id="openStart" type="button">
+          <i class="ri-graduation-cap-line"></i>
+          Mulai Ujian
+        </button>
+      </section>
+
+      <section class="leaderboard-panel" id="leaderboardPanel">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Highscore</p>
+            <h3>Rank Peserta</h3>
+          </div>
+          <button class="icon-button" id="refreshLeaderboard" type="button">
+            <i class="ri-refresh-line"></i>
+          </button>
+        </div>
+        <div class="leaderboard" id="leaderboard">
+          <div class="loading-row">Memuat highscore...</div>
+        </div>
+      </section>
+
+      <form class="start-card hidden" id="startForm">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Daftar Ujian</p>
+            <h3>Masuk UAS</h3>
+          </div>
+          <span class="minimum-pill">min. 10k</span>
+        </div>
+
+        <label>
+          <span>Nama</span>
+          <input
+            id="nameInput"
+            name="name"
+            autocomplete="name"
+            maxlength="40"
+            placeholder="Nama di highscore"
+            required
+          />
+        </label>
+
+        <label>
+          <span>Email</span>
+          <input
+            id="emailInput"
+            name="email"
+            autocomplete="email"
+            inputmode="email"
+            placeholder="buat struk pembayaran"
+            required
+            type="email"
+          />
+        </label>
+
+        <label>
+          <span>Donasi</span>
+          <input
+            id="amountInput"
+            name="amount"
+            inputmode="numeric"
+            min="10000"
+            placeholder="10000"
+            required
+            type="number"
+            value="10000"
+          />
+        </label>
+
+        <div class="channel-picker" role="radiogroup" aria-label="Metode bayar">
+          <label>
+            <input checked name="channel" type="radio" value="qris" />
+            <span><i class="ri-qr-code-line"></i> QRIS</span>
+          </label>
+          <label>
+            <input name="channel" type="radio" value="bca" />
+            <span>BCA VA</span>
+          </label>
+          <label>
+            <input name="channel" type="radio" value="bni" />
+            <span>BNI VA</span>
+          </label>
+          <label>
+            <input name="channel" type="radio" value="bri" />
+            <span>BRI VA</span>
+          </label>
+        </div>
+
+        <details class="format-details">
+          <summary>Format ujian</summary>
+          <p>
+            7 soal tebak map, skill, senjata, skin, dan voice line. 3 soal
+            terakhir tebak agent gabungan dengan poin paling besar.
+          </p>
+        </details>
+
+        <button class="primary-button" type="submit">
+          <i class="ri-bank-card-line"></i>
+          Bayar & Buka Ujian
+        </button>
+        <p class="form-note" id="startMessage">
+          Satu pembayaran hanya untuk satu kali submit.
+        </p>
+      </form>
+
+      <section class="payment-card hidden" id="paymentPanel">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Checkout</p>
+            <h3>Instruksi Bayar</h3>
+          </div>
+          <span class="status-pill" id="paymentStatus">Pending</span>
+        </div>
+        <div id="paymentInstructions"></div>
+        <div class="payment-actions">
+          <button class="primary-button" id="checkPayment" type="button">
+            <i class="ri-search-eye-line"></i>
+            Cek Status
+          </button>
+          <button class="ghost-button hidden" id="localPreview" type="button">
+            Preview lokal
+          </button>
+        </div>
+        <p class="form-note" id="paymentMessage">
+          Ujian otomatis terbuka setelah pembayaran sukses.
+        </p>
+      </section>
+
+      <section class="exam-card hidden" id="examPanel">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Ruang Ujian</p>
+            <h3>UAS Dimulai</h3>
+          </div>
+          <span class="progress-pill" id="progressPill">1/10</span>
+        </div>
+
+        <div class="question-card" id="questionCard"></div>
+
+        <div class="exam-actions">
+          <button class="ghost-button" id="prevQuestion" type="button">
+            <i class="ri-arrow-left-s-line"></i>
+            Sebelumnya
+          </button>
+          <button class="primary-button" id="nextQuestion" type="button">
+            Lanjut
+            <i class="ri-arrow-right-s-line"></i>
+          </button>
+          <button class="primary-button hidden" id="submitExam" type="button">
+            <i class="ri-send-plane-line"></i>
+            Submit
+          </button>
+        </div>
+      </section>
+
+      <section class="result-card hidden" id="resultPanel"></section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
