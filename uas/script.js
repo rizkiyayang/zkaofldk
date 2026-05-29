@@ -14,35 +14,40 @@ function slugId(value) {
 }
 
 const SKILL_SOURCE = {
-  "Astra": ["Nova Pulse","Nebula  / Dissipate","Gravity Well","Astral Form / Cosmic Divide"],
-  "Breach": ["Flashpoint","Fault Line","Aftershock","Rolling Thunder"],
-  "Brimstone": ["Stim Beacon","Incendiary","Sky Smoke","Orbital Strike"],
-  "Chamber": ["Rendezvous","Trademark","Headhunter","Tour De Force"],
-  "Clove": ["Pick-me-up","Ruse","Not Dead Yet","Meddle"],
-  "Cypher": ["Cyber Cage","Spycam","Trapwire","Neural Theft"],
-  "Deadlock": ["Sonic Sensor","Barrier Mesh","GravNet","Annihilation"],
-  "Fade": ["Seize","Haunt","Prowler","Nightfall"],
-  "Gekko": ["Wingman","Dizzy","Mosh Pit","Thrash"],
-  "Harbor": ["High Tide","Storm Surge","Cove","Reckoning"],
-  "Iso": ["Undercut","Kill Contract","Double Tap","Contingency"],
-  "Jett": ["Updraft","Tailwind","Cloudburst","Blade Storm"],
-  "KAY/O": ["FRAG/ment","FLASH/drive","ZERO/point","NULL/cmd"],
-  "Killjoy": ["Nanoswarm","ALARMBOT","TURRET","Lockdown"],
-  "Miks": ["M-pulse","Waveform","Harmonize","Bassquake"],
-  "Neon": ["High Gear","Relay Bolt","Fast Lane","Overdrive"],
-  "Omen": ["Paranoia","Dark Cover","Shrouded Step","From the Shadows"],
-  "Phoenix": ["Blaze","Hot Hands","Curveball","Run it Back"],
-  "Raze": ["Blast Pack","Paint Shells","Boom Bot","Showstopper"],
-  "Reyna": ["Devour","Dismiss","Leer","Empress"],
-  "Sage": ["Slow Orb","Healing Orb","Barrier Orb","Resurrection"],
-  "Skye": ["Trailblazer","Guiding Light","Regrowth","Seekers"],
-  "Sova": ["Shock Bolt","Recon Bolt","Owl Drone","Hunter's Fury"],
-  "Tejo": ["Guided Salvo","Special Delivery","Armageddon","Stealth Drone"],
-  "Veto": ["Interceptor","Crosscut","Evolution","Chokehold"],
-  "Viper": ["Poison Cloud","Toxic Screen","Snake Bite","Viper's Pit"],
-  "Vyse": ["Shear","Arc Rose","Razorvine","Steel Garden"],
-  "Waylay": ["Refract","Saturate","Lightspeed","Convergent Paths"],
-  "Yoru": ["FAKEOUT","BLINDSIDE","GATECRASH","DIMENSIONAL DRIFT"],
+  Astra: [
+    "Nova Pulse",
+    "Nebula  / Dissipate",
+    "Gravity Well",
+    "Astral Form / Cosmic Divide",
+  ],
+  Breach: ["Flashpoint", "Fault Line", "Aftershock", "Rolling Thunder"],
+  Brimstone: ["Stim Beacon", "Incendiary", "Sky Smoke", "Orbital Strike"],
+  Chamber: ["Rendezvous", "Trademark", "Headhunter", "Tour De Force"],
+  Clove: ["Pick-me-up", "Ruse", "Not Dead Yet", "Meddle"],
+  Cypher: ["Cyber Cage", "Spycam", "Trapwire", "Neural Theft"],
+  Deadlock: ["Sonic Sensor", "Barrier Mesh", "GravNet", "Annihilation"],
+  Fade: ["Seize", "Haunt", "Prowler", "Nightfall"],
+  Gekko: ["Wingman", "Dizzy", "Mosh Pit", "Thrash"],
+  Harbor: ["High Tide", "Storm Surge", "Cove", "Reckoning"],
+  Iso: ["Undercut", "Kill Contract", "Double Tap", "Contingency"],
+  Jett: ["Updraft", "Tailwind", "Cloudburst", "Blade Storm"],
+  "KAY/O": ["FRAG/ment", "FLASH/drive", "ZERO/point", "NULL/cmd"],
+  Killjoy: ["Nanoswarm", "ALARMBOT", "TURRET", "Lockdown"],
+  Miks: ["M-pulse", "Waveform", "Harmonize", "Bassquake"],
+  Neon: ["High Gear", "Relay Bolt", "Fast Lane", "Overdrive"],
+  Omen: ["Paranoia", "Dark Cover", "Shrouded Step", "From the Shadows"],
+  Phoenix: ["Blaze", "Hot Hands", "Curveball", "Run it Back"],
+  Raze: ["Blast Pack", "Paint Shells", "Boom Bot", "Showstopper"],
+  Reyna: ["Devour", "Dismiss", "Leer", "Empress"],
+  Sage: ["Slow Orb", "Healing Orb", "Barrier Orb", "Resurrection"],
+  Skye: ["Trailblazer", "Guiding Light", "Regrowth", "Seekers"],
+  Sova: ["Shock Bolt", "Recon Bolt", "Owl Drone", "Hunter's Fury"],
+  Tejo: ["Guided Salvo", "Special Delivery", "Armageddon", "Stealth Drone"],
+  Veto: ["Interceptor", "Crosscut", "Evolution", "Chokehold"],
+  Viper: ["Poison Cloud", "Toxic Screen", "Snake Bite", "Viper's Pit"],
+  Vyse: ["Shear", "Arc Rose", "Razorvine", "Steel Garden"],
+  Waylay: ["Refract", "Saturate", "Lightspeed", "Convergent Paths"],
+  Yoru: ["FAKEOUT", "BLINDSIDE", "GATECRASH", "DIMENSIONAL DRIFT"],
 };
 
 const SKILL_AGENT_NAMES = Object.keys(SKILL_SOURCE);
@@ -121,7 +126,7 @@ const ULTIMATE_VOICE_LINES = [
 const ULTIMATE_VOICE_QUESTIONS = ULTIMATE_VOICE_LINES.map(([line, answer]) => ({
   id: `voice-${slugId(answer)}-${slugId(line)}`,
   answer,
-  group: "skill",
+  group: "voice",
   badge: "Voice Line Ulti",
   title: `"${line}" itu ulti siapa?`,
   choicePool: SKILL_AGENT_NAMES,
@@ -156,18 +161,18 @@ const MAP_QUESTIONS = MAP_NAMES.map((name, index) => ({
 }));
 
 const MAP_GAMEPLAY_SCENES = {
-  "Abyss": 10,
-  "Ascent": 4,
-  "Bind": 6,
-  "Breeze": 16,
-  "Corrode": 21,
-  "Fracture": 8,
-  "Haven": 4,
-  "Icebox": 8,
-  "Lotus": 7,
-  "Pearl": 8,
-  "Split": 4,
-  "Sunset": 12,
+  Abyss: 10,
+  Ascent: 4,
+  Bind: 6,
+  Breeze: 16,
+  Corrode: 21,
+  Fracture: 8,
+  Haven: 4,
+  Icebox: 8,
+  Lotus: 7,
+  Pearl: 8,
+  Split: 4,
+  Sunset: 12,
 };
 
 const MAP_GAMEPLAY_QUESTIONS = Object.entries(MAP_GAMEPLAY_SCENES).flatMap(
@@ -201,24 +206,48 @@ const SKIN_QUESTIONS = [
   ["skin-araxys-vandal", "Araxys Vandal", "araxys-vandal"],
   ["skin-glitchpop-vandal", "Glitchpop Vandal", "glitchpop-vandal"],
   ["skin-chronovoid-vandal", "ChronoVoid Vandal", "chronovoid-vandal"],
-  ["skin-prelude-to-chaos-vandal", "Prelude to Chaos Vandal", "prelude-to-chaos-vandal"],
+  [
+    "skin-prelude-to-chaos-vandal",
+    "Prelude to Chaos Vandal",
+    "prelude-to-chaos-vandal",
+  ],
   ["skin-imperium-vandal", "Imperium Vandal", "imperium-vandal"],
   ["skin-singularity-vandal", "Singularity Vandal", "singularity-vandal"],
-  ["skin-dolmirs-revenge-vandal", "Dolmir's Revenge Vandal", "dolmirs-revenge-vandal"],
+  [
+    "skin-dolmirs-revenge-vandal",
+    "Dolmir's Revenge Vandal",
+    "dolmirs-revenge-vandal",
+  ],
   ["skin-primordium-vandal", "Primordium Vandal", "primordium-vandal"],
   ["skin-overdrive-vandal", "Overdrive Vandal", "overdrive-vandal"],
   ["skin-blackthorn-vandal", "Blackthorn Vandal", "blackthorn-vandal"],
-  ["skin-sentinels-of-light-vandal", "Sentinels of Light Vandal", "sentinels-of-light-vandal"],
+  [
+    "skin-sentinels-of-light-vandal",
+    "Sentinels of Light Vandal",
+    "sentinels-of-light-vandal",
+  ],
   ["skin-mystbloom-vandal", "Mystbloom Vandal", "mystbloom-vandal"],
   ["skin-cyrax-vandal", "CYRAX Vandal", "cyrax-vandal"],
-  ["skin-champions-2025-vandal", "Champions 2025 Vandal", "champions-2025-vandal"],
+  [
+    "skin-champions-2025-vandal",
+    "Champions 2025 Vandal",
+    "champions-2025-vandal",
+  ],
   ["skin-arcane-vandal", "Arcane Vandal", "arcane-vandal"],
   ["skin-rogue-vandal", "Rogue Vandal", "rogue-vandal"],
   ["skin-elderflame-vandal", "Elderflame Vandal", "elderflame-vandal"],
-  ["skin-evori-dreamwings-vandal", "Evori Dreamwings Vandal", "evori-dreamwings-vandal"],
+  [
+    "skin-evori-dreamwings-vandal",
+    "Evori Dreamwings Vandal",
+    "evori-dreamwings-vandal",
+  ],
   ["skin-ora-by-onetap-vandal", "ORA by OneTap Vandal", "ora-by-onetap-vandal"],
   ["skin-neptune-vandal", "Neptune Vandal", "neptune-vandal"],
-  ["skin-gaias-vengeance-vandal", "Gaia's Vengeance Vandal", "gaias-vengeance-vandal"],
+  [
+    "skin-gaias-vengeance-vandal",
+    "Gaia's Vengeance Vandal",
+    "gaias-vengeance-vandal",
+  ],
   ["skin-origin-vandal", "Origin Vandal", "origin-vandal"],
   ["skin-forsaken-vandal", "Forsaken Vandal", "forsaken-vandal"],
   ["skin-prime-vandal", "Prime Vandal", "prime-vandal"],
@@ -235,20 +264,48 @@ const SKIN_QUESTIONS = [
   ["skin-nocturnum-phantom", "Nocturnum Phantom", "nocturnum-phantom"],
   ["skin-neo-frontier-phantom", "Neo Frontier Phantom", "neo-frontier-phantom"],
   ["skin-blastx-phantom", "BlastX Phantom", "blastx-phantom"],
-  ["skin-radiant-entertainment-system-phantom", "Radiant Entertainment System Phantom", "radiant-entertainment-system-phantom"],
-  ["skin-radiant-entertainment-system-operator", "Radiant Entertainment System Operator", "radiant-entertainment-system-operator"],
+  [
+    "skin-radiant-entertainment-system-phantom",
+    "Radiant Entertainment System Phantom",
+    "radiant-entertainment-system-phantom",
+  ],
+  [
+    "skin-radiant-entertainment-system-operator",
+    "Radiant Entertainment System Operator",
+    "radiant-entertainment-system-operator",
+  ],
   ["skin-elderflame-operator", "Elderflame Operator", "elderflame-operator"],
-  ["skin-ora-by-onetap-operator", "ORA by OneTap Operator", "ora-by-onetap-operator"],
+  [
+    "skin-ora-by-onetap-operator",
+    "ORA by OneTap Operator",
+    "ora-by-onetap-operator",
+  ],
   ["skin-kuronami-operator", "Kuronami Operator", "kuronami-operator"],
   ["skin-rgx-11z-pro-operator", "RGX 11Z Pro Operator", "rgx-11z-pro-operator"],
   ["skin-divergence-operator", "Divergence Operator", "divergence-operator"],
   ["skin-araxys-operator", "Araxys Operator", "araxys-operator"],
   ["skin-glitchpop-operator", "Glitchpop Operator", "glitchpop-operator"],
-  ["skin-prelude-to-chaos-operator", "Prelude to Chaos Operator", "prelude-to-chaos-operator"],
+  [
+    "skin-prelude-to-chaos-operator",
+    "Prelude to Chaos Operator",
+    "prelude-to-chaos-operator",
+  ],
   ["skin-imperium-operator", "Imperium Operator", "imperium-operator"],
-  ["skin-bubblegum-deathwish-operator", "Bubblegum Deathwish Operator", "bubblegum-deathwish-operator"],
-  ["skin-holo-meridian-operator", "Holo Meridian Operator", "holo-meridian-operator"],
-  ["skin-sentinels-of-light-operator", "Sentinels of Light Operator", "sentinels-of-light-operator"],
+  [
+    "skin-bubblegum-deathwish-operator",
+    "Bubblegum Deathwish Operator",
+    "bubblegum-deathwish-operator",
+  ],
+  [
+    "skin-holo-meridian-operator",
+    "Holo Meridian Operator",
+    "holo-meridian-operator",
+  ],
+  [
+    "skin-sentinels-of-light-operator",
+    "Sentinels of Light Operator",
+    "sentinels-of-light-operator",
+  ],
   ["skin-mystbloom-operator", "Mystbloom Operator", "mystbloom-operator"],
   ["skin-splashx-operator", "SplashX Operator", "splashx-operator"],
   ["skin-arcane-sheriff", "Arcane Sheriff", "arcane-sheriff"],
@@ -261,14 +318,34 @@ const SKIN_QUESTIONS = [
   ["skin-mystbloom-sheriff", "Mystbloom Sheriff", "mystbloom-sheriff"],
   ["skin-imperium-sheriff", "Imperium Sheriff", "imperium-sheriff"],
   ["skin-magepunk-sheriff", "Magepunk Sheriff", "magepunk-sheriff"],
-  ["skin-protocol-781-a-sheriff", "Protocol 781-A Sheriff", "protocol-781-a-sheriff"],
-  ["skin-sentinels-of-light-sheriff", "Sentinels of Light Sheriff", "sentinels-of-light-sheriff"],
+  [
+    "skin-protocol-781-a-sheriff",
+    "Protocol 781-A Sheriff",
+    "protocol-781-a-sheriff",
+  ],
+  [
+    "skin-sentinels-of-light-sheriff",
+    "Sentinels of Light Sheriff",
+    "sentinels-of-light-sheriff",
+  ],
   ["skin-sovereign-ghost", "Sovereign Ghost", "sovereign-ghost"],
   ["skin-reaver-ghost", "Reaver Ghost", "reaver-ghost"],
-  ["skin-gaia-s-vengeance-ghost", "Gaia's Vengeance Ghost", "gaia-s-vengeance-ghost"],
+  [
+    "skin-gaia-s-vengeance-ghost",
+    "Gaia's Vengeance Ghost",
+    "gaia-s-vengeance-ghost",
+  ],
   ["skin-magepunk-ghost", "Magepunk Ghost", "magepunk-ghost"],
-  ["skin-evori-dreamwings-ghost", "Evori Dreamwings Ghost", "evori-dreamwings-ghost"],
-  ["skin-radiant-entertainment-system-ghost", "Radiant Entertainment System Ghost", "radiant-entertainment-system-ghost"],
+  [
+    "skin-evori-dreamwings-ghost",
+    "Evori Dreamwings Ghost",
+    "evori-dreamwings-ghost",
+  ],
+  [
+    "skin-radiant-entertainment-system-ghost",
+    "Radiant Entertainment System Ghost",
+    "radiant-entertainment-system-ghost",
+  ],
   ["skin-ruination-ghost", "Ruination Ghost", "ruination-ghost"],
   ["skin-phaseguard-ghost", "Phaseguard Ghost", "phaseguard-ghost"],
   ["skin-xerofang-ghost", "XEROFANG Ghost", "xerofang-ghost"],
@@ -276,7 +353,11 @@ const SKIN_QUESTIONS = [
   ["skin-rgx-11z-pro-spectre", "RGX 11Z Pro Spectre", "rgx-11z-pro-spectre"],
   ["skin-reaver-spectre", "Reaver Spectre", "reaver-spectre"],
   ["skin-kuronami-spectre", "Kuronami Spectre", "kuronami-spectre"],
-  ["skin-protocol-781-a-spectre", "Protocol 781-A Spectre", "protocol-781-a-spectre"],
+  [
+    "skin-protocol-781-a-spectre",
+    "Protocol 781-A Spectre",
+    "protocol-781-a-spectre",
+  ],
   ["skin-magepunk-spectre", "Magepunk Spectre", "magepunk-spectre"],
   ["skin-recon-spectre", "Recon Spectre", "recon-spectre"],
   ["skin-singularity-spectre", "Singularity Spectre", "singularity-spectre"],
@@ -289,31 +370,55 @@ const SKIN_QUESTIONS = [
   ["skin-kuronami-marshal", "Kuronami Marshal", "kuronami-marshal"],
   ["skin-neo-frontier-marshal", "Neo Frontier Marshal", "neo-frontier-marshal"],
   ["skin-sovereign-marshal", "Sovereign Marshal", "sovereign-marshal"],
-  ["skin-gaia-s-vengeance-marshal", "Gaia's Vengeance Marshal", "gaia-s-vengeance-marshal"],
+  [
+    "skin-gaia-s-vengeance-marshal",
+    "Gaia's Vengeance Marshal",
+    "gaia-s-vengeance-marshal",
+  ],
   ["skin-magepunk-marshal", "Magepunk Marshal", "magepunk-marshal"],
   ["skin-kuronami-no-yaiba", "Kuronami no Yaiba", "kuronami-no-yaiba"],
   ["skin-reaver-karambit", "Reaver Karambit", "reaver-karambit"],
   ["skin-rgx-11z-pro-firefly", "RGX 11Z Pro Firefly", "rgx-11z-pro-firefly"],
   ["skin-rgx-11z-pro-karambit", "RGX 11Z Pro Karambit", "rgx-11z-pro-karambit"],
   ["skin-rgx-11z-pro-blade", "RGX 11Z Pro Blade", "rgx-11z-pro-blade"],
-  ["skin-champions-2021-karambit", "Champions 2021 Karambit", "champions-2021-karambit"],
-  ["skin-champions-2022-butterfly-knife", "Champions 2022 Butterfly Knife", "champions-2022-butterfly-knife"],
+  [
+    "skin-champions-2021-karambit",
+    "Champions 2021 Karambit",
+    "champions-2021-karambit",
+  ],
+  [
+    "skin-champions-2022-butterfly-knife",
+    "Champions 2022 Butterfly Knife",
+    "champions-2022-butterfly-knife",
+  ],
   ["skin-champions-2023-kunai", "Champions 2023 Kunai", "champions-2023-kunai"],
   ["skin-champions-2024-blade", "Champions 2024 Blade", "champions-2024-blade"],
-  ["skin-champions-2025-butterfly-knife", "Champions 2025 Butterfly Knife", "champions-2025-butterfly-knife"],
+  [
+    "skin-champions-2025-butterfly-knife",
+    "Champions 2025 Butterfly Knife",
+    "champions-2025-butterfly-knife",
+  ],
   ["skin-vct-2025-karambit", "VCT 2025 Karambit", "vct-2025-karambit"],
   ["skin-arcane-gauntlets", "Arcane Gauntlets", "arcane-gauntlets"],
   ["skin-ignite-fan", "Ignite Fan", "ignite-fan"],
   ["skin-xenohunter-knife", "Xenohunter Knife", "xenohunter-knife"],
   ["skin-recon-balisong", "Recon Balisong", "recon-balisong"],
   ["skin-onimaru-kunitsuna", "Onimaru Kunitsuna", "onimaru-kunitsuna"],
-  ["skin-singularity-butterfly-knife", "Singularity Butterfly Knife", "singularity-butterfly-knife"],
+  [
+    "skin-singularity-butterfly-knife",
+    "Singularity Butterfly Knife",
+    "singularity-butterfly-knife",
+  ],
   ["skin-cyrax-fanblade", "CYRAX Fanblade", "cyrax-fanblade"],
   ["skin-prime-2-0-karambit", "Prime//2.0 Karambit", "prime-2-0-karambit"],
   ["skin-mystbloom-fanblade", "Mystbloom Fanblade", "mystbloom-fanblade"],
   ["skin-ex-o-outlaw", "EX.O Outlaw", "ex-o-outlaw"],
   ["skin-rgx-11z-pro-outlaw", "RGX 11Z Pro Outlaw", "rgx-11z-pro-outlaw"],
-  ["skin-prism-reloaded-outlaw", "Prism//Reloaded Outlaw", "prism-reloaded-outlaw"],
+  [
+    "skin-prism-reloaded-outlaw",
+    "Prism//Reloaded Outlaw",
+    "prism-reloaded-outlaw",
+  ],
 ].map(([id, answer, slug]) => ({
   id,
   answer: answer.replace(SKIN_WEAPON_SUFFIX, ""),
@@ -698,7 +803,7 @@ const QUESTION_BANK = [
     answer: "Chamber",
     group: "voice",
     badge: "Voice Line",
-    title: "\"You want to play? Let's play.\" Itu ulti siapa?",
+    title: '"You want to play? Let\'s play." Itu ulti siapa?',
     choices: ["Chamber", "Jett", "Reyna", "Phoenix"],
   },
   ...AGENT_QUESTIONS,
@@ -1012,10 +1117,9 @@ function prepareQuestion(question, seedText) {
   const answerPool = (question.choicePool || fallbackPool).filter(
     (answer) => answer !== question.answer,
   );
-  const requiredChoices = [
-    question.answer,
-    question.fakeAnswer,
-  ].filter((answer, index, list) => answer && list.indexOf(answer) === index);
+  const requiredChoices = [question.answer, question.fakeAnswer].filter(
+    (answer, index, list) => answer && list.indexOf(answer) === index,
+  );
   const choices = question.choices?.length
     ? question.choices
     : [
@@ -1037,7 +1141,10 @@ function randomBetween(random, min, max) {
 }
 
 function jitter(value, random, amount, min, max) {
-  return Math.max(min, Math.min(max, value + randomBetween(random, -amount, amount)));
+  return Math.max(
+    min,
+    Math.min(max, value + randomBetween(random, -amount, amount)),
+  );
 }
 
 const MAP_FOCUS_POINTS = [
@@ -1064,7 +1171,12 @@ const AGENT_NORMAL_FOCUS_POINTS = [
 ];
 
 function questionImageStyle(question, answered) {
-  if (answered) return "";
+  if (answered) {
+    if (question.group === "agent") {
+      return "transform:scale(1.15);transform-origin:center center";
+    }
+    return "";
+  }
 
   const random = createRandom(`${state.visualSeed}:${question.id}:visual`);
 
@@ -1089,7 +1201,7 @@ function questionImageStyle(question, answered) {
       ];
     const x = jitter(baseX, random, 4, 42, 58);
     const y = jitter(baseY, random, 6, 18, 78);
-    const scale = randomBetween(random, 4.2, 4.85);
+    const scale = randomBetween(random, 5.2, 6.2);
 
     return [
       `object-position:${x.toFixed(1)}% ${y.toFixed(1)}%`,
@@ -1115,6 +1227,7 @@ function selectQuizQuestions(seedText) {
   const basicQuestions = shuffleWithSeed(
     [
       ...pickQuestions("skill", 1, seed),
+      ...pickQuestions("voice", 1, seed),
       ...gameplayMapQuestions,
       ...splashMapQuestions,
       ...pickQuestions("weapon", 1, seed),
@@ -1224,7 +1337,8 @@ function renderLeaderboardList(rows = state.leaderboard, limit = 5) {
 }
 
 async function loadLeaderboard() {
-  elements.leaderboard.innerHTML = '<div class="loading-row">Memuat highscore...</div>';
+  elements.leaderboard.innerHTML =
+    '<div class="loading-row">Memuat highscore...</div>';
 
   try {
     const response = await fetch(API.leaderboard);
@@ -1284,7 +1398,9 @@ const FINAL_PAYMENT_STATUSES = new Set(["cancel", "deny", "expire", "failure"]);
 
 function readCheckoutSession() {
   try {
-    return JSON.parse(window.localStorage?.getItem(CHECKOUT_STORAGE_KEY) || "null");
+    return JSON.parse(
+      window.localStorage?.getItem(CHECKOUT_STORAGE_KEY) || "null",
+    );
   } catch {
     return null;
   }
@@ -1388,21 +1504,25 @@ async function copyText(value, button) {
 }
 
 function bindPaymentCopies() {
-  elements.paymentInstructions.querySelectorAll("[data-copy]").forEach((button) => {
-    button.addEventListener("click", () => {
-      copyText(button.dataset.copy, button);
+  elements.paymentInstructions
+    .querySelectorAll("[data-copy]")
+    .forEach((button) => {
+      button.addEventListener("click", () => {
+        copyText(button.dataset.copy, button);
+      });
     });
-  });
 }
 
 function bindPaymentImages() {
-  elements.paymentInstructions.querySelectorAll("[data-qr-fallback]").forEach((image) => {
-    image.addEventListener("error", () => {
-      const target = document.getElementById(image.dataset.qrFallback);
-      image.closest(".payment-qr")?.classList.add("hidden");
-      target?.classList.remove("hidden");
+  elements.paymentInstructions
+    .querySelectorAll("[data-qr-fallback]")
+    .forEach((image) => {
+      image.addEventListener("error", () => {
+        const target = document.getElementById(image.dataset.qrFallback);
+        image.closest(".payment-qr")?.classList.add("hidden");
+        target?.classList.remove("hidden");
+      });
     });
-  });
 }
 
 function paymentField(payment, ...keys) {
@@ -1438,8 +1558,10 @@ function isQrisPayment(payment = {}) {
 function isSnapPayment(payment = {}) {
   return Boolean(
     paymentField(payment, "redirectUrl", "redirect_url") ||
-      paymentField(payment, "snapToken", "token") ||
-      String(paymentField(payment, "paymentType", "payment_type")).toLowerCase() === "snap",
+    paymentField(payment, "snapToken", "token") ||
+    String(
+      paymentField(payment, "paymentType", "payment_type"),
+    ).toLowerCase() === "snap",
   );
 }
 
@@ -1472,9 +1594,7 @@ function renderPayment(payment = {}, amount = 0) {
     "paymentCode",
     "payment_code",
   );
-  const qrSrc = isQris
-    ? qrisProxyUrl() || qrImageUrl || ""
-    : "";
+  const qrSrc = isQris ? qrisProxyUrl() || qrImageUrl || "" : "";
   const qr = qrSrc
     ? `
       <div class="payment-qr">
@@ -1493,14 +1613,15 @@ function renderPayment(payment = {}, amount = 0) {
           QRIS belum mengirim gambar. Pilih VA kalau ingin kode bayar yang bisa disalin.
         </div>
       `
-    : "";
-  const qrFallback = qrSrc && isQris
-    ? `
+      : "";
+  const qrFallback =
+    qrSrc && isQris
+      ? `
       <div class="payment-qr-fallback hidden" id="qrisFallback">
         Barcode QRIS belum bisa dimuat dari Midtrans. Coba refresh checkout ini, atau pilih metode VA.
       </div>
     `
-    : "";
+      : "";
   const qrString = qrStringValue
     ? `
       <div class="payment-line">
@@ -1527,8 +1648,9 @@ function renderPayment(payment = {}, amount = 0) {
       </div>
     `
     : "";
-  const mandiriBill = billKey || billerCode
-    ? `
+  const mandiriBill =
+    billKey || billerCode
+      ? `
       <div class="payment-line payment-line-va">
         <div class="payment-line-main">
           <span>Mandiri bill key</span>
@@ -1546,14 +1668,15 @@ function renderPayment(payment = {}, amount = 0) {
         </div>
       </div>
     `
-    : "";
-  const missingCode = !isQris && !vaNumber && !billKey && !billerCode
-    ? `
+      : "";
+  const missingCode =
+    !isQris && !vaNumber && !billKey && !billerCode
+      ? `
       <div class="payment-qr-fallback">
         Kode bayar belum dikirim Midtrans. Klik Cek Status, atau pakai Ganti Metode untuk buat checkout baru.
       </div>
     `
-    : "";
+      : "";
   if (isSnap && redirectUrl) {
     elements.paymentInstructions.innerHTML = `
       <div class="payment-box">
@@ -1638,7 +1761,9 @@ elements.startForm.addEventListener("submit", async (event) => {
     return;
   }
 
-  const submitButton = elements.startForm.querySelector("button[type='submit']");
+  const submitButton = elements.startForm.querySelector(
+    "button[type='submit']",
+  );
   submitButton.disabled = true;
   setStartMessage("Membuat checkout...");
 
@@ -1677,7 +1802,10 @@ elements.startForm.addEventListener("submit", async (event) => {
     setPaymentMessage("Mengalihkan ke Midtrans...");
     startAutoStatusCheck();
     checkPaymentStatus({ auto: true, silent: true });
-    elements.paymentPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+    elements.paymentPanel.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
     redirectToMidtrans(state.payment);
   } catch (error) {
     setStartMessage(error.message, true);
@@ -1694,7 +1822,10 @@ elements.startForm.addEventListener("submit", async (event) => {
           </div>
         </div>
       `;
-      setPaymentMessage("Mode preview hanya muncul di localhost supaya layout kuis bisa dicek.", true);
+      setPaymentMessage(
+        "Mode preview hanya muncul di localhost supaya layout kuis bisa dicek.",
+        true,
+      );
     }
   } finally {
     submitButton.disabled = false;
@@ -1772,7 +1903,8 @@ async function checkPaymentStatus(options = {}) {
     });
     const data = await readResponseJson(response);
 
-    if (!response.ok) throw new Error(data.message || "Status belum bisa dicek");
+    if (!response.ok)
+      throw new Error(data.message || "Status belum bisa dicek");
 
     elements.paymentStatus.textContent = statusLabel(data.status);
 
@@ -1802,14 +1934,20 @@ async function checkPaymentStatus(options = {}) {
     if (data.submitted) {
       clearCheckoutSession();
       stopAutoStatusCheck();
-      setPaymentMessage("Ujian dari pembayaran ini sudah pernah disubmit.", true);
+      setPaymentMessage(
+        "Ujian dari pembayaran ini sudah pernah disubmit.",
+        true,
+      );
       return;
     }
 
     if (FINAL_PAYMENT_STATUSES.has(data.status)) {
       clearCheckoutSession();
       stopAutoStatusCheck();
-      setPaymentMessage("Checkout sudah tidak aktif. Buat checkout baru ya.", true);
+      setPaymentMessage(
+        "Checkout sudah tidak aktif. Buat checkout baru ya.",
+        true,
+      );
       return;
     }
 
@@ -1818,9 +1956,7 @@ async function checkPaymentStatus(options = {}) {
     );
   } catch (error) {
     setPaymentMessage(
-      auto
-        ? "Auto cek belum berhasil. Tetap akan dicoba lagi."
-        : error.message,
+      auto ? "Auto cek belum berhasil. Tetap akan dicoba lagi." : error.message,
       !auto,
     );
   } finally {
@@ -1862,7 +1998,10 @@ async function changePaymentMethod(trigger = elements.changePayment) {
     const data = await readResponseJson(response);
 
     if (response.status === 409 && data.submitted) {
-      setPaymentMessage("Ujian dari pembayaran ini sudah pernah disubmit.", true);
+      setPaymentMessage(
+        "Ujian dari pembayaran ini sudah pernah disubmit.",
+        true,
+      );
       clearCheckoutSession();
       return;
     }
@@ -1883,7 +2022,9 @@ async function changePaymentMethod(trigger = elements.changePayment) {
       return;
     }
 
-    returnToStartForPaymentChange("Checkout lama dibatalkan. Pilih metode baru ya.");
+    returnToStartForPaymentChange(
+      "Checkout lama dibatalkan. Pilih metode baru ya.",
+    );
   } catch (error) {
     returnToStartForPaymentChange(
       "Pilih metode baru. Checkout lama belum bisa dibatalkan otomatis; jangan bayar invoice lama.",
@@ -1969,7 +2110,9 @@ function restoreCheckoutSession() {
     bindPaymentCopies();
   }
 
-  setPaymentMessage("Melanjutkan checkout tersimpan. Halaman akan cek otomatis.");
+  setPaymentMessage(
+    "Melanjutkan checkout tersimpan. Halaman akan cek otomatis.",
+  );
   startAutoStatusCheck();
   checkPaymentStatus({ auto: true, silent: true });
 }
@@ -1981,7 +2124,11 @@ window.addEventListener("focus", () => {
 });
 
 document.addEventListener("visibilitychange", () => {
-  if (!document.hidden && state.orderId && !elements.paymentPanel.classList.contains("hidden")) {
+  if (
+    !document.hidden &&
+    state.orderId &&
+    !elements.paymentPanel.classList.contains("hidden")
+  ) {
     checkPaymentStatus({ auto: true, silent: true });
   }
 });
@@ -1992,10 +2139,13 @@ function questionMedia(question, answered) {
   const mediaClass = [
     question.group ? `is-${question.group}` : "",
     question.imageClass?.includes("bg-agent-normal") ? "is-agent-normal" : "",
-  ].filter(Boolean).join(" ");
+  ]
+    .filter(Boolean)
+    .join(" ");
   const revealedClass = answered ? "is-revealed" : "";
   const imageClass = answered ? "" : question.imageClass || "";
-  const imageSrc = answered && question.revealImage ? question.revealImage : question.image;
+  const imageSrc =
+    answered && question.revealImage ? question.revealImage : question.image;
   const imageStyle = questionImageStyle(question, answered);
   const imageStyleAttr = imageStyle ? ` style="${imageStyle}"` : "";
   const loading = answered ? "lazy" : "eager";
@@ -2126,7 +2276,9 @@ function renderResult(result) {
       return;
     }
 
-    await navigator.clipboard.writeText(`${shareText} ${window.location.origin}/uas/`);
+    await navigator.clipboard.writeText(
+      `${shareText} ${window.location.origin}/uas/`,
+    );
     document.getElementById("shareResult").innerHTML =
       '<i class="ri-check-line"></i> Tersalin';
   });
