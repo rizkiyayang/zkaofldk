@@ -115,14 +115,12 @@ h1 {
   --rank-glow: rgba(143, 127, 118, 0.3);
   width: 40px;
   height: 40px;
-  padding: 3px;
-  border: 1px solid rgba(255, 95, 162, 0.12);
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.78);
   display: inline-grid;
   place-items: center;
-  box-shadow: 0 8px 16px rgba(255, 79, 163, 0.1);
-  filter: drop-shadow(0 8px 12px var(--rank-glow));
+  filter:
+    drop-shadow(0 2px 0 rgba(75, 32, 52, 0.28))
+    drop-shadow(0 9px 12px var(--rank-glow))
+    drop-shadow(0 13px 22px rgba(75, 32, 52, 0.18));
 }
 
 .rank-emblem picture,
@@ -139,9 +137,10 @@ h1 {
 .rank-emblem-alert {
   width: 58px;
   height: 58px;
-  padding: 4px;
-  border-radius: 19px;
-  filter: drop-shadow(0 14px 18px var(--rank-glow));
+  filter:
+    drop-shadow(0 3px 0 rgba(75, 32, 52, 0.3))
+    drop-shadow(0 14px 18px var(--rank-glow))
+    drop-shadow(0 18px 30px rgba(75, 32, 52, 0.22));
 }
 
 .rank-bronze {
@@ -173,7 +172,7 @@ h1 {
 }
 
 .rank-radiant {
-  --rank-glow: rgba(255, 93, 162, 0.5);
+  --rank-glow: rgba(255, 76, 160, 0.72);
 }
 
 .name strong,
