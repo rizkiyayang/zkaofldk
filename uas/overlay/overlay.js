@@ -21,6 +21,18 @@ const elements = {
   periodLabel: document.getElementById("periodLabel"),
 };
 
+const RANK_ICONS = {
+  ascendant: "2309-valorant-ascendant-3",
+  bronze: "4590-valorant-bronze-3",
+  diamond: "6354-valorant-diamond-3",
+  gold: "3293-valorant-gold-3",
+  immortal: "5979-valorant-immortal-3",
+  iron: "1854-valorant-iron-3",
+  platinum: "5816-valorant-platinum-3",
+  radiant: "5979-valorant-radiant",
+  silver: "3293-valorant-silver-3",
+};
+
 function escapeHtml(value) {
   return String(value ?? "")
     .replace(/&/g, "&amp;")
@@ -28,6 +40,27 @@ function escapeHtml(value) {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
+}
+
+function rankKey(rank) {
+  const key = String(rank || "Iron").toLowerCase();
+  return Object.hasOwn(RANK_ICONS, key) ? key : "iron";
+}
+
+function renderRankEmblem(rank, size = "") {
+  const key = rankKey(rank);
+  const icon = RANK_ICONS[key] || RANK_ICONS.iron;
+  const safeRank = escapeHtml(rank || "Iron");
+  const classes = ["rank-emblem", `rank-${key}`, size].filter(Boolean).join(" ");
+
+  return `
+    <span class="${classes}" aria-label="Rank ${safeRank}" title="${safeRank}">
+      <picture>
+        <source srcset="/uas/icon/${icon}.webp" type="image/webp" />
+        <img src="/uas/icon/${icon}.png" alt="${safeRank}" decoding="async" />
+      </picture>
+    </span>
+  `;
 }
 
 function formatRupiah(value) {
@@ -88,13 +121,14 @@ async function loadLeaderboard() {
           (row, index) => `
             <div class="leaderboard-row">
               <div class="place">${index + 1}</div>
+              <div class="rank-cell">${renderRankEmblem(row.rank)}</div>
               <div class="name">
                 <strong>${escapeHtml(row.name || "Peserta")}</strong>
                 <span>${escapeHtml(row.rank || "Iron")} • ${formatDuration(row.duration_seconds)}</span>
               </div>
               <div class="score">
-                <strong>${Number(row.score || 0)}</strong>
                 <span>nilai</span>
+                <strong>${Number(row.score || 0)}</strong>
               </div>
             </div>
           `,
@@ -113,31 +147,35 @@ function eventContent(event, settings) {
 
   if (event.event_type === "payment_success") {
     return {
-      icon: "$",
-      message: `Pembayaran sukses${amount}`,
-      title: name,
+      className: "is-payment",
+      icon: '<span class="alert-symbol">UAS</span>',
+      message: `Donasi masuk${amount}`,
+      title: `${name} memulai ujian`,
     };
   }
 
   if (event.event_type === "highscore") {
     return {
-      icon: "#",
-      message: `${position} highscore • ${score} nilai • ${duration}`,
-      title: name,
+      className: "is-highscore",
+      icon: renderRankEmblem(rank, "rank-emblem-alert"),
+      message: `${position} highscore • nilai ${score} • ${duration}`,
+      title: `${name} masuk highscore`,
     };
   }
 
   if (event.event_type === "radiant") {
     return {
-      icon: "R",
-      message: `${score} nilai • ${duration}`,
-      title: `${name} Radiant`,
+      className: "is-radiant",
+      icon: renderRankEmblem("Radiant", "rank-emblem-alert"),
+      message: `nilai ${score} • ${duration}`,
+      title: `${name} dapat Radiant`,
     };
   }
 
   return {
-    icon: "U",
-    message: `Rank ${rank} • ${score} nilai • ${duration}`,
+    className: "is-result",
+    icon: renderRankEmblem(rank, "rank-emblem-alert"),
+    message: `${rank} • nilai ${score} • ${duration}`,
     title: `${name} selesai UAS`,
   };
 }
@@ -151,8 +189,8 @@ function showNextAlert(settings = {}) {
   const event = state.eventQueue.shift();
   const content = eventContent(event, settings);
   elements.alertStack.innerHTML = `
-    <article class="alert-card">
-      <div class="alert-icon">${escapeHtml(content.icon)}</div>
+    <article class="alert-card ${content.className || ""}">
+      <div class="alert-icon">${content.icon}</div>
       <div class="alert-copy">
         <strong>${content.title}</strong>
         <span>${content.message}</span>
