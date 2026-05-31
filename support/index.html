@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Support COKELAT MANIS</title>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+    <link rel="stylesheet" href="/support/style.css?v=20260531-1" />
+    <link rel="icon" type="image/x-icon" href="/img/icon.jpg" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css"
+    />
+  </head>
+  <body>
+    <main class="support-shell">
+      <section class="brand-card">
+        <picture>
+          <source srcset="/img/icon.webp" type="image/webp" />
+          <img
+            src="/img/icon.jpg"
+            alt="COKELAT MANIS"
+            class="brand-avatar"
+            decoding="async"
+            loading="eager"
+            fetchpriority="high"
+          />
+        </picture>
+        <div>
+          <h1>COKELAT MANIS</h1>
+          <p>@zkaofldk</p>
+        </div>
+      </section>
+
+      <section class="support-card">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Support Live</p>
+            <h2>Kirim support</h2>
+          </div>
+          <span class="min-pill" id="minimumPill">min. 5k</span>
+        </div>
+
+        <form id="supportForm">
+          <label>
+            <span>Nama</span>
+            <input
+              id="nameInput"
+              autocomplete="name"
+              maxlength="40"
+              placeholder="Nama yang muncul di overlay"
+              required
+            />
+          </label>
+
+          <label>
+            <span>Email</span>
+            <input
+              id="emailInput"
+              autocomplete="email"
+              inputmode="email"
+              placeholder="nama@gmail.com"
+              required
+              type="email"
+            />
+          </label>
+
+          <label>
+            <span>Nominal</span>
+            <div class="amount-control">
+              <span>Rp</span>
+              <input
+                id="amountInput"
+                inputmode="numeric"
+                min="5000"
+                step="1000"
+                type="number"
+                value="10000"
+                required
+              />
+            </div>
+          </label>
+
+          <div class="amount-presets" id="amountPresets" aria-label="Nominal cepat">
+            <button data-amount="5000" type="button">5k</button>
+            <button class="is-selected" data-amount="10000" type="button">
+              10k
+            </button>
+            <button data-amount="20000" type="button">20k</button>
+            <button data-amount="100000" type="button">100k</button>
+          </div>
+
+          <label>
+            <span>Pesan</span>
+            <textarea
+              id="messageInput"
+              maxlength="180"
+              placeholder="Tulis pesan buat live..."
+              rows="4"
+            ></textarea>
+          </label>
+
+          <label>
+            <span>YouTube share</span>
+            <input
+              id="mediaInput"
+              inputmode="url"
+              placeholder="Optional, min. 25k"
+              type="url"
+            />
+          </label>
+
+          <button class="primary-button" id="submitButton" type="submit">
+            <i class="ri-bank-card-line"></i>
+            Lanjut Bayar
+          </button>
+          <p class="form-note" id="formMessage">
+            Pembayaran memakai Midtrans Snap.
+          </p>
+        </form>
+      </section>
+
+      <section class="status-card hidden" id="statusCard">
+        <p class="eyebrow">Checkout</p>
+        <h2 id="statusTitle">Menunggu pembayaran</h2>
+        <p id="statusText"></p>
+        <div class="status-actions">
+          <a class="primary-button" id="paymentLink" href="#">
+            <i class="ri-external-link-line"></i>
+            Buka Pembayaran
+          </a>
+          <button class="ghost-button" id="checkStatus" type="button">
+            <i class="ri-refresh-line"></i>
+            Cek Status
+          </button>
+        </div>
+      </section>
+
+      <footer class="site-footer" aria-label="Copyright">
+        <picture>
+          <source srcset="/img/icon.webp" type="image/webp" />
+          <img
+            src="/img/icon.jpg"
+            alt="COKELAT MANIS"
+            decoding="async"
+            loading="lazy"
+          />
+        </picture>
+        <div>
+          <strong>COKELAT MANIS</strong>
+          <span>&copy; 2026 @zkaofldk</span>
+        </div>
+      </footer>
+    </main>
+
+    <script src="/support/script.js?v=20260531-1"></script>
+  </body>
+</html>

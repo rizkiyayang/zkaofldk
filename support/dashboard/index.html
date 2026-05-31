@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Support Dashboard • COKELAT MANIS</title>
+    <link rel="stylesheet" href="/support/dashboard/style.css?v=20260531-1" />
+    <link rel="icon" type="image/x-icon" href="/img/icon.jpg" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css"
+    />
+  </head>
+  <body>
+    <main class="dashboard-shell">
+      <header class="page-head">
+        <p class="eyebrow">COKELAT MANIS</p>
+        <h1>Support Dashboard</h1>
+      </header>
+
+      <section class="panel login-panel" id="loginPanel">
+        <p class="eyebrow">Login</p>
+        <h2>Masuk dashboard</h2>
+        <form id="loginForm">
+          <input
+            id="passwordInput"
+            autocomplete="current-password"
+            placeholder="Password dashboard"
+            type="password"
+            required
+          />
+          <button class="primary-button" type="submit">
+            <i class="ri-lock-unlock-line"></i>
+            Masuk
+          </button>
+        </form>
+        <p class="note" id="loginMessage"></p>
+      </section>
+
+      <div class="workspace hidden" id="workspace">
+        <section class="stats-grid" id="statsGrid"></section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">Pengaturan</p>
+              <h2>Support & overlay</h2>
+            </div>
+            <button class="primary-button save-button" id="saveButton">
+              <i class="ri-save-3-line"></i>
+              Simpan
+            </button>
+          </div>
+
+          <form class="settings-grid" id="settingsForm">
+            <label>
+              <span>Minimal support</span>
+              <input id="minimumAmount" type="number" min="5000" step="1000" />
+            </label>
+            <label>
+              <span>Minimal media share</span>
+              <input id="mediaMinAmount" type="number" min="25000" step="1000" />
+            </label>
+            <label>
+              <span>Donate besar mulai</span>
+              <input id="bigDonationThreshold" type="number" min="5000" step="1000" />
+            </label>
+            <label>
+              <span>Preset nominal</span>
+              <input id="presetAmounts" placeholder="5000,10000,20000,100000" />
+            </label>
+            <label>
+              <span>Judul milestone</span>
+              <input id="milestoneTitle" />
+            </label>
+            <label>
+              <span>Target milestone</span>
+              <input id="milestoneTargetAmount" type="number" min="5000" step="1000" />
+            </label>
+            <label>
+              <span>Mode leaderboard</span>
+              <select id="leaderboardMode">
+                <option value="monthly">Bulanan</option>
+                <option value="weekly">Mingguan</option>
+                <option value="all_time">Sepanjang masa</option>
+                <option value="custom">Dari tanggal custom</option>
+                <option value="interval_days">Reset tiap beberapa hari</option>
+              </select>
+            </label>
+            <label>
+              <span>Tanggal mulai custom</span>
+              <input id="customStartAt" type="datetime-local" />
+            </label>
+            <label>
+              <span>Reset tiap hari</span>
+              <input id="resetIntervalDays" type="number" min="1" max="365" />
+            </label>
+            <label>
+              <span>Jumlah top</span>
+              <input id="leaderboardLimit" type="number" min="1" max="20" />
+            </label>
+            <label>
+              <span>Judul leaderboard</span>
+              <input id="leaderboardTitle" />
+            </label>
+            <label>
+              <span>Ukuran overlay</span>
+              <select id="overlaySize">
+                <option value="large">Large</option>
+                <option value="compact">Compact</option>
+              </select>
+            </label>
+            <label>
+              <span>Refresh detik</span>
+              <input id="refreshSeconds" type="number" min="2" max="60" />
+            </label>
+            <label>
+              <span>Durasi alert</span>
+              <input id="alertDuration" type="number" min="3" max="60" />
+            </label>
+            <label>
+              <span>Durasi media dasar</span>
+              <input id="mediaBaseSeconds" type="number" min="10" max="300" />
+            </label>
+            <label>
+              <span>Durasi media maksimal</span>
+              <input id="mediaMaxSeconds" type="number" min="30" max="300" />
+            </label>
+            <label>
+              <span>Volume sound</span>
+              <input id="soundVolume" type="range" min="0" max="1" step="0.05" />
+            </label>
+            <label class="check-row">
+              <input id="showAmount" type="checkbox" />
+              <span>Tampilkan nominal di alert</span>
+            </label>
+            <label class="check-row">
+              <input id="leaderboardShowAmount" type="checkbox" />
+              <span>Tampilkan nominal leaderboard</span>
+            </label>
+            <label class="check-row">
+              <input id="leaderboardShowRank" type="checkbox" />
+              <span>Tampilkan nomor urutan</span>
+            </label>
+            <label class="check-row">
+              <input id="leaderboardTransparent" type="checkbox" />
+              <span>Leaderboard transparan</span>
+            </label>
+          </form>
+          <p class="note" id="settingsMessage"></p>
+        </section>
+
+        <section class="panel">
+          <p class="eyebrow">Overlay</p>
+          <h2>Link browser source</h2>
+          <div class="link-list" id="overlayLinks"></div>
+        </section>
+
+        <section class="panel">
+          <p class="eyebrow">Alert</p>
+          <h2>Test notifikasi</h2>
+          <div class="test-grid">
+            <button data-event="donation" type="button">
+              <i class="ri-heart-3-line"></i>
+              Donate
+            </button>
+            <button data-event="big_donation" type="button">
+              <i class="ri-sparkling-line"></i>
+              Donate besar
+            </button>
+            <button data-event="media_share" type="button">
+              <i class="ri-youtube-line"></i>
+              Media share
+            </button>
+            <button data-event="milestone" type="button">
+              <i class="ri-flag-line"></i>
+              Milestone
+            </button>
+          </div>
+          <p class="note" id="testMessage"></p>
+        </section>
+
+        <section class="panel">
+          <p class="eyebrow">Penarikan</p>
+          <h2>Catat manual</h2>
+          <form class="withdraw-form" id="withdrawForm">
+            <input id="withdrawAmount" placeholder="Nominal ditarik" inputmode="numeric" />
+            <input id="withdrawNote" placeholder="Catatan optional" />
+            <button class="primary-button" type="submit">
+              <i class="ri-add-line"></i>
+              Tambah
+            </button>
+          </form>
+          <div class="compact-list" id="withdrawList"></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">History</p>
+              <h2>Donate masuk</h2>
+            </div>
+            <button class="ghost-button" id="refreshButton">
+              <i class="ri-refresh-line"></i>
+              Refresh
+            </button>
+          </div>
+          <div class="donation-list" id="donationList"></div>
+        </section>
+      </div>
+    </main>
+
+    <script src="/support/dashboard/script.js?v=20260531-1"></script>
+  </body>
+</html>
