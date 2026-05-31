@@ -16,7 +16,7 @@ export const DEFAULT_OVERLAY_SETTINGS = {
   leaderboard_title: "UAS Valorant Highscore",
   overlay_size: "large",
   payment_message_template: "Ujian Akhir Season Valorant{shownAmount}",
-  payment_title_template: "{name} memasuki ruang",
+  payment_title_template: "{name}\nmemasuki ruang",
   payment_template: "{name} memasuki ruang UAS Valorant",
   radiant_message_template: "Nilai {score} • waktu {duration}",
   radiant_title_template: "{name} meraih Radiant",
@@ -61,6 +61,18 @@ function cleanText(value, fallback, max = 80) {
   return text || fallback;
 }
 
+function cleanTemplate(value, fallback, max = 160) {
+  const text = String(value ?? "")
+    .replace(/\\n/g, "\n")
+    .split("\n")
+    .map((line) => line.trim().replace(/[ \t]+/g, " "))
+    .join("\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim()
+    .slice(0, max);
+  return text || fallback;
+}
+
 function toBoolean(value, fallback = true) {
   if (value === undefined || value === null || value === "") return fallback;
   if (typeof value === "boolean") return value;
@@ -93,23 +105,23 @@ export function sanitizeOverlaySettings(input = {}) {
       DEFAULT_OVERLAY_SETTINGS.exam_template,
       140,
     ),
-    exam_message_template: cleanText(
+    exam_message_template: cleanTemplate(
       input.exam_message_template,
       DEFAULT_OVERLAY_SETTINGS.exam_message_template,
       160,
     ),
-    exam_title_template: cleanText(
+    exam_title_template: cleanTemplate(
       input.exam_title_template,
       DEFAULT_OVERLAY_SETTINGS.exam_title_template,
       120,
     ),
     custom_start_at: safeIso(input.custom_start_at),
-    highscore_message_template: cleanText(
+    highscore_message_template: cleanTemplate(
       input.highscore_message_template,
       DEFAULT_OVERLAY_SETTINGS.highscore_message_template,
       160,
     ),
-    highscore_title_template: cleanText(
+    highscore_title_template: cleanTemplate(
       input.highscore_title_template,
       DEFAULT_OVERLAY_SETTINGS.highscore_title_template,
       120,
@@ -132,12 +144,12 @@ export function sanitizeOverlaySettings(input = {}) {
       DEFAULT_OVERLAY_SETTINGS.leaderboard_title,
     ),
     overlay_size: overlaySize,
-    payment_message_template: cleanText(
+    payment_message_template: cleanTemplate(
       input.payment_message_template,
       DEFAULT_OVERLAY_SETTINGS.payment_message_template,
       160,
     ),
-    payment_title_template: cleanText(
+    payment_title_template: cleanTemplate(
       input.payment_title_template,
       DEFAULT_OVERLAY_SETTINGS.payment_title_template,
       120,
@@ -147,12 +159,12 @@ export function sanitizeOverlaySettings(input = {}) {
       DEFAULT_OVERLAY_SETTINGS.payment_template,
       140,
     ),
-    radiant_message_template: cleanText(
+    radiant_message_template: cleanTemplate(
       input.radiant_message_template,
       DEFAULT_OVERLAY_SETTINGS.radiant_message_template,
       160,
     ),
-    radiant_title_template: cleanText(
+    radiant_title_template: cleanTemplate(
       input.radiant_title_template,
       DEFAULT_OVERLAY_SETTINGS.radiant_title_template,
       120,
