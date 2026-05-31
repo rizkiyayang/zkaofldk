@@ -281,6 +281,107 @@ h1 {
   color: var(--pink-strong);
 }
 
+.overlay-compact .overlay-root {
+  padding: clamp(10px, 2vw, 24px);
+  gap: 12px;
+}
+
+.overlay-compact .leaderboard-card {
+  width: min(390px, 42vw);
+  min-width: 280px;
+  padding: 13px;
+  border-radius: 20px;
+}
+
+.overlay-compact .eyebrow {
+  margin-bottom: 4px;
+  font-size: 10px;
+  letter-spacing: 1.7px;
+}
+
+.overlay-compact h1 {
+  margin-bottom: 10px;
+  font-size: clamp(18px, 2vw, 25px);
+}
+
+.overlay-compact .leaderboard-list {
+  gap: 7px;
+}
+
+.overlay-compact .leaderboard-row {
+  grid-template-columns: 30px 34px 1fr auto;
+  gap: 8px;
+  min-height: 46px;
+  padding: 7px 9px 7px 7px;
+  border-radius: 14px;
+}
+
+.overlay-compact .place {
+  width: 28px;
+  height: 28px;
+  border-radius: 11px;
+  font-size: 13px;
+}
+
+.overlay-compact .rank-emblem {
+  width: 32px;
+  height: 32px;
+}
+
+.overlay-compact .rank-emblem-alert {
+  width: 46px;
+  height: 46px;
+}
+
+.overlay-compact .name strong,
+.overlay-compact .score strong {
+  font-size: 13px;
+}
+
+.overlay-compact .name span,
+.overlay-compact .score span {
+  margin-top: 3px;
+  font-size: 10px;
+}
+
+.overlay-compact .score strong {
+  font-size: 18px;
+}
+
+.overlay-compact .alert-stack {
+  width: min(420px, 42vw);
+  min-width: 280px;
+}
+
+.overlay-compact .alert-card {
+  grid-template-columns: 54px 1fr;
+  gap: 11px;
+  padding: 13px;
+  border-radius: 20px;
+}
+
+.overlay-compact .alert-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 18px;
+}
+
+.overlay-compact .alert-symbol {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  font-size: 13px;
+}
+
+.overlay-compact .alert-copy strong {
+  font-size: clamp(16px, 2vw, 23px);
+}
+
+.overlay-compact .alert-copy span {
+  margin-top: 4px;
+  font-size: clamp(11px, 1.2vw, 13px);
+}
+
 .alert-card.is-out {
   animation: alert-out 0.3s ease forwards;
 }
@@ -311,5 +412,10 @@ h1 {
   .alert-stack {
     width: min(100%, 440px);
     min-width: 0;
+  }
+
+  .overlay-compact .leaderboard-card,
+  .overlay-compact .alert-stack {
+    width: min(100%, 360px);
   }
 }

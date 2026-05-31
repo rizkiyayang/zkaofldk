@@ -1,5 +1,17 @@
 const overlayType = document.body.dataset.overlay || "full";
 const params = new URLSearchParams(window.location.search);
+const SOUND_FILES = {
+  exam_finished: "/uas/sound/exam_finished.wav",
+  highscore: "/uas/sound/highscore.wav",
+  payment_success: "/uas/sound/payment.wav",
+  radiant: "/uas/sound/radiant.wav",
+};
+const TEMPLATE_FALLBACKS = {
+  exam_finished: "{name} selesai ujian dan mendapat {rank}",
+  highscore: "{name} masuk highscore nomor {position}",
+  payment_success: "{name} memulai ujian akhir season valorant",
+  radiant: "{name} mendapat Radiant",
+};
 const state = {
   alertDuration: 7000,
   alertTimer: null,
@@ -12,6 +24,7 @@ const state = {
   seenIds: new Set(
     JSON.parse(window.localStorage.getItem("uas-overlay-seen-ids") || "[]"),
   ),
+  settings: {},
 };
 
 const elements = {
@@ -79,6 +92,138 @@ function formatDuration(seconds) {
   return `${minutes}:${String(rest).padStart(2, "0")}`;
 }
 
+function wait(ms) {
+  return new Promise((resolve) => {
+    window.setTimeout(resolve, Math.max(0, ms));
+  });
+}
+
+function applyOverlaySize(settings = {}) {
+  const paramSize = params.get("size");
+  const size = ["compact", "large"].includes(paramSize)
+    ? paramSize
+    : settings.overlay_size || "large";
+
+  document.body.classList.toggle("overlay-compact", size === "compact");
+  document.body.classList.toggle("overlay-large", size !== "compact");
+}
+
+function eventValues(event, settings = {}) {
+  const amountText = formatRupiah(event.amount || 0);
+  const position = event.payload?.position ? `#${event.payload.position}` : "";
+
+  return {
+    amount: amountText,
+    duration: formatDuration(event.duration_seconds),
+    name: event.name || "Peserta",
+    period: event.payload?.period || "",
+    position,
+    rank: event.rank || "Iron",
+    score: String(Number(event.score || 0)),
+    shownAmount: settings.show_amount ? ` • ${amountText}` : "",
+  };
+}
+
+function fillTemplate(template, values) {
+  return String(template || "").replace(/\{([a-z_]+)\}/gi, (_, key) => {
+    return values[key] ?? "";
+  });
+}
+
+function getTtsTemplate(eventType, settings = {}) {
+  if (eventType === "payment_success") {
+    return settings.payment_template || TEMPLATE_FALLBACKS.payment_success;
+  }
+
+  if (eventType === "highscore") {
+    return settings.highscore_template || TEMPLATE_FALLBACKS.highscore;
+  }
+
+  if (eventType === "radiant") {
+    return settings.radiant_template || TEMPLATE_FALLBACKS.radiant;
+  }
+
+  return settings.exam_template || TEMPLATE_FALLBACKS.exam_finished;
+}
+
+function playAlertSound(eventType, settings = {}) {
+  if (!settings.sound_enabled) return Promise.resolve();
+
+  const audio = new Audio(SOUND_FILES[eventType] || SOUND_FILES.exam_finished);
+  audio.volume = Math.max(0, Math.min(1, Number(settings.sound_volume ?? 0.65)));
+
+  return new Promise((resolve) => {
+    let settled = false;
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      resolve();
+    };
+
+    audio.addEventListener("ended", finish, { once: true });
+    audio.addEventListener("error", finish, { once: true });
+    audio.play().catch(finish);
+    window.setTimeout(finish, 4500);
+  });
+}
+
+function getBrowserVoices() {
+  if (!("speechSynthesis" in window)) return [];
+  return window.speechSynthesis.getVoices();
+}
+
+function waitForVoices() {
+  if (getBrowserVoices().length) return Promise.resolve(getBrowserVoices());
+
+  return new Promise((resolve) => {
+    const finish = () => resolve(getBrowserVoices());
+    if (typeof window.speechSynthesis.addEventListener === "function") {
+      window.speechSynthesis.addEventListener("voiceschanged", finish, {
+        once: true,
+      });
+    } else {
+      window.speechSynthesis.onvoiceschanged = finish;
+    }
+    window.setTimeout(finish, 700);
+  });
+}
+
+async function speakAlert(text, settings = {}) {
+  if (!settings.tts_enabled || !text || !("speechSynthesis" in window)) return;
+
+  const voices = await waitForVoices();
+  const selected =
+    voices.find((voice) => voice.name === settings.tts_voice) ||
+    voices.find((voice) => /^id/i.test(voice.lang || "")) ||
+    null;
+
+  await new Promise((resolve) => {
+    const utterance = new SpeechSynthesisUtterance(text);
+    let settled = false;
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      resolve();
+    };
+    if (selected) utterance.voice = selected;
+    utterance.lang = selected?.lang || "id-ID";
+    utterance.rate = Math.max(0.7, Math.min(1.3, Number(settings.tts_rate ?? 1)));
+    utterance.volume = Math.max(0, Math.min(1, Number(settings.tts_volume ?? 0.9)));
+    utterance.onend = finish;
+    utterance.onerror = finish;
+    window.speechSynthesis.speak(utterance);
+    window.setTimeout(() => {
+      window.speechSynthesis.cancel();
+      finish();
+    }, 9000);
+  });
+}
+
+async function playAlertMedia(event, content, settings = {}) {
+  await playAlertSound(event.event_type, settings);
+  await speakAlert(content.ttsText, settings);
+}
+
 function saveSeen(event) {
   state.seenIds.add(event.id);
   state.lastSeenAt = event.created_at || new Date().toISOString();
@@ -107,6 +252,8 @@ async function loadLeaderboard() {
   const settings = data.settings || {};
   const rows = data.leaderboard || [];
 
+  state.settings = settings;
+  applyOverlaySize(settings);
   state.refreshMs = Math.max(3000, Number(settings.refresh_seconds || 7) * 1000);
   state.alertDuration = Math.max(
     3000,
@@ -138,18 +285,23 @@ async function loadLeaderboard() {
 }
 
 function eventContent(event, settings) {
-  const name = escapeHtml(event.name || "Peserta");
-  const amount = settings.show_amount ? ` • ${formatRupiah(event.amount)}` : "";
-  const score = Number(event.score || 0);
-  const rank = escapeHtml(event.rank || "Iron");
-  const duration = formatDuration(event.duration_seconds);
-  const position = event.payload?.position ? `#${event.payload.position}` : "";
+  const values = eventValues(event, settings);
+  const name = escapeHtml(values.name);
+  const score = escapeHtml(values.score);
+  const rank = escapeHtml(values.rank);
+  const duration = escapeHtml(values.duration);
+  const position = escapeHtml(values.position);
+  const ttsText = fillTemplate(
+    getTtsTemplate(event.event_type, settings),
+    values,
+  );
 
   if (event.event_type === "payment_success") {
     return {
       className: "is-payment",
       icon: '<span class="alert-symbol">UAS</span>',
-      message: `Donasi masuk${amount}`,
+      message: `Ujian Akhir Season Valorant${escapeHtml(values.shownAmount)}`,
+      ttsText,
       title: `${name} memulai ujian`,
     };
   }
@@ -159,6 +311,7 @@ function eventContent(event, settings) {
       className: "is-highscore",
       icon: renderRankEmblem(rank, "rank-emblem-alert"),
       message: `${position} highscore • nilai ${score} • ${duration}`,
+      ttsText,
       title: `${name} masuk highscore`,
     };
   }
@@ -168,6 +321,7 @@ function eventContent(event, settings) {
       className: "is-radiant",
       icon: renderRankEmblem("Radiant", "rank-emblem-alert"),
       message: `nilai ${score} • ${duration}`,
+      ttsText,
       title: `${name} dapat Radiant`,
     };
   }
@@ -176,11 +330,12 @@ function eventContent(event, settings) {
     className: "is-result",
     icon: renderRankEmblem(rank, "rank-emblem-alert"),
     message: `${rank} • nilai ${score} • ${duration}`,
-    title: `${name} selesai UAS`,
+    ttsText,
+    title: `${name} selesai ujian`,
   };
 }
 
-function showNextAlert(settings = {}) {
+async function showNextAlert(settings = state.settings || {}) {
   if (!elements.alertStack || state.isShowingAlert || !state.eventQueue.length) {
     return;
   }
@@ -188,6 +343,7 @@ function showNextAlert(settings = {}) {
   state.isShowingAlert = true;
   const event = state.eventQueue.shift();
   const content = eventContent(event, settings);
+  const startedAt = Date.now();
   elements.alertStack.innerHTML = `
     <article class="alert-card ${content.className || ""}">
       <div class="alert-icon">${content.icon}</div>
@@ -199,15 +355,15 @@ function showNextAlert(settings = {}) {
   `;
 
   window.clearTimeout(state.alertTimer);
-  state.alertTimer = window.setTimeout(() => {
-    const card = elements.alertStack.querySelector(".alert-card");
-    card?.classList.add("is-out");
-    window.setTimeout(() => {
-      elements.alertStack.innerHTML = "";
-      state.isShowingAlert = false;
-      showNextAlert(settings);
-    }, 320);
-  }, state.alertDuration);
+  await playAlertMedia(event, content, settings).catch(() => {});
+  await wait(state.alertDuration - (Date.now() - startedAt));
+
+  const card = elements.alertStack.querySelector(".alert-card");
+  card?.classList.add("is-out");
+  await wait(320);
+  elements.alertStack.innerHTML = "";
+  state.isShowingAlert = false;
+  showNextAlert(settings);
 }
 
 async function loadEvents() {
@@ -218,6 +374,8 @@ async function loadEvents() {
   });
   const data = await fetchJson(`/api/uas-overlay-events?${query}`);
   const settings = data.settings || {};
+  state.settings = settings;
+  applyOverlaySize(settings);
   state.refreshMs = Math.max(3000, Number(settings.refresh_seconds || 7) * 1000);
   state.alertDuration = Math.max(
     3000,
@@ -245,5 +403,6 @@ function loop() {
   window.setTimeout(loop, state.refreshMs);
 }
 
+applyOverlaySize();
 window.localStorage.setItem("uas-overlay-last-seen-at", state.lastSeenAt);
 loop();
