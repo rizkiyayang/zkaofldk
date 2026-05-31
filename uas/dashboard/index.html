@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard Overlay UAS Valorant</title>
-    <link rel="stylesheet" href="/uas/dashboard/style.css?v=20260531-7" />
+    <link rel="stylesheet" href="/uas/dashboard/style.css?v=20260531-9" />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css"
@@ -141,12 +141,54 @@
 
             <div class="settings-block">
               <div>
-                <p class="eyebrow">Teks Alert</p>
-                <h3>Template</h3>
+                <p class="eyebrow">Teks Notifikasi</p>
+                <h3>Overlay</h3>
               </div>
-              <p class="hint">Placeholder: {name}, {rank}, {score}, {duration}, {amount}, {position}, {period}</p>
+              <p class="hint">Placeholder: {name}, {rank}, {score}, {duration}, {amount}, {shownAmount}, {position}, {period}. Judul/detail boleh pakai Enter.</p>
+              <div class="form-grid">
+                <label>
+                  <span>Pembayaran judul</span>
+                  <textarea id="paymentTitleTemplate" maxlength="120" rows="2"></textarea>
+                </label>
+                <label>
+                  <span>Pembayaran detail</span>
+                  <textarea id="paymentMessageTemplate" maxlength="160" rows="2"></textarea>
+                </label>
+                <label>
+                  <span>Selesai judul</span>
+                  <textarea id="examTitleTemplate" maxlength="120" rows="2"></textarea>
+                </label>
+                <label>
+                  <span>Selesai detail</span>
+                  <textarea id="examMessageTemplate" maxlength="160" rows="2"></textarea>
+                </label>
+                <label>
+                  <span>Highscore judul</span>
+                  <textarea id="highscoreTitleTemplate" maxlength="120" rows="2"></textarea>
+                </label>
+                <label>
+                  <span>Highscore detail</span>
+                  <textarea id="highscoreMessageTemplate" maxlength="160" rows="2"></textarea>
+                </label>
+                <label>
+                  <span>Radiant judul</span>
+                  <textarea id="radiantTitleTemplate" maxlength="120" rows="2"></textarea>
+                </label>
+                <label>
+                  <span>Radiant detail</span>
+                  <textarea id="radiantMessageTemplate" maxlength="160" rows="2"></textarea>
+                </label>
+              </div>
+            </div>
+
+            <div class="settings-block">
+              <div>
+                <p class="eyebrow">Teks TTS</p>
+                <h3>Voice</h3>
+              </div>
+              <p class="hint">Teks yang dibacakan. {duration} otomatis jadi format suara, misal 1:04 dibaca satu menit empat detik.</p>
               <label>
-                <span>Pembayaran sukses</span>
+                <span>Pembayaran</span>
                 <input id="paymentTemplate" maxlength="140" />
               </label>
               <label>
@@ -220,6 +262,6 @@
       </section>
     </main>
 
-    <script src="/uas/dashboard/script.js?v=20260531-7"></script>
+    <script src="/uas/dashboard/script.js?v=20260531-9"></script>
   </body>
 </html>

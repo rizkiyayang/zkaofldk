@@ -1,13 +1,31 @@
 const API = "/api/uas-overlay-admin";
 const PASSWORD_KEY = "uas-overlay-password";
+const DEFAULT_TEMPLATES = {
+  examMessage: "{rank} • nilai {score} • waktu {duration}",
+  examTitle: "{name} menyelesaikan UAS Valorant",
+  examTts: "{name} menyelesaikan UAS Valorant dan mendapat {rank}",
+  highscoreMessage: "{name} • nilai {score} • {rank} • {duration}",
+  highscoreTitle: "Highscore baru {position}",
+  highscoreTts: "{name} masuk highscore {position} dengan nilai {score}",
+  paymentMessage: "Ujian Akhir Season Valorant{shownAmount}",
+  paymentTitle: "{name}\nmemasuki ruang",
+  paymentTts: "{name} memasuki ruang UAS Valorant",
+  radiantMessage: "Nilai {score} • waktu {duration}",
+  radiantTitle: "{name} meraih Radiant",
+  radiantTts: "{name} meraih Radiant dengan nilai {score}",
+};
 
 const elements = {
   alertDuration: document.getElementById("alertDuration"),
   customStartAt: document.getElementById("customStartAt"),
+  examMessageTemplate: document.getElementById("examMessageTemplate"),
+  examTitleTemplate: document.getElementById("examTitleTemplate"),
   leaderboardLimit: document.getElementById("leaderboardLimit"),
   leaderboardMode: document.getElementById("leaderboardMode"),
   leaderboardTitle: document.getElementById("leaderboardTitle"),
   examTemplate: document.getElementById("examTemplate"),
+  highscoreMessageTemplate: document.getElementById("highscoreMessageTemplate"),
+  highscoreTitleTemplate: document.getElementById("highscoreTitleTemplate"),
   highscoreTemplate: document.getElementById("highscoreTemplate"),
   loginForm: document.getElementById("loginForm"),
   loginMessage: document.getElementById("loginMessage"),
@@ -17,8 +35,12 @@ const elements = {
   overlaySize: document.getElementById("overlaySize"),
   overlayLinks: document.getElementById("overlayLinks"),
   passwordInput: document.getElementById("passwordInput"),
+  paymentMessageTemplate: document.getElementById("paymentMessageTemplate"),
   paymentTemplate: document.getElementById("paymentTemplate"),
+  paymentTitleTemplate: document.getElementById("paymentTitleTemplate"),
   previewFrame: document.getElementById("previewFrame"),
+  radiantMessageTemplate: document.getElementById("radiantMessageTemplate"),
+  radiantTitleTemplate: document.getElementById("radiantTitleTemplate"),
   radiantTemplate: document.getElementById("radiantTemplate"),
   refreshButton: document.getElementById("refreshButton"),
   refreshSeconds: document.getElementById("refreshSeconds"),
@@ -134,18 +156,34 @@ function showLogin(message = "") {
 function fillForm(settings) {
   elements.alertDuration.value = settings.alert_duration_seconds || 7;
   elements.customStartAt.value = localInputValue(settings.custom_start_at);
+  elements.examMessageTemplate.value =
+    settings.exam_message_template || DEFAULT_TEMPLATES.examMessage;
+  elements.examTitleTemplate.value =
+    settings.exam_title_template || DEFAULT_TEMPLATES.examTitle;
   elements.examTemplate.value =
-    settings.exam_template || "{name} menyelesaikan UAS Valorant dan mendapat {rank}";
+    settings.exam_template || DEFAULT_TEMPLATES.examTts;
+  elements.highscoreMessageTemplate.value =
+    settings.highscore_message_template || DEFAULT_TEMPLATES.highscoreMessage;
+  elements.highscoreTitleTemplate.value =
+    settings.highscore_title_template || DEFAULT_TEMPLATES.highscoreTitle;
   elements.highscoreTemplate.value =
-    settings.highscore_template || "{name} masuk highscore {position} dengan nilai {score}";
+    settings.highscore_template || DEFAULT_TEMPLATES.highscoreTts;
   elements.leaderboardLimit.value = settings.leaderboard_limit || 5;
   elements.leaderboardMode.value = settings.leaderboard_mode || "monthly";
   elements.leaderboardTitle.value = settings.leaderboard_title || "UAS Valorant Highscore";
   elements.overlaySize.value = settings.overlay_size || "large";
+  elements.paymentMessageTemplate.value =
+    settings.payment_message_template || DEFAULT_TEMPLATES.paymentMessage;
   elements.paymentTemplate.value =
-    settings.payment_template || "{name} memasuki ruang UAS Valorant";
+    settings.payment_template || DEFAULT_TEMPLATES.paymentTts;
+  elements.paymentTitleTemplate.value =
+    settings.payment_title_template || DEFAULT_TEMPLATES.paymentTitle;
+  elements.radiantMessageTemplate.value =
+    settings.radiant_message_template || DEFAULT_TEMPLATES.radiantMessage;
+  elements.radiantTitleTemplate.value =
+    settings.radiant_title_template || DEFAULT_TEMPLATES.radiantTitle;
   elements.radiantTemplate.value =
-    settings.radiant_template || "{name} meraih Radiant dengan nilai {score}";
+    settings.radiant_template || DEFAULT_TEMPLATES.radiantTts;
   elements.refreshSeconds.value = settings.refresh_seconds || 7;
   elements.resetIntervalDays.value = settings.reset_interval_days || 30;
   elements.showAmount.checked = settings.show_amount !== false;
@@ -161,13 +199,21 @@ function readForm() {
   return {
     alert_duration_seconds: Number(elements.alertDuration.value || 7),
     custom_start_at: isoFromLocal(elements.customStartAt.value),
+    exam_message_template: elements.examMessageTemplate.value,
+    exam_title_template: elements.examTitleTemplate.value,
     exam_template: elements.examTemplate.value,
+    highscore_message_template: elements.highscoreMessageTemplate.value,
+    highscore_title_template: elements.highscoreTitleTemplate.value,
     highscore_template: elements.highscoreTemplate.value,
     leaderboard_limit: Number(elements.leaderboardLimit.value || 5),
     leaderboard_mode: elements.leaderboardMode.value,
     leaderboard_title: elements.leaderboardTitle.value,
     overlay_size: elements.overlaySize.value,
+    payment_message_template: elements.paymentMessageTemplate.value,
+    payment_title_template: elements.paymentTitleTemplate.value,
     payment_template: elements.paymentTemplate.value,
+    radiant_message_template: elements.radiantMessageTemplate.value,
+    radiant_title_template: elements.radiantTitleTemplate.value,
     radiant_template: elements.radiantTemplate.value,
     refresh_seconds: Number(elements.refreshSeconds.value || 7),
     reset_interval_days: Number(elements.resetIntervalDays.value || 30),

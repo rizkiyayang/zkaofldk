@@ -30,7 +30,8 @@ body {
 
 button,
 input,
-select {
+select,
+textarea {
   font: inherit;
 }
 
@@ -127,7 +128,8 @@ label span {
 }
 
 input,
-select {
+select,
+textarea {
   width: 100%;
   min-height: 48px;
   border: 1px solid var(--line);
@@ -138,6 +140,13 @@ select {
   outline: 0;
 }
 
+textarea {
+  min-height: 74px;
+  padding: 13px 14px;
+  line-height: 1.35;
+  resize: vertical;
+}
+
 input[type="range"] {
   min-height: 48px;
   padding: 0;
@@ -146,7 +155,8 @@ input[type="range"] {
 }
 
 input:focus,
-select:focus {
+select:focus,
+textarea:focus {
   border-color: var(--pink);
   box-shadow: 0 0 0 4px rgba(255, 79, 163, 0.12);
 }

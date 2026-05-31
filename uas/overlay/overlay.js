@@ -12,6 +12,16 @@ const TEMPLATE_FALLBACKS = {
   payment_success: "{name} memasuki ruang UAS Valorant",
   radiant: "{name} meraih Radiant dengan nilai {score}",
 };
+const VISUAL_TEMPLATE_FALLBACKS = {
+  exam_message: "{rank} • nilai {score} • waktu {duration}",
+  exam_title: "{name} menyelesaikan UAS Valorant",
+  highscore_message: "{name} • nilai {score} • {rank} • {duration}",
+  highscore_title: "Highscore baru {position}",
+  payment_message: "Ujian Akhir Season Valorant{shownAmount}",
+  payment_title: "{name}\nmemasuki ruang",
+  radiant_message: "Nilai {score} • waktu {duration}",
+  radiant_title: "{name} meraih Radiant",
+};
 const state = {
   alertDuration: 7000,
   alertTimer: null,
@@ -105,6 +115,68 @@ function formatDuration(seconds) {
   return `${minutes}:${String(rest).padStart(2, "0")}`;
 }
 
+function numberToWords(value) {
+  const number = Math.max(0, Math.floor(Number(value || 0)));
+  const words = [
+    "nol",
+    "satu",
+    "dua",
+    "tiga",
+    "empat",
+    "lima",
+    "enam",
+    "tujuh",
+    "delapan",
+    "sembilan",
+    "sepuluh",
+    "sebelas",
+  ];
+
+  if (number < 12) return words[number];
+  if (number < 20) return `${words[number - 10]} belas`;
+  if (number < 100) {
+    const tens = Math.floor(number / 10);
+    const rest = number % 10;
+    return `${words[tens]} puluh${rest ? ` ${words[rest]}` : ""}`;
+  }
+  if (number < 200) {
+    return `seratus${number > 100 ? ` ${numberToWords(number - 100)}` : ""}`;
+  }
+  if (number < 1000) {
+    const hundreds = Math.floor(number / 100);
+    const rest = number % 100;
+    return `${words[hundreds]} ratus${rest ? ` ${numberToWords(rest)}` : ""}`;
+  }
+  if (number < 2000) {
+    return `seribu${number > 1000 ? ` ${numberToWords(number - 1000)}` : ""}`;
+  }
+  if (number < 1000000) {
+    const thousands = Math.floor(number / 1000);
+    const rest = number % 1000;
+    return `${numberToWords(thousands)} ribu${rest ? ` ${numberToWords(rest)}` : ""}`;
+  }
+
+  return String(number);
+}
+
+function formatDurationSpeech(seconds) {
+  const value = Number(seconds || 0);
+  if (!value) return "nol detik";
+
+  const minutes = Math.floor(value / 60);
+  const rest = value % 60;
+  const parts = [];
+  if (minutes) parts.push(`${numberToWords(minutes)} menit`);
+  if (rest) parts.push(`${numberToWords(rest)} detik`);
+  return parts.join(" ");
+}
+
+function formatRupiahSpeech(value) {
+  const amount = Math.max(0, Number(value || 0));
+  if (!amount) return "nol rupiah";
+  return `${numberToWords(amount)} rupiah`;
+}
+
 function wait(ms) {
   return new Promise((resolve) => {
     window.setTimeout(resolve, Math.max(0, ms));
@@ -137,6 +209,18 @@ function eventValues(event, settings = {}) {
   };
 }
 
+function eventSpeechValues(event, settings = {}) {
+  const values = eventValues(event, settings);
+  const amountText = formatRupiahSpeech(event.amount || 0);
+
+  return {
+    ...values,
+    amount: amountText,
+    duration: formatDurationSpeech(event.duration_seconds),
+    shownAmount: settings.show_amount ? ` senilai ${amountText}` : "",
+  };
+}
+
 function fillTemplate(template, values) {
   return String(template || "").replace(/\{([a-z_]+)\}/gi, (_, key) => {
     return values[key] ?? "";
@@ -157,6 +241,10 @@ function getTtsTemplate(eventType, settings = {}) {
   }
 
   return settings.exam_template || TEMPLATE_FALLBACKS.exam_finished;
+}
+
+function visualTemplate(key, settings = {}) {
+  return settings[`${key}_template`] || VISUAL_TEMPLATE_FALLBACKS[key];
 }
 
 function playAlertSound(eventType, settings = {}) {
@@ -304,33 +392,28 @@ async function loadLeaderboard() {
 
 function eventContent(event, settings) {
   const values = eventValues(event, settings);
-  const name = escapeHtml(values.name);
-  const score = escapeHtml(values.score);
-  const rank = escapeHtml(values.rank);
-  const duration = escapeHtml(values.duration);
-  const position = escapeHtml(values.position);
   const ttsText = fillTemplate(
     getTtsTemplate(event.event_type, settings),
-    values,
+    eventSpeechValues(event, settings),
   );
 
   if (event.event_type === "payment_success") {
     return {
       className: "is-payment",
       icon: renderBrandLogo("brand-emblem-alert"),
-      message: `Ujian Akhir Season Valorant${escapeHtml(values.shownAmount)}`,
+      message: escapeHtml(fillTemplate(visualTemplate("payment_message", settings), values)),
       ttsText,
-      title: `${name} memasuki ruang`,
+      title: escapeHtml(fillTemplate(visualTemplate("payment_title", settings), values)),
     };
   }
 
   if (event.event_type === "highscore") {
     return {
       className: "is-highscore",
-      icon: renderRankEmblem(rank, "rank-emblem-alert"),
-      message: `${name} • nilai ${score} • ${rank} • ${duration}`,
+      icon: renderRankEmblem(values.rank, "rank-emblem-alert"),
+      message: escapeHtml(fillTemplate(visualTemplate("highscore_message", settings), values)),
       ttsText,
-      title: `Highscore baru ${position}`.trim(),
+      title: escapeHtml(fillTemplate(visualTemplate("highscore_title", settings), values)),
     };
   }
 
@@ -338,18 +421,18 @@ function eventContent(event, settings) {
     return {
       className: "is-radiant",
       icon: renderRankEmblem("Radiant", "rank-emblem-alert"),
-      message: `Nilai ${score} • waktu ${duration}`,
+      message: escapeHtml(fillTemplate(visualTemplate("radiant_message", settings), values)),
       ttsText,
-      title: `${name} meraih Radiant`,
+      title: escapeHtml(fillTemplate(visualTemplate("radiant_title", settings), values)),
     };
   }
 
   return {
     className: "is-result",
-    icon: renderRankEmblem(rank, "rank-emblem-alert"),
-    message: `${rank} • nilai ${score} • waktu ${duration}`,
+    icon: renderRankEmblem(values.rank, "rank-emblem-alert"),
+    message: escapeHtml(fillTemplate(visualTemplate("exam_message", settings), values)),
     ttsText,
-    title: `${name} menyelesaikan UAS Valorant`,
+    title: escapeHtml(fillTemplate(visualTemplate("exam_title", settings), values)),
   };
 }
 

@@ -289,6 +289,7 @@ h1 {
   display: block;
   font-size: clamp(21px, 2.6vw, 32px);
   line-height: 1.02;
+  white-space: pre-line;
 }
 
 .alert-copy span {
@@ -297,6 +298,7 @@ h1 {
   color: var(--muted);
   font-size: clamp(13px, 1.4vw, 16px);
   font-weight: 850;
+  white-space: pre-line;
 }
 
 .alert-card.is-highscore,
