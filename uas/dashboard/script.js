@@ -1,11 +1,5 @@
 const API = "/api/uas-overlay-admin";
 const PASSWORD_KEY = "uas-overlay-password";
-const SOUND_FILES = {
-  exam_finished: "/uas/sound/exam_finished.wav",
-  highscore: "/uas/sound/highscore.wav",
-  payment_success: "/uas/sound/payment.wav",
-  radiant: "/uas/sound/radiant.wav",
-};
 
 const elements = {
   alertDuration: document.getElementById("alertDuration"),
@@ -35,7 +29,6 @@ const elements = {
   soundEnabled: document.getElementById("soundEnabled"),
   soundVolume: document.getElementById("soundVolume"),
   testMessage: document.getElementById("testMessage"),
-  testTtsButton: document.getElementById("testTtsButton"),
   ttsEnabled: document.getElementById("ttsEnabled"),
   ttsRate: document.getElementById("ttsRate"),
   ttsVoice: document.getElementById("ttsVoice"),
@@ -74,24 +67,6 @@ function escapeHtml(value) {
     .replace(/'/g, "&#039;");
 }
 
-function getPreviewData() {
-  return {
-    amount: "Rp10.000",
-    duration: "1:27",
-    name: "COKELAT MANIS",
-    period: "Preview",
-    position: "#1",
-    rank: "Radiant",
-    score: "100",
-  };
-}
-
-function fillTemplate(template, values) {
-  return String(template || "").replace(/\{([a-z_]+)\}/gi, (_, key) => {
-    return values[key] ?? "";
-  });
-}
-
 function sortVoice(a, b) {
   const aId = /^id/i.test(a.lang || "") ? 0 : 1;
   const bId = /^id/i.test(b.lang || "") ? 0 : 1;
@@ -120,58 +95,6 @@ function populateVoices(selected = currentSettings?.tts_voice || "") {
   elements.ttsVoice.value = browserVoices.some((voice) => voice.name === selected)
     ? selected
     : "";
-}
-
-function selectedVoice() {
-  const name = elements.ttsVoice?.value || "";
-  return (
-    browserVoices.find((voice) => voice.name === name) ||
-    browserVoices.find((voice) => /^id/i.test(voice.lang || "")) ||
-    null
-  );
-}
-
-function speakPreview(text) {
-  if (!("speechSynthesis" in window)) {
-    return Promise.reject(new Error("Browser ini belum mendukung TTS."));
-  }
-
-  window.speechSynthesis.cancel();
-
-  return new Promise((resolve, reject) => {
-    const utterance = new SpeechSynthesisUtterance(text);
-    let settled = false;
-    const finish = () => {
-      if (settled) return;
-      settled = true;
-      resolve();
-    };
-    const fail = () => {
-      if (settled) return;
-      settled = true;
-      reject(new Error("TTS gagal diputar."));
-    };
-    const voice = selectedVoice();
-    if (voice) utterance.voice = voice;
-    utterance.lang = voice?.lang || "id-ID";
-    utterance.rate = Number(elements.ttsRate.value || 1);
-    utterance.volume = Number(elements.ttsVolume.value || 0.9);
-    utterance.onend = finish;
-    utterance.onerror = fail;
-    window.speechSynthesis.speak(utterance);
-    window.setTimeout(finish, 9000);
-  });
-}
-
-function playDashboardSound(eventType) {
-  const audio = new Audio(SOUND_FILES[eventType] || SOUND_FILES.exam_finished);
-  audio.volume = Number(elements.soundVolume.value || 0.65);
-
-  return new Promise((resolve, reject) => {
-    audio.onended = resolve;
-    audio.onerror = () => reject(new Error("Sound gagal diputar."));
-    audio.play().catch(reject);
-  });
 }
 
 async function adminRequest(action, payload = {}) {
@@ -372,36 +295,11 @@ document.addEventListener("click", async (event) => {
       await adminRequest("test_event", {
         eventType: test.dataset.testEvent,
       });
-      elements.testMessage.textContent = "Test terkirim.";
+      elements.testMessage.textContent = "Test terkirim ke overlay.";
     } catch (error) {
       elements.testMessage.textContent = error.message;
     }
     return;
-  }
-
-  const sound = event.target.closest("[data-test-sound]");
-  if (sound) {
-    elements.testMessage.textContent = "Memutar sound...";
-    try {
-      await playDashboardSound(sound.dataset.testSound);
-      elements.testMessage.textContent = "Sound berhasil diputar.";
-    } catch (error) {
-      elements.testMessage.textContent = error.message;
-    }
-    return;
-  }
-
-  const tts = event.target.closest("#testTtsButton");
-  if (!tts) return;
-
-  elements.testMessage.textContent = "Memutar TTS...";
-  try {
-    const template =
-      elements.paymentTemplate.value || "{name} memulai ujian akhir season valorant";
-    await speakPreview(fillTemplate(template, getPreviewData()));
-    elements.testMessage.textContent = "TTS berhasil diputar.";
-  } catch (error) {
-    elements.testMessage.textContent = error.message;
   }
 });
 
