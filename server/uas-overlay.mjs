@@ -18,7 +18,7 @@ export const DEFAULT_OVERLAY_SETTINGS = {
   show_amount: true,
   sound_enabled: true,
   sound_volume: 0.65,
-  tts_enabled: false,
+  tts_enabled: true,
   tts_rate: 1,
   tts_voice: "",
   tts_volume: 0.9,
