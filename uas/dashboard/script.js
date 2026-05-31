@@ -25,6 +25,7 @@ const elements = {
   resetIntervalDays: document.getElementById("resetIntervalDays"),
   settingsForm: document.getElementById("settingsForm"),
   settingsMessage: document.getElementById("settingsMessage"),
+  saveSettingsButton: document.getElementById("saveSettingsButton"),
   showAmount: document.getElementById("showAmount"),
   soundEnabled: document.getElementById("soundEnabled"),
   soundVolume: document.getElementById("soundVolume"),
@@ -133,16 +134,18 @@ function showLogin(message = "") {
 function fillForm(settings) {
   elements.alertDuration.value = settings.alert_duration_seconds || 7;
   elements.customStartAt.value = localInputValue(settings.custom_start_at);
-  elements.examTemplate.value = settings.exam_template || "{name} selesai ujian dan mendapat {rank}";
+  elements.examTemplate.value =
+    settings.exam_template || "{name} menyelesaikan UAS Valorant dan mendapat {rank}";
   elements.highscoreTemplate.value =
-    settings.highscore_template || "{name} masuk highscore nomor {position}";
+    settings.highscore_template || "{name} masuk highscore {position} dengan nilai {score}";
   elements.leaderboardLimit.value = settings.leaderboard_limit || 5;
   elements.leaderboardMode.value = settings.leaderboard_mode || "monthly";
   elements.leaderboardTitle.value = settings.leaderboard_title || "UAS Valorant Highscore";
   elements.overlaySize.value = settings.overlay_size || "large";
   elements.paymentTemplate.value =
-    settings.payment_template || "{name} memulai ujian akhir season valorant";
-  elements.radiantTemplate.value = settings.radiant_template || "{name} mendapat Radiant";
+    settings.payment_template || "{name} memasuki ruang UAS Valorant";
+  elements.radiantTemplate.value =
+    settings.radiant_template || "{name} meraih Radiant dengan nilai {score}";
   elements.refreshSeconds.value = settings.refresh_seconds || 7;
   elements.resetIntervalDays.value = settings.reset_interval_days || 30;
   elements.showAmount.checked = settings.show_amount !== false;
@@ -176,6 +179,14 @@ function readForm() {
     tts_voice: elements.ttsVoice.value,
     tts_volume: Number(elements.ttsVolume.value || 0.9),
   };
+}
+
+function setSaveState(message, isSaving = false) {
+  elements.settingsMessage.textContent = message;
+  elements.saveSettingsButton.disabled = isSaving;
+  elements.saveSettingsButton.innerHTML = isSaving
+    ? '<i class="ri-loader-4-line"></i> Menyimpan'
+    : '<i class="ri-save-3-line"></i> Simpan';
 }
 
 function renderLinks(settings) {
@@ -248,16 +259,16 @@ elements.loginForm.addEventListener("submit", async (event) => {
 
 elements.settingsForm.addEventListener("submit", async (event) => {
   event.preventDefault();
-  elements.settingsMessage.textContent = "Menyimpan...";
+  setSaveState("Menyimpan...", true);
 
   try {
     const data = await adminRequest("save", { settings: readForm() });
     currentSettings = data.settings;
     fillForm(currentSettings);
     renderLinks(currentSettings);
-    elements.settingsMessage.textContent = "Tersimpan.";
+    setSaveState("Tersimpan.");
   } catch (error) {
-    elements.settingsMessage.textContent = error.message;
+    setSaveState(error.message);
   }
 });
 

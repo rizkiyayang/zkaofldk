@@ -7,10 +7,10 @@ const SOUND_FILES = {
   radiant: "/uas/sound/radiant.wav",
 };
 const TEMPLATE_FALLBACKS = {
-  exam_finished: "{name} selesai ujian dan mendapat {rank}",
-  highscore: "{name} masuk highscore nomor {position}",
-  payment_success: "{name} memulai ujian akhir season valorant",
-  radiant: "{name} mendapat Radiant",
+  exam_finished: "{name} menyelesaikan UAS Valorant dan mendapat {rank}",
+  highscore: "{name} masuk highscore {position} dengan nilai {score}",
+  payment_success: "{name} memasuki ruang UAS Valorant",
+  radiant: "{name} meraih Radiant dengan nilai {score}",
 };
 const state = {
   alertDuration: 7000,
@@ -71,6 +71,19 @@ function renderRankEmblem(rank, size = "") {
       <picture>
         <source srcset="/uas/icon/${icon}.webp" type="image/webp" />
         <img src="/uas/icon/${icon}.png" alt="${safeRank}" decoding="async" />
+      </picture>
+    </span>
+  `;
+}
+
+function renderBrandLogo(size = "") {
+  const classes = ["brand-emblem", size].filter(Boolean).join(" ");
+
+  return `
+    <span class="${classes}" aria-label="COKELAT MANIS" title="COKELAT MANIS">
+      <picture>
+        <source srcset="/img/icon.webp" type="image/webp" />
+        <img src="/img/icon.jpg" alt="COKELAT MANIS" decoding="async" />
       </picture>
     </span>
   `;
@@ -304,10 +317,10 @@ function eventContent(event, settings) {
   if (event.event_type === "payment_success") {
     return {
       className: "is-payment",
-      icon: '<span class="alert-symbol">UAS</span>',
+      icon: renderBrandLogo("brand-emblem-alert"),
       message: `Ujian Akhir Season Valorant${escapeHtml(values.shownAmount)}`,
       ttsText,
-      title: `${name} memulai ujian`,
+      title: `${name} memasuki ruang`,
     };
   }
 
@@ -315,9 +328,9 @@ function eventContent(event, settings) {
     return {
       className: "is-highscore",
       icon: renderRankEmblem(rank, "rank-emblem-alert"),
-      message: `${position} highscore • nilai ${score} • ${duration}`,
+      message: `${name} • nilai ${score} • ${rank} • ${duration}`,
       ttsText,
-      title: `${name} masuk highscore`,
+      title: `Highscore baru ${position}`.trim(),
     };
   }
 
@@ -325,18 +338,18 @@ function eventContent(event, settings) {
     return {
       className: "is-radiant",
       icon: renderRankEmblem("Radiant", "rank-emblem-alert"),
-      message: `nilai ${score} • ${duration}`,
+      message: `Nilai ${score} • waktu ${duration}`,
       ttsText,
-      title: `${name} dapat Radiant`,
+      title: `${name} meraih Radiant`,
     };
   }
 
   return {
     className: "is-result",
     icon: renderRankEmblem(rank, "rank-emblem-alert"),
-    message: `${rank} • nilai ${score} • ${duration}`,
+    message: `${rank} • nilai ${score} • waktu ${duration}`,
     ttsText,
-    title: `${name} selesai ujian`,
+    title: `${name} menyelesaikan UAS Valorant`,
   };
 }
 

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard Overlay UAS Valorant</title>
-    <link rel="stylesheet" href="/uas/dashboard/style.css?v=20260531-5" />
+    <link rel="stylesheet" href="/uas/dashboard/style.css?v=20260531-7" />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css"
@@ -47,10 +47,13 @@
                 <p class="eyebrow">Leaderboard</p>
                 <h2>Pengaturan</h2>
               </div>
-              <button class="primary-button compact" type="submit">
-                <i class="ri-save-3-line"></i>
-                Simpan
-              </button>
+              <div class="save-actions">
+                <button class="primary-button compact" id="saveSettingsButton" type="submit">
+                  <i class="ri-save-3-line"></i>
+                  Simpan
+                </button>
+                <p class="note save-note" id="settingsMessage"></p>
+              </div>
             </div>
 
             <label>
@@ -160,7 +163,6 @@
               </label>
             </div>
 
-            <p class="note" id="settingsMessage"></p>
           </form>
 
           <section class="panel links-panel">
@@ -218,6 +220,6 @@
       </section>
     </main>
 
-    <script src="/uas/dashboard/script.js?v=20260531-5"></script>
+    <script src="/uas/dashboard/script.js?v=20260531-7"></script>
   </body>
 </html>

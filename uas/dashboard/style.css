@@ -69,6 +69,12 @@ button {
   gap: 14px;
 }
 
+.save-actions {
+  display: grid;
+  justify-items: end;
+  gap: 6px;
+}
+
 h1,
 h2,
 h3,
@@ -223,6 +229,12 @@ select:focus {
   font-size: 13px;
   font-weight: 800;
   line-height: 1.4;
+}
+
+.save-note {
+  min-height: 16px;
+  margin-top: 0;
+  text-align: right;
 }
 
 .link-list,
