@@ -1,9 +1,14 @@
 import { json, supabaseRequest } from "../server/uas-core.mjs";
 import { getOverlaySettings } from "../server/uas-overlay.mjs";
 
+const LIVE_EVENT_LOOKBACK_MS = 30 * 1000;
+
 function safeAfter(value) {
+  const now = new Date();
+  const floor = new Date(now.getTime() - LIVE_EVENT_LOOKBACK_MS);
   const date = new Date(value || "");
-  return Number.isNaN(date.getTime()) ? new Date().toISOString() : date.toISOString();
+  if (Number.isNaN(date.getTime()) || date > now) return now.toISOString();
+  return date < floor ? floor.toISOString() : date.toISOString();
 }
 
 async function fetchHandler(request) {
