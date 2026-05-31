@@ -63,8 +63,40 @@ create table if not exists public.uas_overlay_settings (
   alert_duration_seconds integer not null default 7
     check (alert_duration_seconds between 3 and 20),
   show_amount boolean not null default true,
+  overlay_size text not null default 'large'
+    check (overlay_size in ('compact', 'large')),
+  sound_enabled boolean not null default true,
+  sound_volume numeric not null default 0.65
+    check (sound_volume >= 0 and sound_volume <= 1),
+  tts_enabled boolean not null default false,
+  tts_volume numeric not null default 0.9
+    check (tts_volume >= 0 and tts_volume <= 1),
+  tts_rate numeric not null default 1
+    check (tts_rate >= 0.7 and tts_rate <= 1.3),
+  tts_voice text not null default '',
+  payment_template text not null default '{name} memulai ujian akhir season valorant',
+  exam_template text not null default '{name} selesai ujian dan mendapat {rank}',
+  highscore_template text not null default '{name} masuk highscore nomor {position}',
+  radiant_template text not null default '{name} mendapat Radiant',
   updated_at timestamptz not null default now()
 );
+
+alter table public.uas_overlay_settings
+  add column if not exists overlay_size text not null default 'large'
+    check (overlay_size in ('compact', 'large')),
+  add column if not exists sound_enabled boolean not null default true,
+  add column if not exists sound_volume numeric not null default 0.65
+    check (sound_volume >= 0 and sound_volume <= 1),
+  add column if not exists tts_enabled boolean not null default false,
+  add column if not exists tts_volume numeric not null default 0.9
+    check (tts_volume >= 0 and tts_volume <= 1),
+  add column if not exists tts_rate numeric not null default 1
+    check (tts_rate >= 0.7 and tts_rate <= 1.3),
+  add column if not exists tts_voice text not null default '',
+  add column if not exists payment_template text not null default '{name} memulai ujian akhir season valorant',
+  add column if not exists exam_template text not null default '{name} selesai ujian dan mendapat {rank}',
+  add column if not exists highscore_template text not null default '{name} masuk highscore nomor {position}',
+  add column if not exists radiant_template text not null default '{name} mendapat Radiant';
 
 insert into public.uas_overlay_settings (id)
 values ('main')

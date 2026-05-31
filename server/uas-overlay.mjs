@@ -4,13 +4,24 @@ import { supabaseRequest } from "./uas-core.mjs";
 export const DEFAULT_OVERLAY_SETTINGS = {
   alert_duration_seconds: 7,
   custom_start_at: null,
+  exam_template: "{name} selesai ujian dan mendapat {rank}",
   id: "main",
+  highscore_template: "{name} masuk highscore nomor {position}",
   leaderboard_limit: 5,
   leaderboard_mode: "monthly",
   leaderboard_title: "UAS Valorant Highscore",
+  overlay_size: "large",
+  payment_template: "{name} memulai ujian akhir season valorant",
+  radiant_template: "{name} mendapat Radiant",
   refresh_seconds: 7,
   reset_interval_days: 30,
   show_amount: true,
+  sound_enabled: true,
+  sound_volume: 0.65,
+  tts_enabled: false,
+  tts_rate: 1,
+  tts_voice: "",
+  tts_volume: 0.9,
 };
 
 const VALID_MODES = new Set([
@@ -20,9 +31,16 @@ const VALID_MODES = new Set([
   "custom",
   "interval_days",
 ]);
+const VALID_OVERLAY_SIZES = new Set(["compact", "large"]);
 
 function clampNumber(value, fallback, min, max) {
   const parsed = Number.parseInt(String(value ?? ""), 10);
+  if (!Number.isFinite(parsed)) return fallback;
+  return Math.max(min, Math.min(max, parsed));
+}
+
+function clampDecimal(value, fallback, min, max) {
+  const parsed = Number.parseFloat(String(value ?? ""));
   if (!Number.isFinite(parsed)) return fallback;
   return Math.max(min, Math.min(max, parsed));
 }
@@ -51,6 +69,9 @@ export function sanitizeOverlaySettings(input = {}) {
   const mode = VALID_MODES.has(input.leaderboard_mode)
     ? input.leaderboard_mode
     : DEFAULT_OVERLAY_SETTINGS.leaderboard_mode;
+  const overlaySize = VALID_OVERLAY_SIZES.has(input.overlay_size)
+    ? input.overlay_size
+    : DEFAULT_OVERLAY_SETTINGS.overlay_size;
 
   return {
     alert_duration_seconds: clampNumber(
@@ -59,7 +80,17 @@ export function sanitizeOverlaySettings(input = {}) {
       3,
       20,
     ),
+    exam_template: cleanText(
+      input.exam_template,
+      DEFAULT_OVERLAY_SETTINGS.exam_template,
+      140,
+    ),
     custom_start_at: safeIso(input.custom_start_at),
+    highscore_template: cleanText(
+      input.highscore_template,
+      DEFAULT_OVERLAY_SETTINGS.highscore_template,
+      140,
+    ),
     id: "main",
     leaderboard_limit: clampNumber(
       input.leaderboard_limit,
@@ -71,6 +102,17 @@ export function sanitizeOverlaySettings(input = {}) {
     leaderboard_title: cleanText(
       input.leaderboard_title,
       DEFAULT_OVERLAY_SETTINGS.leaderboard_title,
+    ),
+    overlay_size: overlaySize,
+    payment_template: cleanText(
+      input.payment_template,
+      DEFAULT_OVERLAY_SETTINGS.payment_template,
+      140,
+    ),
+    radiant_template: cleanText(
+      input.radiant_template,
+      DEFAULT_OVERLAY_SETTINGS.radiant_template,
+      140,
     ),
     refresh_seconds: clampNumber(
       input.refresh_seconds,
@@ -87,6 +129,33 @@ export function sanitizeOverlaySettings(input = {}) {
     show_amount: toBoolean(
       input.show_amount,
       DEFAULT_OVERLAY_SETTINGS.show_amount,
+    ),
+    sound_enabled: toBoolean(
+      input.sound_enabled,
+      DEFAULT_OVERLAY_SETTINGS.sound_enabled,
+    ),
+    sound_volume: clampDecimal(
+      input.sound_volume,
+      DEFAULT_OVERLAY_SETTINGS.sound_volume,
+      0,
+      1,
+    ),
+    tts_enabled: toBoolean(
+      input.tts_enabled,
+      DEFAULT_OVERLAY_SETTINGS.tts_enabled,
+    ),
+    tts_rate: clampDecimal(
+      input.tts_rate,
+      DEFAULT_OVERLAY_SETTINGS.tts_rate,
+      0.7,
+      1.3,
+    ),
+    tts_voice: cleanText(input.tts_voice, DEFAULT_OVERLAY_SETTINGS.tts_voice, 120),
+    tts_volume: clampDecimal(
+      input.tts_volume,
+      DEFAULT_OVERLAY_SETTINGS.tts_volume,
+      0,
+      1,
     ),
   };
 }
