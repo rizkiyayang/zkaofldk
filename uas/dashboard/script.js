@@ -130,22 +130,22 @@ function showLogin(message = "") {
 }
 
 function fillForm(settings) {
-  elements.alertDuration.value = settings.alert_duration_seconds;
+  elements.alertDuration.value = settings.alert_duration_seconds || 7;
   elements.customStartAt.value = localInputValue(settings.custom_start_at);
   elements.examTemplate.value = settings.exam_template || "{name} selesai ujian dan mendapat {rank}";
   elements.highscoreTemplate.value =
     settings.highscore_template || "{name} masuk highscore nomor {position}";
-  elements.leaderboardLimit.value = settings.leaderboard_limit;
-  elements.leaderboardMode.value = settings.leaderboard_mode;
-  elements.leaderboardTitle.value = settings.leaderboard_title;
+  elements.leaderboardLimit.value = settings.leaderboard_limit || 5;
+  elements.leaderboardMode.value = settings.leaderboard_mode || "monthly";
+  elements.leaderboardTitle.value = settings.leaderboard_title || "UAS Valorant Highscore";
   elements.overlaySize.value = settings.overlay_size || "large";
   elements.paymentTemplate.value =
     settings.payment_template || "{name} memulai ujian akhir season valorant";
   elements.radiantTemplate.value = settings.radiant_template || "{name} mendapat Radiant";
-  elements.refreshSeconds.value = settings.refresh_seconds;
-  elements.resetIntervalDays.value = settings.reset_interval_days;
-  elements.showAmount.checked = Boolean(settings.show_amount);
-  elements.soundEnabled.checked = Boolean(settings.sound_enabled);
+  elements.refreshSeconds.value = settings.refresh_seconds || 7;
+  elements.resetIntervalDays.value = settings.reset_interval_days || 30;
+  elements.showAmount.checked = settings.show_amount !== false;
+  elements.soundEnabled.checked = settings.sound_enabled !== false;
   elements.soundVolume.value = Number(settings.sound_volume ?? 0.65);
   elements.ttsEnabled.checked = Boolean(settings.tts_enabled);
   elements.ttsRate.value = Number(settings.tts_rate ?? 1);
