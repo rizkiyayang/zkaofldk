@@ -165,10 +165,10 @@ export async function getOverlaySettings() {
     const rows = await supabaseRequest(
       "uas_overlay_settings?select=*&id=eq.main&limit=1",
     );
-    return {
+    return sanitizeOverlaySettings({
       ...DEFAULT_OVERLAY_SETTINGS,
       ...(rows?.[0] || {}),
-    };
+    });
   } catch {
     return DEFAULT_OVERLAY_SETTINGS;
   }
