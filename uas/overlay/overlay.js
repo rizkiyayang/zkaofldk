@@ -22,18 +22,15 @@ const VISUAL_TEMPLATE_FALLBACKS = {
   radiant_message: "Nilai {score} • waktu {duration}",
   radiant_title: "{name} meraih Radiant",
 };
+const overlayStartedAt = new Date().toISOString();
 const state = {
   alertDuration: 7000,
   alertTimer: null,
   eventQueue: [],
   isShowingAlert: false,
-  lastSeenAt:
-    window.localStorage.getItem("uas-overlay-last-seen-at") ||
-    new Date().toISOString(),
+  lastSeenAt: overlayStartedAt,
   refreshMs: 7000,
-  seenIds: new Set(
-    JSON.parse(window.localStorage.getItem("uas-overlay-seen-ids") || "[]"),
-  ),
+  seenIds: new Set(),
   settings: {},
 };
 
@@ -333,9 +330,6 @@ async function playAlertMedia(event, content, settings = {}) {
 function saveSeen(event) {
   state.seenIds.add(event.id);
   state.lastSeenAt = event.created_at || new Date().toISOString();
-  const ids = [...state.seenIds].slice(-80);
-  window.localStorage.setItem("uas-overlay-seen-ids", JSON.stringify(ids));
-  window.localStorage.setItem("uas-overlay-last-seen-at", state.lastSeenAt);
 }
 
 async function fetchJson(url) {
@@ -505,5 +499,4 @@ function loop() {
 }
 
 applyOverlaySize();
-window.localStorage.setItem("uas-overlay-last-seen-at", state.lastSeenAt);
 loop();
