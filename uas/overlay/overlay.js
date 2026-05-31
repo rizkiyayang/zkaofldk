@@ -200,9 +200,11 @@ async function speakAlert(text, settings = {}) {
   await new Promise((resolve) => {
     const utterance = new SpeechSynthesisUtterance(text);
     let settled = false;
+    let timeoutId = 0;
     const finish = () => {
       if (settled) return;
       settled = true;
+      window.clearTimeout(timeoutId);
       resolve();
     };
     if (selected) utterance.voice = selected;
@@ -211,8 +213,11 @@ async function speakAlert(text, settings = {}) {
     utterance.volume = Math.max(0, Math.min(1, Number(settings.tts_volume ?? 0.9)));
     utterance.onend = finish;
     utterance.onerror = finish;
+    window.speechSynthesis.resume();
     window.speechSynthesis.speak(utterance);
-    window.setTimeout(() => {
+    window.setTimeout(() => window.speechSynthesis.resume(), 80);
+    timeoutId = window.setTimeout(() => {
+      if (settled) return;
       window.speechSynthesis.cancel();
       finish();
     }, 9000);

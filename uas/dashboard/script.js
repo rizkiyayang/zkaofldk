@@ -82,9 +82,10 @@ function populateVoices(selected = currentSettings?.tts_voice || "") {
     return;
   }
 
+  elements.ttsVoice.disabled = false;
   browserVoices = window.speechSynthesis.getVoices().sort(sortVoice);
   const options = [
-    '<option value="">Default browser</option>',
+    '<option value="">Default browser (id-ID)</option>',
     ...browserVoices.map((voice) => {
       const label = `${voice.name} (${voice.lang || "unknown"})`;
       return `<option value="${escapeHtml(voice.name)}">${escapeHtml(label)}</option>`;
@@ -147,7 +148,7 @@ function fillForm(settings) {
   elements.showAmount.checked = settings.show_amount !== false;
   elements.soundEnabled.checked = settings.sound_enabled !== false;
   elements.soundVolume.value = Number(settings.sound_volume ?? 0.65);
-  elements.ttsEnabled.checked = Boolean(settings.tts_enabled);
+  elements.ttsEnabled.checked = settings.tts_enabled !== false;
   elements.ttsRate.value = Number(settings.tts_rate ?? 1);
   elements.ttsVolume.value = Number(settings.tts_volume ?? 0.9);
   populateVoices(settings.tts_voice || "");
