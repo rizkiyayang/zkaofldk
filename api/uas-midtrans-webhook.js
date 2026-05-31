@@ -4,6 +4,7 @@ import {
   readJson,
   verifyMidtransSignature,
 } from "../server/uas-core.mjs";
+import { recordPaymentEvent } from "../server/uas-overlay.mjs";
 
 async function fetchHandler(request) {
   if (request.method !== "POST") {
@@ -21,7 +22,11 @@ async function fetchHandler(request) {
       return json({ error: "invalid_signature" }, 401);
     }
 
-    await markPaidAndMaybeSendReceipt(payload.order_id, payload);
+    const order = await markPaidAndMaybeSendReceipt(payload.order_id, payload);
+
+    if (order?.paid_at) {
+      await recordPaymentEvent(order);
+    }
 
     return json({
       ok: true,

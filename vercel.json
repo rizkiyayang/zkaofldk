@@ -28,6 +28,24 @@
       ]
     },
     {
+      "source": "/uas/dashboard/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/uas/overlay/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
       "source": "/(.*)\\.(avif|webp|png|jpg|jpeg|JPG|ico|svg)",
       "headers": [
         {

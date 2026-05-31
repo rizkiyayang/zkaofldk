@@ -48,6 +48,48 @@ create index if not exists uas_attempts_leaderboard_idx
 create index if not exists uas_orders_quiz_token_idx
   on public.uas_orders (quiz_token);
 
+create table if not exists public.uas_overlay_settings (
+  id text primary key default 'main',
+  leaderboard_mode text not null default 'monthly'
+    check (leaderboard_mode in ('all_time', 'monthly', 'weekly', 'custom', 'interval_days')),
+  leaderboard_limit integer not null default 5
+    check (leaderboard_limit between 1 and 20),
+  leaderboard_title text not null default 'UAS Valorant Highscore',
+  custom_start_at timestamptz,
+  reset_interval_days integer not null default 30
+    check (reset_interval_days between 1 and 365),
+  refresh_seconds integer not null default 7
+    check (refresh_seconds between 3 and 60),
+  alert_duration_seconds integer not null default 7
+    check (alert_duration_seconds between 3 and 20),
+  show_amount boolean not null default true,
+  updated_at timestamptz not null default now()
+);
+
+insert into public.uas_overlay_settings (id)
+values ('main')
+on conflict (id) do nothing;
+
+create table if not exists public.uas_overlay_events (
+  id uuid primary key default gen_random_uuid(),
+  event_key text not null unique,
+  event_type text not null
+    check (event_type in ('payment_success', 'exam_finished', 'highscore', 'radiant')),
+  order_id text,
+  name text not null,
+  amount integer,
+  score integer,
+  rank text,
+  duration_seconds integer,
+  payload jsonb not null default '{}'::jsonb,
+  created_at timestamptz not null default now()
+);
+
+create index if not exists uas_overlay_events_created_at_idx
+  on public.uas_overlay_events (created_at desc);
+
 alter table public.uas_players enable row level security;
 alter table public.uas_orders enable row level security;
 alter table public.uas_attempts enable row level security;
+alter table public.uas_overlay_settings enable row level security;
+alter table public.uas_overlay_events enable row level security;
