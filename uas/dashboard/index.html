@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Overlay UAS Valorant</title>
+    <link rel="stylesheet" href="/uas/dashboard/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css"
+    />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="panel login-panel" id="loginPanel">
+        <p class="eyebrow">Admin</p>
+        <h1>Overlay UAS</h1>
+        <form id="loginForm">
+          <label>
+            <span>Password</span>
+            <input id="passwordInput" autocomplete="current-password" type="password" />
+          </label>
+          <button class="primary-button" type="submit">
+            <i class="ri-lock-unlock-line"></i>
+            Masuk
+          </button>
+        </form>
+        <p class="note" id="loginMessage"></p>
+      </section>
+
+      <section class="workspace hidden" id="workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">UAS Valorant</p>
+            <h1>Overlay Dashboard</h1>
+          </div>
+          <button class="ghost-button" id="logoutButton" type="button">
+            <i class="ri-logout-box-r-line"></i>
+            Keluar
+          </button>
+        </header>
+
+        <section class="grid">
+          <form class="panel settings-panel" id="settingsForm">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">Leaderboard</p>
+                <h2>Pengaturan</h2>
+              </div>
+              <button class="primary-button compact" type="submit">
+                <i class="ri-save-3-line"></i>
+                Simpan
+              </button>
+            </div>
+
+            <label>
+              <span>Judul overlay</span>
+              <input id="leaderboardTitle" maxlength="80" />
+            </label>
+
+            <div class="form-grid">
+              <label>
+                <span>Mode reset</span>
+                <select id="leaderboardMode">
+                  <option value="all_time">Sepanjang masa</option>
+                  <option value="monthly">Bulanan</option>
+                  <option value="weekly">Mingguan</option>
+                  <option value="custom">Custom mulai tanggal</option>
+                  <option value="interval_days">Tiap X hari</option>
+                </select>
+              </label>
+              <label>
+                <span>Jumlah top</span>
+                <input id="leaderboardLimit" inputmode="numeric" max="20" min="1" type="number" />
+              </label>
+              <label>
+                <span>Tanggal mulai</span>
+                <input id="customStartAt" type="datetime-local" />
+              </label>
+              <label>
+                <span>Reset tiap hari</span>
+                <input id="resetIntervalDays" inputmode="numeric" max="365" min="1" type="number" />
+              </label>
+              <label>
+                <span>Refresh detik</span>
+                <input id="refreshSeconds" inputmode="numeric" max="60" min="3" type="number" />
+              </label>
+              <label>
+                <span>Durasi alert</span>
+                <input id="alertDuration" inputmode="numeric" max="20" min="3" type="number" />
+              </label>
+            </div>
+
+            <label class="toggle-row">
+              <input id="showAmount" type="checkbox" />
+              <span>Tampilkan nominal donate</span>
+            </label>
+
+            <p class="note" id="settingsMessage"></p>
+          </form>
+
+          <section class="panel links-panel">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">OBS</p>
+                <h2>URL Overlay</h2>
+              </div>
+              <button class="ghost-button compact" id="refreshButton" type="button">
+                <i class="ri-refresh-line"></i>
+                Refresh
+              </button>
+            </div>
+            <div class="link-list" id="overlayLinks"></div>
+          </section>
+
+          <section class="panel test-panel">
+            <p class="eyebrow">Alert</p>
+            <h2>Test Notifikasi</h2>
+            <div class="test-buttons">
+              <button class="ghost-button" data-test-event="payment_success" type="button">
+                <i class="ri-bank-card-line"></i>
+                Pembayaran
+              </button>
+              <button class="ghost-button" data-test-event="exam_finished" type="button">
+                <i class="ri-graduation-cap-line"></i>
+                Selesai Ujian
+              </button>
+              <button class="ghost-button" data-test-event="highscore" type="button">
+                <i class="ri-trophy-line"></i>
+                Highscore
+              </button>
+              <button class="ghost-button" data-test-event="radiant" type="button">
+                <i class="ri-sparkling-2-line"></i>
+                Radiant
+              </button>
+            </div>
+            <p class="note" id="testMessage"></p>
+          </section>
+
+          <section class="panel preview-panel">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">Preview</p>
+                <h2>Full Overlay</h2>
+              </div>
+              <button class="ghost-button compact" id="openPreview" type="button">
+                <i class="ri-external-link-line"></i>
+                Buka
+              </button>
+            </div>
+            <iframe id="previewFrame" title="Preview overlay"></iframe>
+          </section>
+        </section>
+      </section>
+    </main>
+
+    <script src="/uas/dashboard/script.js"></script>
+  </body>
+</html>
