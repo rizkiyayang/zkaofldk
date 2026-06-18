@@ -1,15 +1,15 @@
-import { productCollections } from "/data/products.js?v=20260619-history1";
-import { agents } from "/data/agents.js?v=20260619-history1";
-import { maps } from "/data/maps.js?v=20260619-history1";
-import { weapons } from "/data/weapons.js?v=20260619-history1";
+import { productCollections } from "/data/products.js?v=20260619-pagefix2";
+import { agents } from "/data/agents.js?v=20260619-pagefix2";
+import { maps } from "/data/maps.js?v=20260619-pagefix2";
+import { weapons } from "/data/weapons.js?v=20260619-pagefix2";
 import {
   renderAgents,
   renderMaps,
   renderProductCollections,
   renderWeapons,
-} from "/assets/js/render.js?v=20260619-history1";
-import { initCarousel, initTestimonialScroller } from "/assets/js/carousel.js?v=20260619-history1";
-import { initCommonPage } from "/assets/js/common.js?v=20260619-history1";
+} from "/assets/js/render.js?v=20260619-pagefix2";
+import { initCarousel, initTestimonialScroller } from "/assets/js/carousel.js?v=20260619-pagefix2";
+import { initCommonPage } from "/assets/js/common.js?v=20260619-pagefix2";
 
 renderProductCollections(productCollections);
 renderAgents(document.getElementById("agentCarousel"), agents);

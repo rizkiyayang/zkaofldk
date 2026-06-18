@@ -1,4 +1,4 @@
-import { initDonateModal } from "/assets/js/modal.js?v=20260619-history1";
+import { initDonateModal } from "/assets/js/modal.js?v=20260619-pagefix2";
 
 const JAKARTA_TIME_ZONE = "Asia/Jakarta";
 
@@ -114,14 +114,22 @@ function initHistoryRestoreGuard() {
     modal?.setAttribute("aria-hidden", "true");
   });
 
-  window.addEventListener("pageshow", (event) => {
-    updateLiveStatus();
+  window.addEventListener("pageshow", () => {
+    // Jangan reload dari event pageshow. Safari kadang menganggap halaman
+    // hasil restore sebagai persisted berulang kali dan masuk siklus reload.
+    // Cukup aktifkan ulang stylesheet, bersihkan state sementara, lalu paksa reflow.
+    document.querySelectorAll('link[rel="stylesheet"]').forEach((stylesheet) => {
+      stylesheet.disabled = false;
+    });
 
-    // Safari/WebKit kadang memulihkan snapshot BFCache tanpa stylesheet atau
-    // layout lengkap. Muat ulang sekali agar halaman kembali utuh.
-    if (event.persisted) {
-      window.location.reload();
-    }
+    document.querySelectorAll(".release, .glitching").forEach((element) => {
+      element.classList.remove("release", "glitching");
+    });
+
+    updateLiveStatus();
+    requestAnimationFrame(() => {
+      void document.documentElement.offsetHeight;
+    });
   });
 }
 
