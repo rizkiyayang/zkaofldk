@@ -1701,11 +1701,9 @@ elements.startForm.addEventListener("submit", async (event) => {
 
   const name = elements.nameInput.value.trim();
   const email = elements.emailInput.value.trim();
-  const amount = Number(elements.amountInput.value || 0);
-  const channel = selectedChannel();
 
-  if (!name || !email || amount < 10000) {
-    setStartMessage("Nama, email, dan donasi minimal 10k wajib diisi.", true);
+  if (!name || !email) {
+    setStartMessage("Nama dan email wajib diisi.", true);
     return;
   }
 
@@ -1713,7 +1711,7 @@ elements.startForm.addEventListener("submit", async (event) => {
     "button[type='submit']",
   );
   submitButton.disabled = true;
-  setStartMessage("Membuat checkout...");
+  setStartMessage("Mendaftarkan peserta...");
 
   try {
     const response = await fetch(API.start, {
@@ -1722,58 +1720,28 @@ elements.startForm.addEventListener("submit", async (event) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        amount,
-        channel,
         email,
         name,
       }),
     });
     const data = await readResponseJson(response);
 
-    if (!response.ok) throw new Error(data.message || "Checkout gagal dibuat");
+    if (!response.ok) throw new Error(data.message || "Gagal memulai ujian");
+    if (!data.quizToken) throw new Error("Token ujian tidak tersedia");
 
-    state.amount = amount;
-    state.channel = data.channel || channel;
+    state.amount = 0;
+    state.channel = data.channel || "free";
     state.email = email;
     state.orderId = data.orderId;
-    state.payment = data.payment || {};
-    elements.startPanel.classList.add("hidden");
-    elements.paymentPanel.classList.remove("hidden");
-    elements.paymentStatus.textContent = data.status || "pending";
-    renderPayment(state.payment, amount);
-    saveCheckoutSession({
-      channel,
-      payment: state.payment,
-      status: data.status || "pending",
-    });
-    setStartMessage("Checkout siap. Lanjutkan pembayaran di Midtrans.");
-    setPaymentMessage("Mengalihkan ke Midtrans...");
-    startAutoStatusCheck();
-    checkPaymentStatus({ auto: true, silent: true });
-    elements.paymentPanel.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
-    redirectToMidtrans(state.payment);
+    state.payment = null;
+    clearCheckoutSession();
+    setStartMessage("Pendaftaran berhasil. Membuka ujian...");
+    unlockQuiz(data.quizToken);
   } catch (error) {
     setStartMessage(error.message, true);
 
     if (isLocalPreview()) {
-      elements.startPanel.classList.add("hidden");
-      elements.paymentPanel.classList.remove("hidden");
-      elements.localPreview.classList.remove("hidden");
-      elements.paymentInstructions.innerHTML = `
-        <div class="payment-box">
-          <div class="payment-line">
-            <span>Preview lokal</span>
-            <strong>API Vercel belum aktif di server lokal ini.</strong>
-          </div>
-        </div>
-      `;
-      setPaymentMessage(
-        "Mode preview hanya muncul di localhost supaya layout kuis bisa dicek.",
-        true,
-      );
+      unlockQuiz(`local-preview-${Date.now()}`, true);
     }
   } finally {
     submitButton.disabled = false;
@@ -1812,6 +1780,7 @@ function startAutoStatusCheck() {
 
 function statusLabel(status) {
   const normalized = String(status || "").toLowerCase();
+  if (normalized === "free") return "Gratis";
   if (normalized === "settlement" || normalized === "capture") return "Lunas";
   if (normalized === "pending" || normalized === "created") return "Pending";
   if (normalized === "expire") return "Expired";
@@ -2299,4 +2268,4 @@ async function submitExam() {
 elements.refreshLeaderboard.addEventListener("click", loadLeaderboard);
 
 loadLeaderboard();
-restoreCheckoutSession();
+clearCheckoutSession();

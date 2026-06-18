@@ -18,7 +18,7 @@
       <section class="uas-card" id="introPanel">
         <h2>UAS Valorant</h2>
         <p class="intro-subtitle">Ujian Akhir Season Valorant</p>
-        <p class="intro-note">Donate min 10k untuk mulai ujian.</p>
+        <p class="intro-note">Gratis. Isi data, lalu langsung mulai ujian.</p>
         <button class="primary-button" id="openStart" type="button">
           <i class="ri-graduation-cap-line"></i>
           Mulai Ujian
@@ -44,7 +44,7 @@
           <div>
             <p class="eyebrow">Daftar Ujian</p>
           </div>
-          <span class="minimum-pill">min. 10k</span>
+          <span class="minimum-pill">Gratis</span>
         </div>
 
         <label>
@@ -72,38 +72,15 @@
           />
         </label>
 
-        <label>
-          <span>Donate seikhlasnya</span>
-          <div class="amount-control">
-            <span>Rp</span>
-            <input
-              id="amountInput"
-              name="amount"
-              inputmode="numeric"
-              min="10000"
-              placeholder="10000"
-              required
-              step="1000"
-              type="number"
-              value="10000"
-            />
-          </div>
-        </label>
-
-        <div class="amount-presets" aria-label="Pilihan nominal donasi">
-          <button class="is-selected" data-amount="10000" type="button">
-            10k
-          </button>
-          <button data-amount="25000" type="button">25k</button>
-          <button data-amount="50000" type="button">50k</button>
-        </div>
+        <input id="amountInput" name="amount" type="hidden" value="0" />
+        <div class="amount-presets hidden" aria-hidden="true"></div>
 
         <button class="primary-button" type="submit">
-          <i class="ri-bank-card-line"></i>
-          Bayar & Mulai Ujian
+          <i class="ri-play-circle-line"></i>
+          Mulai Ujian Gratis
         </button>
         <p class="form-note" id="startMessage">
-          Satu pembayaran untuk satu kali ujian.
+          Nama dan email tetap disimpan untuk hasil dan highscore.
         </p>
       </form>
 
@@ -161,6 +138,6 @@
       </footer>
     </main>
 
-    <script src="/uas/script.js?v=20260529-5"></script>
+    <script src="/uas/script.js?v=20260619-free"></script>
   </body>
 </html>
