@@ -1,581 +1,651 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>COKELAT MANIS</title>
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
-    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
-    <link rel="stylesheet" href="style.css" />
-
-    <link rel="icon" type="image/x-icon" href="img/icon.jpg" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css"
-    />
-  </head>
-  <body>
-    <div class="container">
-      <!-- Header -->
-      <div class="header-glass">
-        <div class="avatar-wrap">
-          <picture
-            ><source srcset="img/icon.webp" type="image/webp" />
-            <img
-              src="img/icon.jpg"
-              alt="COKELAT MANIS"
-              class="profile-avatar"
-              decoding="async"
-              loading="eager"
-              fetchpriority="high"
-          /></picture>
-
-          <picture
-            ><source srcset="img/prx.webp" type="image/webp" />
-            <img
-              src="img/prx.jpg"
-              class="avatar-prx-overlay"
-              decoding="async"
-              loading="eager"
-          /></picture>
-        </div>
-
-        <div class="profile-right">
-          <div class="header-top">
-            <div class="header-title">
-              <h1>COKELAT MANIS</h1>
-              <span class="username">@zkaofldk</span>
-            </div>
-
-            <div class="header-icons">
-              <a href="https://www.instagram.com/zkaofldk">
-                <img
-                  src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg"
-                  alt="Instagram"
-                  decoding="async"
-                  loading="lazy"
-                />
-              </a>
-              <a href="https://www.tiktok.com/@zkaofldk">
-                <img
-                  src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg"
-                  alt="TikTok"
-                  decoding="async"
-                  loading="lazy"
-                />
-              </a>
-              <a href="https://discord.gg/CVur7k6wsE">
-                <img
-                  src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg"
-                  alt="Discord"
-                  decoding="async"
-                  loading="lazy"
-                />
-              </a>
-            </div>
-          </div>
-        </div>
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   COKELAT MANIS
+  </title>
+  <link crossorigin="" href="https://cdn.jsdelivr.net" rel="preconnect"/>
+  <link href="https://cdn.jsdelivr.net" rel="dns-prefetch"/>
+  <link href="/img/icon.jpg" rel="icon" type="image/jpeg"/>
+  <link href="/assets/css/base.css" rel="stylesheet"/>
+  <link href="/assets/css/components.css" rel="stylesheet"/>
+  <link href="/assets/css/home.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <div class="container">
+   <!-- Header -->
+   <div class="header-glass">
+    <div class="avatar-wrap">
+     <picture>
+      <source srcset="/img/icon.avif" type="image/avif"/>
+      <source srcset="/img/icon.webp" type="image/webp"/>
+      <img alt="COKELAT MANIS" class="profile-avatar" decoding="async" fetchpriority="high" height="320" loading="eager" src="/img/icon.jpg" width="320"/>
+     </picture>
+     <picture>
+      <source srcset="/img/prx.avif" type="image/avif"/>
+      <source srcset="/img/prx.webp" type="image/webp"/>
+      <img alt="" class="avatar-prx-overlay" decoding="async" height="320" loading="eager" src="/img/prx.jpg" width="320"/>
+     </picture>
+    </div>
+    <div class="profile-right">
+     <div class="header-top">
+      <div class="header-title">
+       <h1>
+        COKELAT MANIS
+       </h1>
+       <span class="username">
+        @zkaofldk
+       </span>
       </div>
-      <p class="profile-bio profile-bio-full">
-        Cewek jago valo 🎀 Live tiap hari, mabar valorant
-      </p>
-      <div class="price">
-        <div class="price-row">
-          <strong>20k</strong>
-          <span>VIP sampe end live</span>
-        </div>
-        <div class="price-row">
-          <strong>10k</strong>
-          <span>request senjata 3 round</span>
-        </div>
-        <div class="price-row">
-          <strong>20k</strong>
-          <span>request agent 1 match</span>
-        </div>
-        <div class="price-row">
-          <strong>100k</strong>
-          <span>sheriff only 1 match</span>
-        </div>
+      <div class="header-icons">
+       <a href="https://www.instagram.com/zkaofldk">
+        <img alt="Instagram" decoding="async" height="20" loading="lazy" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" width="20"/>
+       </a>
+       <a href="https://www.tiktok.com/@zkaofldk">
+        <img alt="TikTok" decoding="async" height="20" loading="lazy" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg" width="20"/>
+       </a>
+       <a href="https://discord.gg/CVur7k6wsE">
+        <img alt="Discord" decoding="async" height="20" loading="lazy" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg" width="20"/>
+       </a>
       </div>
-      <p class="slot-note">Khusus saat live aktif. Slot terbatas.</p>
-
-      <ul class="links choice-list">
-        <li>
-          <a href="#" class="support choice-card donate-trigger">
-            <span class="live-pill">Live</span>
-            <span class="choice-title">Donate Live</span>
-            <span class="choice-hint">Support • VIP • Top Up</span>
-          </a>
-        </li>
-      </ul>
-
-      <ul class="links secondary-links merged-links">
-        <li>
-          <a href="/uas/">
-            <div class="modern-left">
-              <div class="modern-icon">
-                <i class="ri-graduation-cap-line"></i>
-              </div>
-
-              <div class="modern-content">
-                <div class="text">
-                  UAS Valorant
-                  <span class="sub">Ujian Akhir Season Valorant.</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="modern-arrow">
-              <i class="ri-arrow-right-s-line"></i>
-            </div>
-          </a>
-        </li>
-        <li>
-          <a href="/setup/" class="shop-card">
-            <div class="shop-card-image">
-              <picture
-                ><source srcset="img/setup.webp" type="image/webp" />
-                <img
-                  src="img/setup.jpeg"
-                  alt="Spek PC Aku"
-                  decoding="async"
-                  loading="lazy"
-              /></picture>
-            </div>
-            <div class="shop-card-content">
-              <div class="modern-left">
-                <div class="modern-icon">
-                  <i class="ri-computer-line"></i>
-                </div>
-
-                <div class="modern-content">
-                  <span class="text">Spill spek PC Aku</span>
-                  <span class="sub">PC, alat, dan link shopee.</span>
-                </div>
-              </div>
-
-              <div class="modern-arrow">
-                <i class="ri-arrow-right-s-line"></i>
-              </div>
-            </div>
-          </a>
-        </li>
-      </ul>
-
-      <!-- Affiliate Carousel -->
-      <div class="affiliate-section">
-        <p class="section-title">Rekomendasi</p>
-        <div class="affiliate-wrapper">
-          <button class="affiliate-nav affiliate-prev" id="affiliatePrev">
-            <i class="ri-arrow-left-s-line"></i>
-          </button>
-          <button class="affiliate-nav affiliate-next" id="affiliateNext">
-            <i class="ri-arrow-right-s-line"></i>
-          </button>
-          <div class="affiliate-carousel" id="affiliateCarousel">
-            <a
-              href="https://s.shopee.co.id/W2AvFWQER"
-              target="_blank"
-              class="affiliate-card"
-            >
-              <div class="affiliate-image-wrap">
-                <picture
-                  ><source srcset="img/wingman.webp" type="image/webp" />
-                  <img src="img/wingman.JPG" decoding="async" loading="lazy"
-                /></picture>
-              </div>
-              <div class="affiliate-info">
-                <div class="affiliate-name">Wingman Flex</div>
-                <div class="affiliate-sub">Gantungan matanya bisa keluar.</div>
-              </div>
-            </a>
-            <a
-              href="https://s.shopee.co.id/AAEImIRG4j"
-              target="_blank"
-              class="affiliate-card"
-            >
-              <div class="affiliate-image-wrap">
-                <picture
-                  ><source srcset="img/teneneng.webp" type="image/webp" />
-                  <img src="img/teneneng.png" decoding="async" loading="lazy"
-                /></picture>
-              </div>
-              <div class="affiliate-info">
-                <div class="affiliate-name">Teneneng</div>
-                <div class="affiliate-sub">Teneneng neng teneneng neng.</div>
-              </div>
-            </a>
-            <a
-              href="https://s.shopee.co.id/W3nGbMAOQ"
-              target="_blank"
-              class="affiliate-card"
-            >
-              <div class="affiliate-image-wrap">
-                <picture
-                  ><source srcset="img/cincinsage.webp" type="image/webp" />
-                  <img src="img/cincinsage.png" decoding="async" loading="lazy"
-                /></picture>
-              </div>
-              <div class="affiliate-info">
-                <div class="affiliate-name">Cincin Sage</div>
-                <div class="affiliate-sub">revive me jett.</div>
-              </div>
-            </a>
-            <a
-              href="https://s.shopee.co.id/8V64nRx9Mw"
-              target="_blank"
-              class="affiliate-card"
-            >
-              <div class="affiliate-image-wrap">
-                <picture
-                  ><source srcset="img/keycapssage.webp" type="image/webp" />
-                  <img
-                    src="img/keycapssage.png"
-                    decoding="async"
-                    loading="lazy"
-                /></picture>
-              </div>
-              <div class="affiliate-info">
-                <div class="affiliate-name">Keycaps Valorant</div>
-                <div class="affiliate-sub">Buat yang suka ganti tombol.</div>
-              </div>
-            </a>
-            <a
-              href="https://s.shopee.co.id/AAEImbsMu4"
-              target="_blank"
-              class="affiliate-card"
-            >
-              <div class="affiliate-image-wrap">
-                <picture
-                  ><source srcset="img/legosage.webp" type="image/webp" />
-                  <img src="img/legosage.png" decoding="async" loading="lazy"
-                /></picture>
-              </div>
-              <div class="affiliate-info">
-                <div class="affiliate-name">Lego Valorant</div>
-                <div class="affiliate-sub">Jangan dimakan.</div>
-              </div>
-            </a>
-            <a
-              href="https://s.shopee.co.id/AUr9BQ8BL3"
-              target="_blank"
-              class="affiliate-card"
-            >
-              <div class="affiliate-image-wrap">
-                <picture
-                  ><source srcset="img/sageboneka.webp" type="image/webp" />
-                  <img src="img/sageboneka.png" decoding="async" loading="lazy"
-                /></picture>
-              </div>
-              <div class="affiliate-info">
-                <div class="affiliate-name">Boneka Valorant</div>
-                <div class="affiliate-sub">Ada buat agent lain juga.</div>
-              </div>
-            </a>
-            <a
-              href="https://s.shopee.co.id/2LVRSIqgbj"
-              target="_blank"
-              class="affiliate-card"
-            >
-              <div class="affiliate-image-wrap">
-                <picture
-                  ><source srcset="img/bear.webp" type="image/webp" />
-                  <img src="img/bear.png" decoding="async" loading="lazy"
-                /></picture>
-              </div>
-              <div class="affiliate-info">
-                <div class="affiliate-name">Tactibear Flex</div>
-                <div class="affiliate-sub">Ngik ngik.</div>
-              </div>
-            </a>
-            <a
-              href="https://s.shopee.co.id/4VZw2UXpBf"
-              target="_blank"
-              class="affiliate-card"
-            >
-              <div class="affiliate-image-wrap">
-                <picture
-                  ><source srcset="img/chambercard.webp" type="image/webp" />
-                  <img
-                    src="img/chambercard.png"
-                    decoding="async"
-                    loading="lazy"
-                /></picture>
-              </div>
-              <div class="affiliate-info">
-                <div class="affiliate-name">Stiker Kartu</div>
-                <div class="affiliate-sub">Eh eh Chamber...</div>
-              </div>
-            </a>
-          </div>
+     </div>
+    </div>
+   </div>
+   <p class="profile-bio profile-bio-full">
+    Cewek jago valo 🎀 Live tiap hari, mabar valorant
+   </p>
+   <div class="price">
+    <div class="price-row">
+     <strong>
+      20k
+     </strong>
+     <span>
+      VIP sampe end live
+     </span>
+    </div>
+    <div class="price-row">
+     <strong>
+      10k
+     </strong>
+     <span>
+      request senjata 3 round
+     </span>
+    </div>
+    <div class="price-row">
+     <strong>
+      20k
+     </strong>
+     <span>
+      request agent 1 match
+     </span>
+    </div>
+    <div class="price-row">
+     <strong>
+      100k
+     </strong>
+     <span>
+      sens paling kiri/kanan
+     </span>
+    </div>
+   </div>
+   <p class="slot-note">
+    Khusus saat live aktif. Slot terbatas.
+   </p>
+   <ul class="links choice-list">
+    <li>
+     <a class="support choice-card donate-trigger" href="#">
+      <span aria-live="polite" class="live-pill is-offline" data-live-status="">
+       Offline
+      </span>
+      <span class="choice-title">
+       Donate Live
+      </span>
+      <span class="choice-hint" data-live-hint="">
+       Live mulai 22.00 WIB
+      </span>
+     </a>
+    </li>
+   </ul>
+   <ul class="links secondary-links merged-links">
+    <li>
+     <a href="/uas/">
+      <div class="modern-left">
+       <div class="modern-icon">
+        <i class="ri-graduation-cap-line">
+        </i>
+       </div>
+       <div class="modern-content">
+        <div class="text">
+         UAS Valorant
+         <span class="sub">
+          Ujian Akhir Season Valorant.
+         </span>
         </div>
+       </div>
       </div>
-
-      <ul class="links secondary-links merged-links">
-        <li>
-          <a class="lita-link" href="https://www.lita.game/user/27947254">
-            <div class="modern-left">
-              <div class="modern-icon">
-                <i class="ri-gamepad-line"></i>
-              </div>
-
-              <div class="modern-content">
-                <div class="text">
-                  Mabar lewat Lita
-                  <span class="sub">buat mabar diluar live.</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="modern-arrow">
-              <i class="ri-arrow-right-s-line"></i>
-            </div>
-          </a>
-        </li>
-      </ul>
-      <!-- Testimoni -->
-      <div class="testimonial">
-        <div class="testimonial-list">
-          <!-- COPY BLOCK INI UNTUK TAMBAH TESTIMONI -->
-          <div class="testimonial-item">
-            <div class="testimonial-top">
-              <div class="testimonial-name">flotirta_</div>
-              <div class="testimonial-time">3-6 2:14</div>
-            </div>
-
-            <div class="testimonial-stars">★★★★★</div>
-
-            <div class="testimonial-text">
-              makasii kakak, have a nice day kaka. baik banget kakak nya.
-            </div>
-          </div>
-
-          <div class="testimonial-item">
-            <div class="testimonial-top">
-              <div class="testimonial-name">ThomasAd</div>
-              <div class="testimonial-time">4-22 23:59</div>
-            </div>
-
-            <div class="testimonial-stars">★★★★★</div>
-
-            <div class="testimonial-text">
-              thank you, gara gara kamu, aku gold ~
-            </div>
-          </div>
-
-          <div class="testimonial-item">
-            <div class="testimonial-top">
-              <div class="testimonial-name">Paradoxx</div>
-              <div class="testimonial-time">2-15 10:56</div>
-            </div>
-
-            <div class="testimonial-stars">★★★★★</div>
-
-            <div class="testimonial-text">makasih untuk carry nya kak😁</div>
-          </div>
-
-          <div class="testimonial-item">
-            <div class="testimonial-top">
-              <div class="testimonial-name">Ulasan Anonim</div>
-              <div class="testimonial-time">5-19 22:15</div>
-            </div>
-            <div class="testimonial-stars">★★★★★</div>
-            <div class="testimonial-text">gg</div>
-          </div>
-          <div class="testimonial-item">
-            <div class="testimonial-top">
-              <div class="testimonial-name">indra🕷️</div>
-              <div class="testimonial-time">5-17 17:23</div>
-            </div>
-            <div class="testimonial-stars">★★★★★</div>
-            <div class="testimonial-text">gg,jago banget</div>
-          </div>
-          <div class="testimonial-item">
-            <div class="testimonial-top">
-              <div class="testimonial-name">A I I L Y</div>
-              <div class="testimonial-time">5-3 13:21</div>
-            </div>
-            <div class="testimonial-stars">★★★★★</div>
-            <div class="testimonial-text">ggwp</div>
-          </div>
-          <div class="testimonial-item">
-            <div class="testimonial-top">
-              <div class="testimonial-name">Lita24112659</div>
-              <div class="testimonial-time">4-27 16:28</div>
-            </div>
-            <div class="testimonial-stars">★★★★★</div>
-            <div class="testimonial-text">gg</div>
-          </div>
-          <div class="testimonial-item">
-            <div class="testimonial-top">
-              <div class="testimonial-name">Ulasan Anonim</div>
-              <div class="testimonial-time">4-23 23:05</div>
-            </div>
-            <div class="testimonial-stars">★★★★★</div>
-            <div class="testimonial-text">GG</div>
-          </div>
-          <div class="testimonial-item">
-            <div class="testimonial-top">
-              <div class="testimonial-name">ThomasAd</div>
-              <div class="testimonial-time">4-22 23:59</div>
-            </div>
-            <div class="testimonial-stars">★★★★★</div>
-            <div class="testimonial-text">
-              thank you, gara gara kamu, aku gold ~
-            </div>
-          </div>
-          <div class="testimonial-item">
-            <div class="testimonial-top">
-              <div class="testimonial-name">AlexxX3</div>
-              <div class="testimonial-time">4-13 23:47</div>
-            </div>
-            <div class="testimonial-stars">★★★★★</div>
-            <div class="testimonial-text">gg</div>
-          </div>
-          <div class="testimonial-item">
-            <div class="testimonial-top">
-              <div class="testimonial-name">flotirta_</div>
-              <div class="testimonial-time">4-6 23:28</div>
-            </div>
-            <div class="testimonial-stars">★★★★★</div>
-            <div class="testimonial-text">
-              makasii kakak sudah temenin review skinn, kakak nya lucu wkwkwkw,
+      <div class="modern-arrow">
+       <i class="ri-arrow-right-s-line">
+       </i>
+      </div>
+     </a>
+    </li>
+    <li>
+     <a class="shop-card" href="/setup/">
+      <div class="shop-card-image">
+       <picture>
+        <source srcset="/img/setup.avif" type="image/avif"/>
+        <source srcset="/img/setup.webp" type="image/webp"/>
+        <img alt="Spek PC Aku" decoding="async" height="810" loading="lazy" src="/img/setup.jpeg" width="1080"/>
+       </picture>
+      </div>
+      <div class="shop-card-content">
+       <div class="modern-left">
+        <div class="modern-icon">
+         <i class="ri-computer-line">
+         </i>
+        </div>
+        <div class="modern-content">
+         <span class="text">
+          Spill spek PC Aku
+         </span>
+         <span class="sub">
+          PC, alat, dan link shopee.
+         </span>
+        </div>
+       </div>
+       <div class="modern-arrow">
+        <i class="ri-arrow-right-s-line">
+        </i>
+       </div>
+      </div>
+     </a>
+    </li>
+   </ul>
+   <!-- Affiliate Carousel -->
+   <div class="affiliate-section">
+    <p class="section-title">
+     Rekomendasi
+    </p>
+    <div class="affiliate-wrapper">
+     <button aria-label="Geser ke kiri" class="affiliate-nav affiliate-prev" id="affiliatePrev" type="button">
+      <i class="ri-arrow-left-s-line">
+      </i>
+     </button>
+     <button aria-label="Geser ke kanan" class="affiliate-nav affiliate-next" id="affiliateNext" type="button">
+      <i class="ri-arrow-right-s-line">
+      </i>
+     </button>
+     <div class="affiliate-carousel" data-product-collection="homeRecommendations" id="affiliateCarousel">
+     </div>
+    </div>
+   </div>
+   <ul class="links secondary-links merged-links">
+    <li>
+     <a class="lita-link" href="https://www.lita.game/user/27947254">
+      <div class="modern-left">
+       <div class="modern-icon">
+        <i class="ri-gamepad-line">
+        </i>
+       </div>
+       <div class="modern-content">
+        <div class="text">
+         Mabar lewat Lita
+         <span class="sub">
+          buat mabar diluar live.
+         </span>
+        </div>
+       </div>
+      </div>
+      <div class="modern-arrow">
+       <i class="ri-arrow-right-s-line">
+       </i>
+      </div>
+     </a>
+    </li>
+   </ul>
+   <!-- Testimoni -->
+   <div class="testimonial">
+    <div class="testimonial-list">
+     <!-- COPY BLOCK INI UNTUK TAMBAH TESTIMONI -->
+     <div class="testimonial-item">
+      <div class="testimonial-top">
+       <div class="testimonial-name">
+        flotirta_
+       </div>
+       <div class="testimonial-time">
+        3-6 2:14
+       </div>
+      </div>
+      <div class="testimonial-stars">
+       &starf;&starf;&starf;&starf;&starf;
+      </div>
+      <div class="testimonial-text">
+       makasii kakak, have a nice day kaka. baik banget kakak nya.
+      </div>
+     </div>
+     <div class="testimonial-item">
+      <div class="testimonial-top">
+       <div class="testimonial-name">
+        ThomasAd
+       </div>
+       <div class="testimonial-time">
+        4-22 23:59
+       </div>
+      </div>
+      <div class="testimonial-stars">
+       &starf;&starf;&starf;&starf;&starf;
+      </div>
+      <div class="testimonial-text">
+       thank you, gara gara kamu, aku gold ~
+      </div>
+     </div>
+     <div class="testimonial-item">
+      <div class="testimonial-top">
+       <div class="testimonial-name">
+        Paradoxx
+       </div>
+       <div class="testimonial-time">
+        2-15 10:56
+       </div>
+      </div>
+      <div class="testimonial-stars">
+       &starf;&starf;&starf;&starf;&starf;
+      </div>
+      <div class="testimonial-text">
+       makasih untuk carry nya kak😁
+      </div>
+     </div>
+     <div class="testimonial-item">
+      <div class="testimonial-top">
+       <div class="testimonial-name">
+        Ulasan Anonim
+       </div>
+       <div class="testimonial-time">
+        5-19 22:15
+       </div>
+      </div>
+      <div class="testimonial-stars">
+       &starf;&starf;&starf;&starf;&starf;
+      </div>
+      <div class="testimonial-text">
+       gg
+      </div>
+     </div>
+     <div class="testimonial-item">
+      <div class="testimonial-top">
+       <div class="testimonial-name">
+        indra🕷️
+       </div>
+       <div class="testimonial-time">
+        5-17 17:23
+       </div>
+      </div>
+      <div class="testimonial-stars">
+       &starf;&starf;&starf;&starf;&starf;
+      </div>
+      <div class="testimonial-text">
+       gg,jago banget
+      </div>
+     </div>
+     <div class="testimonial-item">
+      <div class="testimonial-top">
+       <div class="testimonial-name">
+        A I I L Y
+       </div>
+       <div class="testimonial-time">
+        5-3 13:21
+       </div>
+      </div>
+      <div class="testimonial-stars">
+       &starf;&starf;&starf;&starf;&starf;
+      </div>
+      <div class="testimonial-text">
+       ggwp
+      </div>
+     </div>
+     <div class="testimonial-item">
+      <div class="testimonial-top">
+       <div class="testimonial-name">
+        Lita24112659
+       </div>
+       <div class="testimonial-time">
+        4-27 16:28
+       </div>
+      </div>
+      <div class="testimonial-stars">
+       &starf;&starf;&starf;&starf;&starf;
+      </div>
+      <div class="testimonial-text">
+       gg
+      </div>
+     </div>
+     <div class="testimonial-item">
+      <div class="testimonial-top">
+       <div class="testimonial-name">
+        Ulasan Anonim
+       </div>
+       <div class="testimonial-time">
+        4-23 23:05
+       </div>
+      </div>
+      <div class="testimonial-stars">
+       &starf;&starf;&starf;&starf;&starf;
+      </div>
+      <div class="testimonial-text">
+       GG
+      </div>
+     </div>
+     <div class="testimonial-item">
+      <div class="testimonial-top">
+       <div class="testimonial-name">
+        ThomasAd
+       </div>
+       <div class="testimonial-time">
+        4-22 23:59
+       </div>
+      </div>
+      <div class="testimonial-stars">
+       &starf;&starf;&starf;&starf;&starf;
+      </div>
+      <div class="testimonial-text">
+       thank you, gara gara kamu, aku gold ~
+      </div>
+     </div>
+     <div class="testimonial-item">
+      <div class="testimonial-top">
+       <div class="testimonial-name">
+        AlexxX3
+       </div>
+       <div class="testimonial-time">
+        4-13 23:47
+       </div>
+      </div>
+      <div class="testimonial-stars">
+       &starf;&starf;&starf;&starf;&starf;
+      </div>
+      <div class="testimonial-text">
+       gg
+      </div>
+     </div>
+     <div class="testimonial-item">
+      <div class="testimonial-top">
+       <div class="testimonial-name">
+        flotirta_
+       </div>
+       <div class="testimonial-time">
+        4-6 23:28
+       </div>
+      </div>
+      <div class="testimonial-stars">
+       &starf;&starf;&starf;&starf;&starf;
+      </div>
+      <div class="testimonial-text">
+       makasii kakak sudah temenin review skinn, kakak nya lucu wkwkwkw,
               semoga ngga turun iron lagi ya kak, makasih banyak kakak cantikk,
               have a nice day kak, puas x main sama kakak wkwkw
-            </div>
-          </div>
-          <div class="testimonial-item">
-            <div class="testimonial-top">
-              <div class="testimonial-name">Ulasan Anonim</div>
-              <div class="testimonial-time">3-29 0:41</div>
-            </div>
-            <div class="testimonial-stars">★★★★★</div>
-            <div class="testimonial-text">gg</div>
-          </div>
-          <div class="testimonial-item">
-            <div class="testimonial-top">
-              <div class="testimonial-name">kaleee37</div>
-              <div class="testimonial-time">3-23 23:17</div>
-            </div>
-            <div class="testimonial-stars">★★★★★</div>
-            <div class="testimonial-text">aaasikkk baikk</div>
-          </div>
-          <div class="testimonial-item">
-            <div class="testimonial-top">
-              <div class="testimonial-name">BryanAlvero</div>
-              <div class="testimonial-time">3-14 1:41</div>
-            </div>
-            <div class="testimonial-stars">★★★★★</div>
-            <div class="testimonial-text">sangat mantap</div>
-          </div>
-          <div class="testimonial-item">
-            <div class="testimonial-top">
-              <div class="testimonial-name">Ulasan Anonim</div>
-              <div class="testimonial-time">3-12 2:46</div>
-            </div>
-            <div class="testimonial-stars">★★★★★</div>
-            <div class="testimonial-text">GGWP</div>
-          </div>
-          <div class="testimonial-item">
-            <div class="testimonial-top">
-              <div class="testimonial-name">Ulasan Anonim</div>
-              <div class="testimonial-time">3-12 0:58</div>
-            </div>
-            <div class="testimonial-stars">★★★★★</div>
-            <div class="testimonial-text">Ggwp</div>
-          </div>
-          <div class="testimonial-item">
-            <div class="testimonial-top">
-              <div class="testimonial-name">Ulasan Anonim</div>
-              <div class="testimonial-time">3-9 23:08</div>
-            </div>
-            <div class="testimonial-stars">★★★★★</div>
-            <div class="testimonial-text">Fun loh</div>
-          </div>
-          <div class="testimonial-item">
-            <div class="testimonial-top">
-              <div class="testimonial-name">Ulasan Anonim</div>
-              <div class="testimonial-time">3-9 22:28</div>
-            </div>
-            <div class="testimonial-stars">★★★★★</div>
-            <div class="testimonial-text">HAVEFUN</div>
-          </div>
-          <div class="testimonial-item">
-            <div class="testimonial-top">
-              <div class="testimonial-name">flotirta_</div>
-              <div class="testimonial-time">3-6 2:14</div>
-            </div>
-            <div class="testimonial-stars">★★★★★</div>
-            <div class="testimonial-text">
-              makasii kakak, have a nice day kaka. baik banget kakak nya, lucu
+      </div>
+     </div>
+     <div class="testimonial-item">
+      <div class="testimonial-top">
+       <div class="testimonial-name">
+        Ulasan Anonim
+       </div>
+       <div class="testimonial-time">
+        3-29 0:41
+       </div>
+      </div>
+      <div class="testimonial-stars">
+       &starf;&starf;&starf;&starf;&starf;
+      </div>
+      <div class="testimonial-text">
+       gg
+      </div>
+     </div>
+     <div class="testimonial-item">
+      <div class="testimonial-top">
+       <div class="testimonial-name">
+        kaleee37
+       </div>
+       <div class="testimonial-time">
+        3-23 23:17
+       </div>
+      </div>
+      <div class="testimonial-stars">
+       &starf;&starf;&starf;&starf;&starf;
+      </div>
+      <div class="testimonial-text">
+       aaasikkk baikk
+      </div>
+     </div>
+     <div class="testimonial-item">
+      <div class="testimonial-top">
+       <div class="testimonial-name">
+        BryanAlvero
+       </div>
+       <div class="testimonial-time">
+        3-14 1:41
+       </div>
+      </div>
+      <div class="testimonial-stars">
+       &starf;&starf;&starf;&starf;&starf;
+      </div>
+      <div class="testimonial-text">
+       sangat mantap
+      </div>
+     </div>
+     <div class="testimonial-item">
+      <div class="testimonial-top">
+       <div class="testimonial-name">
+        Ulasan Anonim
+       </div>
+       <div class="testimonial-time">
+        3-12 2:46
+       </div>
+      </div>
+      <div class="testimonial-stars">
+       &starf;&starf;&starf;&starf;&starf;
+      </div>
+      <div class="testimonial-text">
+       GGWP
+      </div>
+     </div>
+     <div class="testimonial-item">
+      <div class="testimonial-top">
+       <div class="testimonial-name">
+        Ulasan Anonim
+       </div>
+       <div class="testimonial-time">
+        3-12 0:58
+       </div>
+      </div>
+      <div class="testimonial-stars">
+       &starf;&starf;&starf;&starf;&starf;
+      </div>
+      <div class="testimonial-text">
+       Ggwp
+      </div>
+     </div>
+     <div class="testimonial-item">
+      <div class="testimonial-top">
+       <div class="testimonial-name">
+        Ulasan Anonim
+       </div>
+       <div class="testimonial-time">
+        3-9 23:08
+       </div>
+      </div>
+      <div class="testimonial-stars">
+       &starf;&starf;&starf;&starf;&starf;
+      </div>
+      <div class="testimonial-text">
+       Fun loh
+      </div>
+     </div>
+     <div class="testimonial-item">
+      <div class="testimonial-top">
+       <div class="testimonial-name">
+        Ulasan Anonim
+       </div>
+       <div class="testimonial-time">
+        3-9 22:28
+       </div>
+      </div>
+      <div class="testimonial-stars">
+       &starf;&starf;&starf;&starf;&starf;
+      </div>
+      <div class="testimonial-text">
+       HAVEFUN
+      </div>
+     </div>
+     <div class="testimonial-item">
+      <div class="testimonial-top">
+       <div class="testimonial-name">
+        flotirta_
+       </div>
+       <div class="testimonial-time">
+        3-6 2:14
+       </div>
+      </div>
+      <div class="testimonial-stars">
+       &starf;&starf;&starf;&starf;&starf;
+      </div>
+      <div class="testimonial-text">
+       makasii kakak, have a nice day kaka. baik banget kakak nya, lucu
               juga hahaha. makasih banget kakak.
-            </div>
-          </div>
-          <div class="testimonial-item">
-            <div class="testimonial-top">
-              <div class="testimonial-name">Paradoxx</div>
-              <div class="testimonial-time">2-15 10:56</div>
-            </div>
-            <div class="testimonial-stars">★★★★★</div>
-            <div class="testimonial-text">makasih untuk carry nya kak😁</div>
-          </div>
-          <div class="testimonial-item">
-            <div class="testimonial-top">
-              <div class="testimonial-name">IT Was Kenn</div>
-              <div class="testimonial-time">2-5 1:28</div>
-            </div>
-            <div class="testimonial-stars">★★★★★</div>
-            <div class="testimonial-text">🤯🤯🤯🤯👻</div>
-          </div>
-          <div class="testimonial-item">
-            <div class="testimonial-top">
-              <div class="testimonial-name">IT Was Kenn</div>
-              <div class="testimonial-time">2-5 0:18</div>
-            </div>
-            <div class="testimonial-stars">★★★★★</div>
-            <div class="testimonial-text">Gg banget cantik</div>
-          </div>
-          <div class="testimonial-item">
-            <div class="testimonial-top">
-              <div class="testimonial-name">IT Was Kenn</div>
-              <div class="testimonial-time">2-4 23:37</div>
-            </div>
-            <div class="testimonial-stars">★★★★★</div>
-            <div class="testimonial-text">GG banget kamuu</div>
-          </div>
-          <div class="testimonial-item">
-            <div class="testimonial-top">
-              <div class="testimonial-name">IT Was Kenn</div>
-              <div class="testimonial-time">2-4 23:04</div>
-            </div>
-            <div class="testimonial-stars">★★★★★</div>
-            <div class="testimonial-text">Gg kamuu</div>
-          </div>
-          <div class="testimonial-item">
-            <div class="testimonial-top">
-              <div class="testimonial-name">Lita21452850</div>
-              <div class="testimonial-time">2-2 21:59</div>
-            </div>
-            <div class="testimonial-stars">★★★★★</div>
-            <div class="testimonial-text">ggwp</div>
-          </div>
-          <div class="testimonial-item">
-            <div class="testimonial-top">
-              <div class="testimonial-name">MI4WWWWWWO</div>
-              <div class="testimonial-time">1-25 2:17</div>
-            </div>
-            <div class="testimonial-stars">★★★★★</div>
-            <div class="testimonial-text">gg</div>
-          </div>
-          <div class="testimonial-item">
-            <div class="testimonial-top">
-              <div class="testimonial-name">Anawaru</div>
-              <div class="testimonial-time">1-22 18:22</div>
-            </div>
-            <div class="testimonial-stars">★★★★★</div>
-            <div class="testimonial-text">good banget</div>
-          </div>
-          <!-- <div class="testimonial-item">
+      </div>
+     </div>
+     <div class="testimonial-item">
+      <div class="testimonial-top">
+       <div class="testimonial-name">
+        Paradoxx
+       </div>
+       <div class="testimonial-time">
+        2-15 10:56
+       </div>
+      </div>
+      <div class="testimonial-stars">
+       &starf;&starf;&starf;&starf;&starf;
+      </div>
+      <div class="testimonial-text">
+       makasih untuk carry nya kak😁
+      </div>
+     </div>
+     <div class="testimonial-item">
+      <div class="testimonial-top">
+       <div class="testimonial-name">
+        IT Was Kenn
+       </div>
+       <div class="testimonial-time">
+        2-5 1:28
+       </div>
+      </div>
+      <div class="testimonial-stars">
+       &starf;&starf;&starf;&starf;&starf;
+      </div>
+      <div class="testimonial-text">
+       🤯🤯🤯🤯👻
+      </div>
+     </div>
+     <div class="testimonial-item">
+      <div class="testimonial-top">
+       <div class="testimonial-name">
+        IT Was Kenn
+       </div>
+       <div class="testimonial-time">
+        2-5 0:18
+       </div>
+      </div>
+      <div class="testimonial-stars">
+       &starf;&starf;&starf;&starf;&starf;
+      </div>
+      <div class="testimonial-text">
+       Gg banget cantik
+      </div>
+     </div>
+     <div class="testimonial-item">
+      <div class="testimonial-top">
+       <div class="testimonial-name">
+        IT Was Kenn
+       </div>
+       <div class="testimonial-time">
+        2-4 23:37
+       </div>
+      </div>
+      <div class="testimonial-stars">
+       &starf;&starf;&starf;&starf;&starf;
+      </div>
+      <div class="testimonial-text">
+       GG banget kamuu
+      </div>
+     </div>
+     <div class="testimonial-item">
+      <div class="testimonial-top">
+       <div class="testimonial-name">
+        IT Was Kenn
+       </div>
+       <div class="testimonial-time">
+        2-4 23:04
+       </div>
+      </div>
+      <div class="testimonial-stars">
+       &starf;&starf;&starf;&starf;&starf;
+      </div>
+      <div class="testimonial-text">
+       Gg kamuu
+      </div>
+     </div>
+     <div class="testimonial-item">
+      <div class="testimonial-top">
+       <div class="testimonial-name">
+        Lita21452850
+       </div>
+       <div class="testimonial-time">
+        2-2 21:59
+       </div>
+      </div>
+      <div class="testimonial-stars">
+       &starf;&starf;&starf;&starf;&starf;
+      </div>
+      <div class="testimonial-text">
+       ggwp
+      </div>
+     </div>
+     <div class="testimonial-item">
+      <div class="testimonial-top">
+       <div class="testimonial-name">
+        MI4WWWWWWO
+       </div>
+       <div class="testimonial-time">
+        1-25 2:17
+       </div>
+      </div>
+      <div class="testimonial-stars">
+       &starf;&starf;&starf;&starf;&starf;
+      </div>
+      <div class="testimonial-text">
+       gg
+      </div>
+     </div>
+     <div class="testimonial-item">
+      <div class="testimonial-top">
+       <div class="testimonial-name">
+        Anawaru
+       </div>
+       <div class="testimonial-time">
+        1-22 18:22
+       </div>
+      </div>
+      <div class="testimonial-stars">
+       &starf;&starf;&starf;&starf;&starf;
+      </div>
+      <div class="testimonial-text">
+       good banget
+      </div>
+     </div>
+     <!-- <div class="testimonial-item">
             <div class="testimonial-top">
               <div class="testimonial-name">Nama User 28</div>
               <div class="testimonial-time">5-29 09:14</div>
@@ -663,316 +733,162 @@
             <div class="testimonial-stars">★★★★★</div>
             <div class="testimonial-text">isi review disini</div>
           </div> -->
-        </div>
+    </div>
+   </div>
+   <!-- Agent Showcase -->
+   <div class="agent-showcase">
+    <p class="section-title">
+     Role &amp; Agent Pool
+    </p>
+    <div class="role-icons role-spacing">
+     <div>
+      <picture>
+       <source srcset="/img/all.avif" type="image/avif"/>
+       <source srcset="/img/all.webp" type="image/webp"/>
+       <img alt="" class="active" data-role="all" decoding="async" height="96" loading="lazy" src="/img/all.png" width="96"/>
+      </picture>
+      <div style="font-size: 10px; margin-top: 4px">
+       All
       </div>
-
-      <!-- Agent Showcase -->
-      <div class="agent-showcase">
-        <p class="section-title">Role & Agent Pool</p>
-        <div class="role-icons role-spacing">
-          <div>
-            <picture
-              ><source srcset="img/all.webp" type="image/webp" />
-              <img
-                src="img/all.png"
-                data-role="all"
-                class="active"
-                decoding="async"
-                loading="lazy"
-            /></picture>
-            <div style="font-size: 10px; margin-top: 4px">All</div>
-          </div>
-          <div>
-            <picture
-              ><source srcset="img/duelist.webp" type="image/webp" />
-              <img
-                src="img/duelist.png"
-                data-role="duelist"
-                decoding="async"
-                loading="lazy"
-            /></picture>
-            <div style="font-size: 10px; margin-top: 4px">Duelist</div>
-          </div>
-          <div>
-            <picture
-              ><source srcset="img/initiator.webp" type="image/webp" />
-              <img
-                src="img/initiator.png"
-                data-role="initiator"
-                decoding="async"
-                loading="lazy"
-            /></picture>
-            <div style="font-size: 10px; margin-top: 4px">Initiator</div>
-          </div>
-          <div>
-            <picture
-              ><source srcset="img/controller.webp" type="image/webp" />
-              <img
-                src="img/controller.png"
-                data-role="controller"
-                decoding="async"
-                loading="lazy"
-            /></picture>
-            <div style="font-size: 10px; margin-top: 4px">Controller</div>
-          </div>
-          <div>
-            <picture
-              ><source srcset="img/sentinel.webp" type="image/webp" />
-              <img
-                src="img/sentinel.png"
-                data-role="sentinel"
-                decoding="async"
-                loading="lazy"
-            /></picture>
-            <div style="font-size: 10px; margin-top: 4px">Sentinel</div>
-          </div>
-        </div>
-        <div class="carousel-shell">
-          <button
-            class="carousel-nav carousel-prev"
-            data-target="agentCarousel"
-          >
-            <i class="ri-arrow-left-s-line"></i>
-          </button>
-
-          <button
-            class="carousel-nav carousel-next"
-            data-target="agentCarousel"
-          >
-            <i class="ri-arrow-right-s-line"></i>
-          </button>
-
-          <div class="agent-big-grid" id="agentCarousel">
-            <!-- Duelist -->
-            <a class="agent-card" data-role="duelist">
-              <img src="img/yoru.avif" decoding="async" loading="lazy" />
-              <div class="agent-name">YORU</div>
-            </a>
-            <a class="agent-card" data-role="duelist">
-              <img src="img/reyna.avif" decoding="async" loading="lazy" />
-              <div class="agent-name">REYNA</div>
-            </a>
-            <a class="agent-card" data-role="duelist">
-              <img src="img/iso.avif" decoding="async" loading="lazy" />
-              <div class="agent-name">ISO</div>
-            </a>
-            <a class="agent-card" data-role="duelist">
-              <img src="img/raze.avif" decoding="async" loading="lazy" />
-              <div class="agent-name">RAZE</div>
-            </a>
-            <a class="agent-card" data-role="duelist">
-              <img src="img/phoenix.avif" decoding="async" loading="lazy" />
-              <div class="agent-name">PHOENIX</div>
-            </a>
-            <a class="agent-card" data-role="duelist">
-              <img src="img/neon.avif" decoding="async" loading="lazy" />
-              <div class="agent-name">NEON</div>
-            </a>
-
-            <!-- Initiator -->
-            <a class="agent-card" data-role="initiator">
-              <img src="img/fade.avif" decoding="async" loading="lazy" />
-              <div class="agent-name">FADE</div>
-            </a>
-            <a class="agent-card" data-role="initiator">
-              <img src="img/sova.avif" decoding="async" loading="lazy" />
-              <div class="agent-name">SOVA</div>
-            </a>
-
-            <!-- Controller -->
-            <a class="agent-card" data-role="controller">
-              <img src="img/clove.avif" decoding="async" loading="lazy" />
-              <div class="agent-name">CLOVE</div>
-            </a>
-            <a class="agent-card" data-role="controller">
-              <img src="img/omen.avif" decoding="async" loading="lazy" />
-              <div class="agent-name">OMEN</div>
-            </a>
-            <a class="agent-card" data-role="controller">
-              <img src="img/miks.avif" decoding="async" loading="lazy" />
-              <div class="agent-name">MIKS</div>
-            </a>
-            <a class="agent-card" data-role="controller">
-              <img src="img/brimstone.avif" decoding="async" loading="lazy" />
-              <div class="agent-name">BRIMSTONE</div>
-            </a>
-            <a class="agent-card" data-role="controller">
-              <img src="img/viper.avif" decoding="async" loading="lazy" />
-              <div class="agent-name">VIPER</div>
-            </a>
-
-            <!-- Sentinel -->
-            <a class="agent-card" data-role="sentinel">
-              <img src="img/sage.avif" decoding="async" loading="lazy" />
-              <div class="agent-name">SAGE</div>
-            </a>
-            <a class="agent-card" data-role="sentinel">
-              <img src="img/killjoy.avif" decoding="async" loading="lazy" />
-              <div class="agent-name">KILLJOY</div>
-            </a>
-          </div>
-        </div>
+     </div>
+     <div>
+      <picture>
+       <source srcset="/img/duelist.avif" type="image/avif"/>
+       <source srcset="/img/duelist.webp" type="image/webp"/>
+       <img alt="" data-role="duelist" decoding="async" height="95" loading="lazy" src="/img/duelist.png" width="96"/>
+      </picture>
+      <div style="font-size: 10px; margin-top: 4px">
+       Duelist
       </div>
-
-      <!-- Favorite Map -->
-      <div class="map-showcase">
-        <p class="section-title">Map Favorit</p>
-        <div class="carousel-shell">
-          <button class="carousel-nav carousel-prev" data-target="mapCarousel">
-            <i class="ri-arrow-left-s-line"></i>
-          </button>
-
-          <button class="carousel-nav carousel-next" data-target="mapCarousel">
-            <i class="ri-arrow-right-s-line"></i>
-          </button>
-
-          <div class="map-big-grid" id="mapCarousel">
-            <div class="map-card">
-              <img src="img/sunset.webp" decoding="async" loading="lazy" />
-              <div class="map-name">SUNSET</div>
-              <div class="map-desc">
-                Clear 1 sudut, mati dari arah yang gak kepikiran.
-              </div>
-            </div>
-            <div class="map-card">
-              <img src="img/bind.webp" decoding="async" loading="lazy" />
-              <div class="map-name">BIND</div>
-              <div class="map-desc">
-                Denger TP? bingung harus rotate atau diem aja.
-              </div>
-            </div>
-            <div class="map-card">
-              <img src="img/abyss.webp" decoding="async" loading="lazy" />
-              <div class="map-name">ABYSS</div>
-              <div class="map-desc">Belum war, udah jatuh duluan.</div>
-            </div>
-          </div>
-        </div>
+     </div>
+     <div>
+      <picture>
+       <source srcset="/img/initiator.avif" type="image/avif"/>
+       <source srcset="/img/initiator.webp" type="image/webp"/>
+       <img alt="" data-role="initiator" decoding="async" height="96" loading="lazy" src="/img/initiator.png" width="96"/>
+      </picture>
+      <div style="font-size: 10px; margin-top: 4px">
+       Initiator
       </div>
-
-      <!-- Favorite Weapons -->
-      <div class="weapon-showcase">
-        <p class="section-title">Senjata Favorit</p>
-        <div class="carousel-shell">
-          <button
-            class="carousel-nav carousel-prev"
-            data-target="weaponCarousel"
-          >
-            <i class="ri-arrow-left-s-line"></i>
-          </button>
-
-          <button
-            class="carousel-nav carousel-next"
-            data-target="weaponCarousel"
-          >
-            <i class="ri-arrow-right-s-line"></i>
-          </button>
-
-          <div class="weapon-grid" id="weaponCarousel">
-            <div class="weapon-card">
-              <img src="img/ghost.avif" decoding="async" loading="lazy" />
-              <div class="weapon-name">GHOST</div>
-              <div class="weapon-desc">
-                Dibilang eco, tapi kok bisa one tap terus?
-              </div>
-            </div>
-            <div class="weapon-card">
-              <img src="img/bucky.avif" decoding="async" loading="lazy" />
-              <div class="weapon-name">BUCKY</div>
-              <div class="weapon-desc">
-                Ngumpet di corner = langsung kena ceramah di all chat.
-              </div>
-            </div>
-            <div class="weapon-card">
-              <img src="img/spectre.avif" decoding="async" loading="lazy" />
-              <div class="weapon-name">SPECTRE</div>
-              <div class="weapon-desc">
-                Katanya jelek… tapi tiap eco selalu kepake juga.
-              </div>
-            </div>
-            <div class="weapon-card">
-              <img src="img/ares.avif" decoding="async" loading="lazy" />
-              <div class="weapon-name">ARES</div>
-              <div class="weapon-desc">
-                Murah, spam dikit… musuh langsung toxic.
-              </div>
-            </div>
-            <div class="weapon-card">
-              <img src="img/vandal.avif" decoding="async" loading="lazy" />
-              <div class="weapon-name">VANDAL</div>
-              <div class="weapon-desc">
-                Miss 10 peluru, tapi 1 headshot langsung lupa dosa.
-              </div>
-            </div>
-            <div class="weapon-card">
-              <img src="img/phantom.avif" decoding="async" loading="lazy" />
-              <div class="weapon-name">PHANTOM</div>
-              <div class="weapon-desc">
-                Spray enak… tapi kok ga mati-mati ya?
-              </div>
-            </div>
-            <div class="weapon-card">
-              <img src="img/operator.avif" decoding="async" loading="lazy" />
-              <div class="weapon-name">OPERATOR</div>
-              <div class="weapon-desc">
-                Miss sekali, langsung dikejar 5 orang.
-              </div>
-            </div>
-            <div class="weapon-card">
-              <img src="img/odin.avif" decoding="async" loading="lazy" />
-              <div class="weapon-name">ODIN</div>
-              <div class="weapon-desc">Menang? iya. Dihina? juga iya.</div>
-            </div>
-          </div>
-        </div>
+     </div>
+     <div>
+      <picture>
+       <source srcset="/img/controller.avif" type="image/avif"/>
+       <source srcset="/img/controller.webp" type="image/webp"/>
+       <img alt="" data-role="controller" decoding="async" height="96" loading="lazy" src="/img/controller.png" width="95"/>
+      </picture>
+      <div style="font-size: 10px; margin-top: 4px">
+       Controller
       </div>
-      <ul class="links secondary-links merged-links">
-        <li>
-          <a href="/jajan/">
-            <div class="modern-left">
-              <div class="modern-icon">
-                <i class="ri-cake-3-line"></i>
-              </div>
-
-              <div class="modern-content">
-                <div class="text">
-                  Jajanan
-                  <span class="sub">rekomendasiin jajanan enak dong.</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="modern-arrow">
-              <i class="ri-arrow-right-s-line"></i>
-            </div>
-          </a>
-        </li>
-        <li>
-          <a
-            href="https://wa.me/6289519133146?text=Halo%20kak,%20kami%20tertarik%20untuk%20kerja%20sama%20endorsement."
-          >
-            <div class="modern-left">
-              <div class="modern-icon">
-                <i class="ri-hand-heart-line"></i>
-              </div>
-
-              <div class="modern-content">
-                <div class="text">
-                  Kerja Sama & Endorsement
-                  <span class="sub">Untuk brand atau business inquiries.</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="modern-arrow">
-              <i class="ri-arrow-right-s-line"></i>
-            </div>
-          </a>
-        </li>
-      </ul>
-
-      <!-- Affiliate Wingman -->
-      <!-- <div style="margin-top: 32px">
+     </div>
+     <div>
+      <picture>
+       <source srcset="/img/sentinel.avif" type="image/avif"/>
+       <source srcset="/img/sentinel.webp" type="image/webp"/>
+       <img alt="" data-role="sentinel" decoding="async" height="96" loading="lazy" src="/img/sentinel.png" width="96"/>
+      </picture>
+      <div style="font-size: 10px; margin-top: 4px">
+       Sentinel
+      </div>
+     </div>
+    </div>
+    <div class="carousel-shell">
+     <button aria-label="Geser ke kiri" class="carousel-nav carousel-prev" data-target="agentCarousel" type="button">
+      <i class="ri-arrow-left-s-line">
+      </i>
+     </button>
+     <button aria-label="Geser ke kanan" class="carousel-nav carousel-next" data-target="agentCarousel" type="button">
+      <i class="ri-arrow-right-s-line">
+      </i>
+     </button>
+     <div class="agent-big-grid" data-render="agents" id="agentCarousel">
+     </div>
+    </div>
+   </div>
+   <!-- Favorite Map -->
+   <div class="map-showcase">
+    <p class="section-title">
+     Map Favorit
+    </p>
+    <div class="carousel-shell">
+     <button aria-label="Geser ke kiri" class="carousel-nav carousel-prev" data-target="mapCarousel" type="button">
+      <i class="ri-arrow-left-s-line">
+      </i>
+     </button>
+     <button aria-label="Geser ke kanan" class="carousel-nav carousel-next" data-target="mapCarousel" type="button">
+      <i class="ri-arrow-right-s-line">
+      </i>
+     </button>
+     <div class="map-big-grid" data-render="maps" id="mapCarousel">
+     </div>
+    </div>
+   </div>
+   <!-- Favorite Weapons -->
+   <div class="weapon-showcase">
+    <p class="section-title">
+     Senjata Favorit
+    </p>
+    <div class="carousel-shell">
+     <button aria-label="Geser ke kiri" class="carousel-nav carousel-prev" data-target="weaponCarousel" type="button">
+      <i class="ri-arrow-left-s-line">
+      </i>
+     </button>
+     <button aria-label="Geser ke kanan" class="carousel-nav carousel-next" data-target="weaponCarousel" type="button">
+      <i class="ri-arrow-right-s-line">
+      </i>
+     </button>
+     <div class="weapon-grid" data-render="weapons" id="weaponCarousel">
+     </div>
+    </div>
+   </div>
+   <ul class="links secondary-links merged-links">
+    <li>
+     <a href="/jajan/">
+      <div class="modern-left">
+       <div class="modern-icon">
+        <i class="ri-cake-3-line">
+        </i>
+       </div>
+       <div class="modern-content">
+        <div class="text">
+         Jajanan
+         <span class="sub">
+          rekomendasiin jajanan enak dong.
+         </span>
+        </div>
+       </div>
+      </div>
+      <div class="modern-arrow">
+       <i class="ri-arrow-right-s-line">
+       </i>
+      </div>
+     </a>
+    </li>
+    <li>
+     <a href="https://wa.me/6289519133146?text=Halo%20kak,%20kami%20tertarik%20untuk%20kerja%20sama%20endorsement.">
+      <div class="modern-left">
+       <div class="modern-icon">
+        <i class="ri-hand-heart-line">
+        </i>
+       </div>
+       <div class="modern-content">
+        <div class="text">
+         Kerja Sama &amp; Endorsement
+         <span class="sub">
+          Untuk brand atau business inquiries.
+         </span>
+        </div>
+       </div>
+      </div>
+      <div class="modern-arrow">
+       <i class="ri-arrow-right-s-line">
+       </i>
+      </div>
+     </a>
+    </li>
+   </ul>
+   <!-- Affiliate Wingman -->
+   <!-- <div style="margin-top: 32px">
         <p
           style="
             font-size: 13px;
@@ -1005,64 +921,70 @@
           /></picture>
         </a>
       </div> -->
-      <footer class="site-footer" aria-label="Copyright">
-        <picture>
-          <source srcset="img/icon.webp" type="image/webp" />
-          <img
-            src="img/icon.jpg"
-            alt="COKELAT MANIS"
-            decoding="async"
-            loading="lazy"
-          />
-        </picture>
-        <div>
-          <strong>COKELAT MANIS</strong>
-          <span>&copy; 2026 @zkaofldk</span>
-        </div>
-      </footer>
+   <footer aria-label="Copyright" class="site-footer">
+    <picture>
+     <source srcset="/img/icon.avif" type="image/avif"/>
+     <source srcset="/img/icon.webp" type="image/webp"/>
+     <img alt="COKELAT MANIS" decoding="async" height="320" loading="lazy" src="/img/icon.jpg" width="320"/>
+    </picture>
+    <div>
+     <strong>
+      COKELAT MANIS
+     </strong>
+     <span>
+      &copy; 2026 @zkaofldk
+     </span>
     </div>
-    <div class="donate-modal" id="donateModal">
-      <div class="donate-sheet">
-        <div class="donate-head">
-          <h3>Donate Live</h3>
-          <p>Pilih platform untuk support live stream.</p>
-        </div>
-
-        <div class="donate-options">
-          <a href="https://saweria.co/Cokelatmanistiktok" class="donate-option">
-            <picture
-              ><source srcset="img/saweria.webp" type="image/webp" />
-              <img
-                src="img/saweria.png"
-                alt="Saweria"
-                decoding="async"
-                loading="lazy"
-            /></picture>
-            <div>
-              <strong>Saweria</strong>
-              <span>Support, request, atau top up game.</span>
-            </div>
-          </a>
-
-          <a href="https://sociabuzz.com/zkaofldk/tribe" class="donate-option">
-            <picture
-              ><source srcset="img/sociabuzz.webp" type="image/webp" />
-              <img
-                src="img/sociabuzz.png"
-                alt="Sociabuzz"
-                decoding="async"
-                loading="lazy"
-            /></picture>
-            <div>
-              <strong>Sociabuzz</strong>
-              <span>Untuk support live stream.</span>
-            </div>
-          </a>
-        </div>
-
-        <button class="donate-close" id="closeDonateModal">Tutup</button>
+   </footer>
+  </div>
+  <div class="donate-modal" id="donateModal">
+   <div class="donate-sheet">
+    <div class="donate-head">
+     <h3>
+      Donate Live
+     </h3>
+     <p>
+      Pilih platform untuk support live stream.
+     </p>
+    </div>
+    <div class="donate-options">
+     <a class="donate-option" href="https://saweria.co/Cokelatmanistiktok">
+      <picture>
+       <source srcset="/img/saweria.avif" type="image/avif"/>
+       <source srcset="/img/saweria.webp" type="image/webp"/>
+       <img alt="Saweria" decoding="async" height="160" loading="lazy" src="/img/saweria.png" width="160"/>
+      </picture>
+      <div>
+       <strong>
+        Saweria
+       </strong>
+       <span>
+        Support, request, atau top up game.
+       </span>
       </div>
+     </a>
+     <a class="donate-option" href="https://sociabuzz.com/zkaofldk/tribe">
+      <picture>
+       <source srcset="/img/sociabuzz.avif" type="image/avif"/>
+       <source srcset="/img/sociabuzz.webp" type="image/webp"/>
+       <img alt="Sociabuzz" decoding="async" height="120" loading="lazy" src="/img/sociabuzz.png" width="120"/>
+      </picture>
+      <div>
+       <strong>
+        Sociabuzz
+       </strong>
+       <span>
+        Untuk support live stream.
+       </span>
+      </div>
+     </a>
     </div>
-    <script src="script.js"></script>
-  </body>
+    <button class="donate-close" id="closeDonateModal">
+     Tutup
+    </button>
+   </div>
+  </div>
+  <script src="/assets/js/home.js" type="module">
+  </script>
+ </body>
 </html>
