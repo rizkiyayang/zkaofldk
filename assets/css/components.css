@@ -926,7 +926,9 @@ a {
 }
 
 .map-card img {
+  display: block;
   width: 100%;
+  height: auto;
   aspect-ratio: 16/9;
   object-fit: contain;
   background: #eae6dd;
