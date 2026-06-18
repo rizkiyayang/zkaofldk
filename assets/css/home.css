@@ -1,0 +1,163 @@
+/* Homepage-only treatment. Shared components live in components.css. */
+.merged-links a.lita-link {
+  background: linear-gradient(135deg, #ff4fa3, #ff86c2);
+  border-color: rgba(255, 255, 255, 0.52);
+  box-shadow:
+    0 14px 28px rgba(255, 79, 163, 0.28),
+    0 0 18px rgba(255, 95, 162, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+.merged-links a.lita-link::after {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.28),
+    transparent
+  );
+}
+
+.merged-links a.lita-link .modern-icon,
+.merged-links a.lita-link .modern-arrow {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.32);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.32),
+    0 8px 18px rgba(160, 20, 89, 0.14);
+}
+
+.merged-links a.lita-link .modern-icon i,
+.merged-links a.lita-link .modern-arrow i,
+.merged-links a.lita-link .text,
+.merged-links a.lita-link .sub {
+  color: #fff;
+}
+
+.merged-links a.lita-link .sub {
+  opacity: 0.86;
+}
+
+.merged-links a.lita-link:hover {
+  box-shadow:
+    0 18px 34px rgba(255, 79, 163, 0.34),
+    0 0 20px rgba(255, 95, 162, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+.merged-links a.lita-link:hover .modern-arrow {
+  background: rgba(255, 255, 255, 0.26);
+}
+
+.section-title {
+  margin-bottom: 14px;
+}
+
+.shop-card-image {
+  height: 180px;
+}
+
+.shop-card-image img {
+  object-position: center center;
+}
+
+.links a:focus-visible,
+.header-icons a:focus-visible,
+.carousel-nav:focus-visible,
+.affiliate-nav:focus-visible,
+.role-icons img:focus-visible {
+  outline: 3px solid rgba(255, 59, 107, 0.45);
+  outline-offset: 3px;
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+
+  body {
+    padding: 18px 22px;
+  }
+
+  h1 {
+    font-size: 20px;
+    line-height: 1.1;
+  }
+
+  h2 {
+    font-size: 13px;
+    line-height: 1.35;
+  }
+
+  .profile-bio,
+  .profile-bio-full {
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  .links a {
+    padding: 13px 14px;
+    font-size: 14px;
+    line-height: 1.25;
+  }
+
+  .links a .sub,
+  .links a.valorant .sub {
+    font-size: 12px;
+    line-height: 1.35;
+  }
+
+  .choice-label {
+    font-size: 10px;
+  }
+
+  .choice-title {
+    font-size: 16px;
+    line-height: 1.08;
+  }
+
+  .merged-links .text,
+  .shop-card .text {
+    font-size: 15px;
+    line-height: 1.15;
+  }
+
+  .merged-links .sub,
+  .shop-card .sub {
+    font-size: 12px;
+    line-height: 1.35;
+  }
+
+  .section-title {
+    font-size: 15px;
+  }
+
+  .donate-head h3 {
+    font-size: 21px;
+  }
+
+  .shop-card-image {
+    height: 130px;
+  }
+
+  .shop-card-image img {
+    object-position: center center;
+  }
+}
+
+@media (max-width: 380px) {
+  body {
+    padding: 16px 18px;
+  }
+
+  h1 {
+    font-size: 19px;
+  }
+
+  .choice-title {
+    font-size: 15px;
+  }
+
+  .links a {
+    font-size: 13px;
+  }
+}

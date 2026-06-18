@@ -1,0 +1,7 @@
+/* Setup-only additions. Most visual components are shared with the homepage. */
+.pc-showcase:focus-visible,
+.affiliate-card:focus-visible,
+.donate-option:focus-visible {
+  outline: 3px solid rgba(255, 59, 107, 0.42);
+  outline-offset: 4px;
+}
