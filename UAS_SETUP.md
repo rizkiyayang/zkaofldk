@@ -1,101 +1,59 @@
-# UAS Valorant Sandbox Setup
+# UAS Valorant Gratis — Setup
 
-Halaman kuis ada di `/uas/`. Untuk sekarang pakai Midtrans **Sandbox** dulu sampai alurnya benar-benar layak.
+Halaman kuis ada di `/uas/`. Versi ini tidak membuat checkout atau transaksi Midtrans. Nama, email, order, token kuis, dan hasil ujian tetap disimpan di Supabase.
 
 ## 1. Supabase
 
-1. Buat project Supabase baru.
-2. Buka SQL Editor.
-3. Jalankan isi file `supabase-uas.sql`.
-4. Ambil nilai ini dari Project Settings:
-   - `SUPABASE_URL`
-   - `SUPABASE_SERVICE_ROLE_KEY`
-
-`SUPABASE_URL` pakai root project URL saja, contoh:
-
-```text
-https://xxxxx.supabase.co
-```
-
-Jangan pakai format yang berakhiran `/rest/v1/` untuk env ini.
-
-Tabel sengaja tidak punya public policy karena semua akses database dilakukan lewat Vercel API dengan service role, bukan dari browser.
-
-## 2. Midtrans Sandbox
-
-1. Login ke Midtrans Dashboard.
-2. Pastikan mode dashboard ada di **Sandbox**.
-3. Buka Settings -> Access Keys.
-4. Ambil **Server Key Sandbox**.
-5. Masukkan ke env sebagai:
-
-```text
-MIDTRANS_SERVER_KEY=SB-Mid-server-xxxxx
-MIDTRANS_IS_PRODUCTION=false
-```
-
-Notification URL Sandbox:
-
-```text
-https://nama-project-kamu.vercel.app/api/uas-midtrans-webhook
-```
-
-Backend juga mengirim `X-Override-Notification` memakai `SITE_URL`, jadi isi `SITE_URL` dengan domain Vercel production/preview yang sedang dites.
-
-## 3. Resend
-
-Resend dipakai untuk email struk setelah pembayaran sukses.
-
-Env yang dibutuhkan:
-
-```text
-RESEND_API_KEY=re_xxxxx
-RESEND_FROM_EMAIL=UAS Valorant <struk@domain-kamu.com>
-```
-
-`RESEND_FROM_EMAIL` harus pakai domain/sender yang sudah valid di Resend. Kalau belum siap, kosongkan dulu `RESEND_API_KEY`; pembayaran dan kuis tetap jalan, hanya struk email yang tidak dikirim.
-
-## 4. Vercel Env Vars
-
-Masukkan env ini di Vercel Project Settings -> Environment Variables:
+1. Buka SQL Editor di project Supabase.
+2. Jalankan seluruh isi `supabase-uas.sql`.
+3. Untuk database lama, menjalankan ulang file tersebut penting karena constraint nominal diubah dari minimal `10000` menjadi minimal `0`.
+4. Siapkan environment variable:
 
 ```text
 SUPABASE_URL=https://xxxxx.supabase.co
 SUPABASE_SERVICE_ROLE_KEY=xxxxx
-MIDTRANS_SERVER_KEY=SB-Mid-server-xxxxx
-MIDTRANS_IS_PRODUCTION=false
-SITE_URL=https://nama-project-kamu.vercel.app
-RESEND_API_KEY=re_xxxxx
-RESEND_FROM_EMAIL=UAS Valorant <struk@domain-kamu.com>
 ```
 
-Set env untuk **Production**, **Preview**, dan **Development** kalau kamu ingin semua deployment bisa dites. Setelah env diubah, deploy ulang.
+`SUPABASE_URL` menggunakan root project URL, bukan URL yang berakhiran `/rest/v1/`.
 
-## 5. Test Flow
+Tabel tidak memiliki public policy karena seluruh akses database dilakukan lewat API server menggunakan service role.
 
-1. Buka `/uas/`.
-2. Klik Mulai Ujian.
-3. Isi nama, email, dan nominal minimal 10000.
-4. Pilih QRIS atau VA.
-5. Bayar pakai simulator/test payment Midtrans Sandbox.
-6. Klik Cek Status.
-7. Pastikan kuis terbuka.
-8. Submit kuis.
-9. Pastikan highscore bertambah di Supabase.
+## 2. Alur Data Gratis
 
-## 6. Ganti ke Production Nanti
+Saat peserta menekan **Mulai Ujian Gratis**:
 
-Saat sudah siap live:
+1. Data nama dan email masuk ke `uas_players`.
+2. Satu order gratis masuk ke `uas_orders` dengan:
+   - `amount = 0`
+   - `channel = free`
+   - `payment_status = free`
+3. Token kuis langsung diberikan.
+4. Setelah selesai, hasil masuk ke `uas_attempts` dan leaderboard tetap diperbarui.
+
+## 3. Vercel
+
+Environment variable minimum:
 
 ```text
-MIDTRANS_SERVER_KEY=Mid-server-production-xxxxx
-MIDTRANS_IS_PRODUCTION=true
-SITE_URL=https://domain-production-kamu.com
+SUPABASE_URL=https://xxxxx.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=xxxxx
 ```
 
-Server Key Sandbox dan Production berbeda. Jangan campur.
+Environment variable Midtrans dan Resend tidak diperlukan untuk flow gratis baru. Endpoint lama tetap ada agar data/transaksi lama tidak rusak, tetapi halaman gratis tidak memanggilnya.
 
-## 7. Edit Kuis
+## 4. Test Flow
+
+1. Deploy ulang project.
+2. Buka `/uas/`.
+3. Klik **Mulai Ujian**.
+4. Isi nama dan email.
+5. Klik **Mulai Ujian Gratis**.
+6. Pastikan kuis langsung terbuka tanpa checkout.
+7. Submit kuis.
+8. Pastikan tabel `uas_players`, `uas_orders`, dan `uas_attempts` bertambah.
+9. Pastikan `uas_orders.amount` bernilai `0` dan `payment_status` bernilai `free`.
+
+## 5. Edit Kuis
 
 Pertanyaan frontend:
 
@@ -109,8 +67,4 @@ Kunci jawaban dan bobot server:
 server/uas-quiz.mjs
 ```
 
-Kalau mengganti jawaban benar di frontend, samakan juga di server.
-
-## 8. kirim.email
-
-Belum disambungkan karena API/list detail belum dimasukkan. Nanti setelah API key dan endpoint jelas, integrasinya ditaruh di backend Vercel, bukan frontend.
+Kalau jawaban benar di frontend diubah, samakan juga di server.
