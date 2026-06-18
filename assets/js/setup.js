@@ -1,7 +1,7 @@
-import { productCollections } from "/data/products.js?v=20260619-history1";
-import { renderProductCollections } from "/assets/js/render.js?v=20260619-history1";
-import { initCarousel } from "/assets/js/carousel.js?v=20260619-history1";
-import { initCommonPage } from "/assets/js/common.js?v=20260619-history1";
+import { productCollections } from "/data/products.js?v=20260619-livefix3";
+import { renderProductCollections } from "/assets/js/render.js?v=20260619-livefix3";
+import { initCarousel } from "/assets/js/carousel.js?v=20260619-livefix3";
+import { initCommonPage } from "/assets/js/common.js?v=20260619-livefix3";
 
 renderProductCollections(productCollections);
 initCommonPage();

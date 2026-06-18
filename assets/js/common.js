@@ -1,4 +1,4 @@
-import { initDonateModal } from "/assets/js/modal.js?v=20260619-pagefix2";
+import { initDonateModal } from "/assets/js/modal.js?v=20260619-livefix3";
 
 const JAKARTA_TIME_ZONE = "Asia/Jakarta";
 
@@ -16,7 +16,7 @@ export function updateLiveStatus() {
   const hour = getJakartaHour();
   const isLive = hour >= 22 || hour < 5;
 
-  document.querySelectorAll("[data-live-status]").forEach((pill) => {
+  document.querySelectorAll(".live-pill[data-live-status]").forEach((pill) => {
     pill.textContent = isLive ? "Live" : "Offline";
     pill.classList.toggle("is-live", isLive);
     pill.classList.toggle("is-offline", !isLive);
@@ -28,7 +28,7 @@ export function updateLiveStatus() {
       : "Live mulai 22.00 WIB";
   });
 
-  document.documentElement.dataset.liveStatus = isLive ? "live" : "offline";
+  document.documentElement.dataset.streamStatus = isLive ? "live" : "offline";
 }
 
 function initLiveClock() {
