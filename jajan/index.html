@@ -1,590 +1,220 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Jajan Favorit – Link Shopee</title>
-    <link rel="icon" type="image/x-icon" href="../img/icon.jpg" />
-
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jajanan Favorit • COKELAT MANIS</title>
     <meta
       name="description"
-      content="Jajanan favorit, snack viral, dan cemilan lucu. Klik buat jajan di Shopee."
+      content="Jajanan favorit Cokelat Manis. Ada molreng, basreng, mie gulung, dan camilan lain buat nemenin live atau mabar."
     />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+    <link rel="icon" type="image/jpeg" href="/img/icon.jpg" />
+    <link rel="stylesheet" href="/assets/css/base.css?v=20260619-jajan1" />
+    <link rel="stylesheet" href="/assets/css/components.css?v=20260619-jajan1" />
+    <link rel="stylesheet" href="/assets/css/jajan.css?v=20260619-jajan1" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Nunito:wght@600;800&display=swap"
       rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css"
     />
-    <!-- Network hints for faster external fetch -->
-    <link rel="dns-prefetch" href="https://s.shopee.co.id" />
-    <link rel="preconnect" href="https://s.shopee.co.id" crossorigin />
-    <link rel="dns-prefetch" href="https://images.unsplash.com" />
-    <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
-    <style>
-      :root {
-        --bg1: #fff3f8; /* pink pastel */
-        --bg2: #f2fbff; /* biru muda */
-        --card: #ffffff;
-        --text: #273043;
-        --muted: #6c7890;
-        --cta: #ff6b6b; /* cute coral */
-        --cta-dark: #ff5252;
-        --ring: rgba(255, 107, 107, 0.3);
-        --radius: 22px;
-        --shadow:
-          0 12px 40px rgba(255, 105, 180, 0.15), 0 8px 24px rgba(0, 0, 0, 0.06);
-      }
-      * {
-        box-sizing: border-box;
-      }
-      body {
-        margin: 0;
-        font-family:
-          Poppins,
-          system-ui,
-          -apple-system,
-          Segoe UI,
-          Roboto,
-          Arial;
-        color: var(--text);
-        background:
-          radial-gradient(900px 500px at 10% -10%, var(--bg1), transparent),
-          radial-gradient(900px 600px at 90% -20%, var(--bg2), transparent),
-          linear-gradient(180deg, #fff, #fff7fb 60%, #f8fdff);
-        min-height: 100dvh;
-        padding: 22px;
-      }
-      .wrap {
-        max-width: 960px;
-        margin: 0 auto;
-      }
-
-      /* Header cute */
-      .hero {
-        display: flex;
-        gap: 16px;
-        align-items: center;
-        background: var(--card);
-        border-radius: var(--radius);
-        padding: 18px 18px;
-        box-shadow:
-          0 12px 40px rgba(255, 105, 180, 0.12),
-          0 6px 20px rgba(36, 46, 63, 0.06);
-        border: 1px solid #ffe5f1;
-      }
-      .pfp {
-        width: 100%;
-        max-width: 240px; /* adjust as needed */
-        height: auto;
-        border-radius: 22px;
-        overflow: hidden;
-        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
-      }
-      .pfp svg {
-        width: 34px;
-        height: 34px;
-        color: #ff6b6b;
-      }
-      .pfp img {
-        width: 100%;
-        height: auto;
-        object-fit: cover;
-        display: block;
-      }
-      h1 {
-        font-family: Nunito, Poppins, sans-serif;
-        font-size: clamp(20px, 3.5vw, 30px);
-        margin: 0 0 4px;
-        letter-spacing: 0.3px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-      .nick {
-        background: #ffe6ef;
-        color: #ff4b6d;
-        padding: 4px 10px;
-        border-radius: 999px;
-        font-size: 13px;
-        font-weight: 700;
-      }
-      .handles {
-        color: var(--muted);
-        font-size: 13px;
-      }
-      .handles a {
-        color: #ff4b6d;
-        text-decoration: none;
-        font-weight: 600;
-      }
-
-      .header-main {
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-      }
-      .title-row {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        flex-wrap: wrap;
-      }
-      .nick {
-        background: #ffe6ef;
-        color: #ff4b6d;
-        padding: 6px 12px;
-        border-radius: 999px;
-        font-size: 12px;
-        font-weight: 800;
-        transform: translateY(-2px);
-        letter-spacing: 0.2px;
-      }
-      h1 {
-        font-family: Nunito, Poppins, sans-serif;
-        font-size: clamp(22px, 3.6vw, 32px);
-        margin: 0;
-        letter-spacing: 0.2px;
-        font-weight: 800;
-        color: #242e3f;
-      }
-
-      .socials {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-        margin-top: 8px;
-      }
-      .body[role="link"] {
-        cursor: pointer;
-      }
-
-      .skeleton {
-        background: linear-gradient(
-          110deg,
-          #fbe9f3 8%,
-          #fff4f8 18%,
-          #fbe9f3 33%
-        );
-        background-size: 200% 100%;
-        animation: shimmer 1.2s linear infinite;
-      }
-      @keyframes shimmer {
-        to {
-          background-position-x: -200%;
-        }
-      }
-      .sbtn {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        height: 40px;
-        padding: 0 14px;
-        border-radius: 999px;
-        font-weight: 800;
-        font-size: 12px;
-        text-decoration: none;
-        border: 1px solid rgba(255, 255, 255, 0.6);
-        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
-        transition:
-          transform 0.15s ease,
-          box-shadow 0.15s ease,
-          filter 0.15s ease;
-      }
-      .sbtn .ico {
-        width: 16px;
-        height: 16px;
-      }
-      .sbtn:hover {
-        transform: translateY(-1px) scale(1.02);
-        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.07);
-      }
-      .sbtn:focus-visible {
-        outline: 3px solid rgba(255, 107, 107, 0.35);
-        outline-offset: 2px;
-      }
-      .sbtn.ig {
-        background: #ff6b6b;
-        color: #fff;
-        border-color: transparent;
-      }
-      .sbtn.ig:hover {
-        filter: brightness(1.03);
-      }
-      .sbtn.tt {
-        background: rgba(53, 84, 255, 0.08);
-        color: #3554ff;
-        border-color: rgba(53, 84, 255, 0.2);
-      }
-      .sbtn.tt:hover {
-        filter: brightness(1.03);
-      }
-      @media (max-width: 360px) {
-        .socials {
-          gap: 8px;
-        }
-        .sbtn {
-          flex: 1 1 100%;
-          justify-content: center;
-        }
-      }
-
-      /* Desktop refinements for hero */
-      @media (min-width: 960px) {
-        .hero {
-          display: grid;
-          grid-template-columns: 180px 1fr; /* avatar column smaller */
-          align-items: center;
-          padding: 20px 24px; /* less padding */
-          gap: 16px; /* tighter gap */
-        }
-        .pfp {
-          width: 140px;
-          height: 140px;
-          border-radius: 18px;
-          overflow: hidden;
-        }
-        .pfp img {
-          height: 100%;
-          object-fit: cover;
-        }
-        .title-row {
-          gap: 14px;
-        }
-        .socials {
-          margin-top: 6px;
-        }
-        h1 {
-          font-size: clamp(26px, 2.2vw, 36px);
-          line-height: 1.15;
-        }
-      }
-
-      /* Setup photo + Spec container */
-      .setup-box {
-        margin-top: 16px;
-        background: var(--card);
-        border-radius: var(--radius);
-        padding: 14px;
-        box-shadow: var(--shadow);
-        border: 1px solid #ffe5f1;
-      }
-      .setup-photo {
-        width: 100%;
-        aspect-ratio: 16/9;
-        border-radius: 16px;
-        object-fit: cover;
-        display: block;
-        background: linear-gradient(135deg, #ffe6f2, #e8f7ff);
-      }
-      .setup-caption {
-        margin: 10px 2px 0;
-        font-size: 12px;
-        color: var(--muted);
-      }
-
-      .spec-box {
-        margin-top: 14px;
-        background: var(--card);
-        border-radius: var(--radius);
-        padding: 16px;
-        box-shadow: var(--shadow);
-        border: 1px solid #ffe5f1;
-      }
-      .spec-box h2 {
-        margin: 0 0 10px;
-        font-size: 18px;
-        font-weight: 800;
-        color: #ff4b6d;
-      }
-      .spec-box ul {
-        margin: 0;
-        padding-left: 20px;
-        color: var(--muted);
-        font-size: 14px;
-        line-height: 1.6;
-      }
-
-      /* Grid */
-      .grid {
-        margin-top: 16px;
-        display: grid;
-        gap: 14px;
-        grid-template-columns: 1fr;
-      }
-      @media (min-width: 640px) {
-        .grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
-      }
-      @media (min-width: 960px) {
-        .grid {
-          grid-template-columns: repeat(3, 1fr);
-        }
-      }
-
-      /* Card */
-      .card {
-        background: var(--card);
-        border-radius: var(--radius);
-        overflow: hidden;
-        box-shadow: var(--shadow);
-        border: 1px solid #ffe5f1;
-        position: relative;
-      }
-      .imgbox {
-        aspect-ratio: 16/10;
-        background: linear-gradient(135deg, #ffe6f2, #e8f7ff);
-        display: block;
-        position: relative;
-        cursor: pointer;
-      }
-      .imgbox img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-      }
-      .badge {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        background: #fff;
-        color: #ff5b86;
-        padding: 6px 10px;
-        border-radius: 999px;
-        font-size: 12px;
-        font-weight: 700;
-        border: 1px solid #ffd6e9;
-      }
-      .body {
-        padding: 14px;
-      }
-      .title {
-        font-size: 16px;
-        font-weight: 700;
-        margin: 0 0 4px;
-      }
-      .desc {
-        margin: 0 0 12px;
-        color: var(--muted);
-        font-size: 13px;
-      }
-      .cta {
-        display: flex;
-        gap: 10px;
-      }
-      .btn {
-        appearance: none;
-        border: none;
-        padding: 12px 14px;
-        border-radius: 14px;
-        font-weight: 800;
-        letter-spacing: 0.2px;
-        cursor: pointer;
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-      }
-      .btn.shopee {
-        background: var(--cta);
-        color: #fff;
-        box-shadow: 0 10px 30px var(--ring);
-      }
-      .btn.shopee:hover {
-        background: var(--cta-dark);
-      }
-      .btn.ghost {
-        background: #fff1f6;
-        color: #ff4b6d;
-      }
-      .btn .ico {
-        width: 18px;
-        height: 18px;
-      }
-      .card a {
-        text-decoration: none;
-      }
-
-      /* Floating cues */
-      .spark {
-        position: absolute;
-        right: 10px;
-        top: 10px;
-        font-size: 18px;
-      }
-
-      /* Footer note */
-      .foot {
-        margin: 16px auto 0;
-        text-align: center;
-        color: #7b8398;
-        font-size: 12px;
-      }
-      /* Animation */
-      @keyframes fadeUp {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      .hero {
-        opacity: 0;
-        animation: fadeUp 0.6s ease forwards;
-      }
-
-      .card {
-        opacity: 0;
-        animation: fadeUp 0.5s ease forwards;
-      }
-
-      .card:nth-child(1) {
-        animation-delay: 0.1s;
-      }
-      .card:nth-child(2) {
-        animation-delay: 0.2s;
-      }
-      .card:nth-child(3) {
-        animation-delay: 0.3s;
-      }
-      .card:nth-child(4) {
-        animation-delay: 0.4s;
-      }
-      .card:nth-child(5) {
-        animation-delay: 0.5s;
-      }
-      .card:nth-child(6) {
-        animation-delay: 0.6s;
-      }
-
-      .foot {
-        opacity: 0;
-        animation: fadeUp 0.6s ease forwards;
-        animation-delay: 0.7s;
-      }
-    </style>
   </head>
   <body>
-    <div class="wrap">
-      <!-- Header dengan nama panggilan + handle IG/TikTok -->
-      <section class="hero">
-        <div class="pfp">
-          <!-- Ganti src dengan foto kamu; bisa file lokal ./img/avatar.jpg atau URL -->
-          <img
-            src="img/avatar.jpg"
-            alt="Foto profil"
-            width="60"
-            height="60"
-            loading="lazy"
-            decoding="async"
-          />
+    <div class="container">
+      <div class="jajan-shell">
+        <div class="back-link-wrap">
+          <a class="back-link" href="/">
+            <i class="ri-arrow-left-line"></i>
+            <span>Kembali ke halaman utama</span>
+          </a>
         </div>
-        <div class="header-main">
-          <div class="title-row">
-            <span class="nick">Cokelat Manis</span>
-            <h1>Jajan Favoritku 🍭</h1>
+
+        <div class="header-glass">
+          <div class="avatar-wrap">
+            <picture>
+              <source srcset="/img/icon.avif" type="image/avif" />
+              <source srcset="/img/icon.webp" type="image/webp" />
+              <img
+                src="/img/icon.jpg"
+                alt="COKELAT MANIS"
+                class="profile-avatar"
+                width="320"
+                height="320"
+                loading="eager"
+                fetchpriority="high"
+                decoding="async"
+              />
+            </picture>
+            <picture>
+              <source srcset="/img/prx.avif" type="image/avif" />
+              <source srcset="/img/prx.webp" type="image/webp" />
+              <img
+                src="/img/prx.jpg"
+                alt=""
+                class="avatar-prx-overlay"
+                width="320"
+                height="320"
+                loading="eager"
+                decoding="async"
+              />
+            </picture>
           </div>
-          <div class="handles">Snack enak, lucu, & sering aku jajan 😋</div>
+          <div class="profile-right">
+            <div class="header-top">
+              <div class="header-title">
+                <h1>COKELAT MANIS</h1>
+                <span class="username">@zkaofldk</span>
+              </div>
+              <div class="header-icons">
+                <a href="https://www.instagram.com/zkaofldk">
+                  <img
+                    src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg"
+                    alt="Instagram"
+                    width="20"
+                    height="20"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </a>
+                <a href="https://www.tiktok.com/@zkaofldk">
+                  <img
+                    src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg"
+                    alt="TikTok"
+                    width="20"
+                    height="20"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </a>
+                <a href="https://discord.gg/CVur7k6wsE">
+                  <img
+                    src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg"
+                    alt="Discord"
+                    width="20"
+                    height="20"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
-      </section>
 
-      <!-- Grid produk: gambar + nama + tombol ke Shopee -->
-      <section class="grid" id="list">
-        <article class="card" data-url="https://s.shopee.co.id/5AmaZJtwI7">
-          <div class="imgbox" onclick="openCard(this)">
-            <img src="img/miegulung.jpg" loading="lazy" />
-            <span class="badge">⭐ Enak Banget</span>
-            <span class="spark">🍪</span>
+        <p class="profile-bio profile-bio-full profile-bio-inline">
+          Cemilan favorit buat nemenin live, mabar, atau scroll malam-malam 🎀
+        </p>
+
+        <ul class="links choice-list">
+          <li>
+            <a class="support choice-card donate-trigger" href="#">
+              <span class="live-pill is-offline" data-live-status aria-live="polite">Offline</span>
+              <span class="choice-title">Donate Live</span>
+              <span class="choice-hint" data-live-hint>Live mulai 22.00 WIB</span>
+            </a>
+          </li>
+        </ul>
+
+        <a
+          class="shop-card featured-snack"
+          href="https://s.shopee.co.id/50WnrQMwQy"
+          target="_blank"
+          rel="noopener noreferrer sponsored"
+        >
+          <div class="shop-card-image">
+            <picture>
+              <source srcset="/jajan/img/molreng.avif" type="image/avif" />
+              <source srcset="/jajan/img/molreng.webp" type="image/webp" />
+              <img
+                src="/jajan/img/molreng.png"
+                alt="Molreng"
+                width="800"
+                height="800"
+                loading="eager"
+                decoding="async"
+              />
+            </picture>
           </div>
-          <div class="body" role="link" onclick="openCard(this)">
-            <h3 class="title">Mie Gulung</h3>
-            <p class="desc">Manis, nagih 😭 cocok buat ngemil santai</p>
-            <div class="cta">
-              <a
-                class="btn shopee"
-                href="https://s.shopee.co.id/5AmaZJtwI7"
-                target="_blank"
-                rel="noopener"
-                >Jajan di Shopee</a
-              >
+          <div class="shop-card-content">
+            <div class="shop-card-info">
+              <span class="hero-caption">Lagi pengen</span>
+              <div class="modern-left">
+                <div class="modern-icon">
+                  <i class="ri-cake-3-line"></i>
+                </div>
+                <div class="modern-content">
+                  <span class="text">Molreng</span>
+                  <span class="sub">Gurih, pedas, dan cocok buat nemenin ngegame.</span>
+                </div>
+              </div>
+            </div>
+            <div class="modern-arrow">
+              <i class="ri-arrow-right-s-line"></i>
             </div>
           </div>
-        </article>
+        </a>
 
-        <article class="card" data-url="https://s.shopee.co.id/30i5zToEve">
-          <div class="imgbox" onclick="openCard(this)">
-            <img src="img/basreng.jpg" loading="lazy" />
-            <span class="badge">🔥 Viral</span>
-            <span class="spark">🌶️</span>
-          </div>
-          <div class="body" role="link" onclick="openCard(this)">
-            <h3 class="title">Basreng</h3>
-            <p class="desc">Pedesnya ngeselin, bikin pengen lagi</p>
-            <div class="cta">
-              <a
-                class="btn shopee"
-                href="https://s.shopee.co.id/30i5zToEve"
-                target="_blank"
-                rel="noopener"
-                >Cobain 🍜</a
-              >
+        <div class="snack-guide-box">
+          <p class="section-title">Kenapa aku pilih ini?</p>
+          <div class="snack-guide-list">
+            <div class="snack-guide-item">
+              <div class="snack-guide-icon"><i class="ri-fire-line"></i></div>
+              <div>
+                <strong>Ngemil malam tetap aman</strong>
+                <span>Pilihan jajannya aku pilih yang enak buat nemenin live jam 10 malam sampai subuh.</span>
+              </div>
+            </div>
+            <div class="snack-guide-item">
+              <div class="snack-guide-icon"><i class="ri-heart-3-line"></i></div>
+              <div>
+                <strong>Yang benar-benar aku suka</strong>
+                <span>Bukan pajangan doang—ini jajanan yang vibe-nya cocok sama aku dan sering bikin pengen repeat order.</span>
+              </div>
+            </div>
+            <div class="snack-guide-item">
+              <div class="snack-guide-icon"><i class="ri-shopping-bag-3-line"></i></div>
+              <div>
+                <strong>Langsung klik, langsung checkout</strong>
+                <span>Semua kartu di bawah ini bisa langsung dibuka ke Shopee dengan affiliate link yang tetap aman.</span>
+              </div>
             </div>
           </div>
-        </article>
+        </div>
 
-        <article class="card" data-url="https://s.shopee.co.id/1qW8bZezWy">
-          <div class="imgbox" onclick="openCard(this)">
-            <img src="img/mielidi.jpg" loading="lazy" />
-            <span class="badge">🎀 Lucu</span>
-            <span class="spark">🍓</span>
+        <div class="affiliate-section">
+          <p class="section-title">Jajan Favorit</p>
+          <div class="affiliate-wrapper">
+            <button
+              class="affiliate-nav affiliate-prev"
+              id="jajanPrev"
+              type="button"
+              aria-label="Geser ke kiri"
+            >
+              <i class="ri-arrow-left-s-line"></i>
+            </button>
+            <button
+              class="affiliate-nav affiliate-next"
+              id="jajanNext"
+              type="button"
+              aria-label="Geser ke kanan"
+            >
+              <i class="ri-arrow-right-s-line"></i>
+            </button>
+            <div
+              class="affiliate-carousel"
+              id="jajanCarousel"
+              data-product-collection="jajanFavorites"
+            ></div>
           </div>
-          <div class="body" role="link" onclick="openCard(this)">
-            <h3 class="title">Mie Lidi</h3>
-            <p class="desc">Lucu tapi enak, gemes pas dibuka</p>
-            <div class="cta">
-              <a
-                class="btn shopee"
-                href="https://s.shopee.co.id/1qW8bZezWy"
-                target="_blank"
-                rel="noopener"
-                >Coba 🍭</a
-              >
-            </div>
-          </div>
-        </article>
-      </section>
+        </div>
 
-      <p class="foot" style="margin-top: 12px">
-        *Sebagian link di halaman ini merupakan affiliate link.
-      </p>
-      <p class="foot">Tap gambar atau tombol untuk langsung ke Shopee 💖</p>
+        <p class="jajan-footnote">
+          *Sebagian link di halaman ini merupakan affiliate link. Kalau kamu checkout lewat sini,
+          aku bisa dapat komisi kecil tanpa biaya tambahan buat kamu 💖
+        </p>
+      </div>
     </div>
 
-    <script>
-      // Buka link Shopee jika klik gambar/kartu
-      function openCard(el) {
-        const card = el.closest(".card");
-        const url = card?.dataset.url;
-        if (url) {
-          window.open(url, "_blank", "noopener");
-        }
-      }
-      // Keyboard support: Enter/Space activates body-as-link
-      document.querySelectorAll('.body[role="link"]').forEach((b) => {
-        b.tabIndex = 0;
-        b.addEventListener("keydown", (e) => {
-          if (e.key === "Enter" || e.key === " ") {
-            openCard(b);
-          }
-        });
-      });
-    </script>
+    <script type="module" src="/assets/js/jajan.js?v=20260619-jajan1"></script>
   </body>
 </html>
