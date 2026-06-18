@@ -1,7 +1,7 @@
-import { productCollections } from "/data/products.js";
-import { renderProductCollections } from "/assets/js/render.js";
-import { initCarousel } from "/assets/js/carousel.js";
-import { initCommonPage } from "/assets/js/common.js";
+import { productCollections } from "/data/products.js?v=20260619-history1";
+import { renderProductCollections } from "/assets/js/render.js?v=20260619-history1";
+import { initCarousel } from "/assets/js/carousel.js?v=20260619-history1";
+import { initCommonPage } from "/assets/js/common.js?v=20260619-history1";
 
 renderProductCollections(productCollections);
 initCommonPage();

@@ -1,4 +1,4 @@
-import { initDonateModal } from "/assets/js/modal.js";
+import { initDonateModal } from "/assets/js/modal.js?v=20260619-history1";
 
 const JAKARTA_TIME_ZONE = "Asia/Jakarta";
 
@@ -103,7 +103,30 @@ function initAvatarGlitch() {
 }
 
 
+function initHistoryRestoreGuard() {
+  window.addEventListener("pagehide", () => {
+    document.querySelectorAll(".release, .glitching").forEach((element) => {
+      element.classList.remove("release", "glitching");
+    });
+
+    const modal = document.getElementById("donateModal");
+    modal?.classList.remove("active");
+    modal?.setAttribute("aria-hidden", "true");
+  });
+
+  window.addEventListener("pageshow", (event) => {
+    updateLiveStatus();
+
+    // Safari/WebKit kadang memulihkan snapshot BFCache tanpa stylesheet atau
+    // layout lengkap. Muat ulang sekali agar halaman kembali utuh.
+    if (event.persisted) {
+      window.location.reload();
+    }
+  });
+}
+
 export function initCommonPage() {
+  initHistoryRestoreGuard();
   initPressFeedback();
   initAvatarGlitch();
   initDonateModal();
