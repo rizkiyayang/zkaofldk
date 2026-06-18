@@ -6,215 +6,49 @@
     <title>Jajanan Favorit • COKELAT MANIS</title>
     <meta
       name="description"
-      content="Jajanan favorit Cokelat Manis. Ada molreng, basreng, mie gulung, dan camilan lain buat nemenin live atau mabar."
+      content="Jajanan favorit Cokelat Manis: molreng, basreng, mie gulung, dan mie lidi."
     />
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
-    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
     <link rel="icon" type="image/jpeg" href="/img/icon.jpg" />
-    <link rel="stylesheet" href="/assets/css/base.css?v=20260619-livefix3" />
-    <link rel="stylesheet" href="/assets/css/components.css?v=20260619-livefix3" />
-    <link rel="stylesheet" href="/assets/css/jajan.css?v=20260619-livefix3" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css"
-    />
+    <link rel="stylesheet" href="/assets/css/base.css?v=20260619-jajansimple1" />
+    <link rel="stylesheet" href="/assets/css/jajan.css?v=20260619-jajansimple1" />
   </head>
   <body>
-    <div class="container">
-      <div class="jajan-shell">
-        <div class="back-link-wrap">
-          <a class="back-link" href="/">
-            <i class="ri-arrow-left-line"></i>
-            <span>Kembali ke halaman utama</span>
-          </a>
+    <main class="jajan-page">
+      <a class="back-link" href="/" aria-label="Kembali ke halaman utama">
+        <span aria-hidden="true">←</span>
+        <span>Kembali</span>
+      </a>
+
+      <header class="jajan-header">
+        <picture>
+          <source srcset="/img/icon.avif" type="image/avif" />
+          <source srcset="/img/icon.webp" type="image/webp" />
+          <img
+            src="/img/icon.jpg"
+            alt="Cokelat Manis"
+            width="96"
+            height="96"
+            loading="eager"
+            decoding="async"
+          />
+        </picture>
+        <div>
+          <p class="eyebrow">COKELAT MANIS</p>
+          <h1>Jajanan Favorit</h1>
+          <p class="intro">Cemilan yang enak buat nemenin main dan rebahan.</p>
         </div>
+      </header>
 
-        <div class="header-glass">
-          <div class="avatar-wrap">
-            <picture>
-              <source srcset="/img/icon.avif" type="image/avif" />
-              <source srcset="/img/icon.webp" type="image/webp" />
-              <img
-                src="/img/icon.jpg"
-                alt="COKELAT MANIS"
-                class="profile-avatar"
-                width="320"
-                height="320"
-                loading="eager"
-                fetchpriority="high"
-                decoding="async"
-              />
-            </picture>
-            <picture>
-              <source srcset="/img/prx.avif" type="image/avif" />
-              <source srcset="/img/prx.webp" type="image/webp" />
-              <img
-                src="/img/prx.jpg"
-                alt=""
-                class="avatar-prx-overlay"
-                width="320"
-                height="320"
-                loading="eager"
-                decoding="async"
-              />
-            </picture>
-          </div>
-          <div class="profile-right">
-            <div class="header-top">
-              <div class="header-title">
-                <h1>COKELAT MANIS</h1>
-                <span class="username">@zkaofldk</span>
-              </div>
-              <div class="header-icons">
-                <a href="https://www.instagram.com/zkaofldk">
-                  <img
-                    src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg"
-                    alt="Instagram"
-                    width="20"
-                    height="20"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </a>
-                <a href="https://www.tiktok.com/@zkaofldk">
-                  <img
-                    src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg"
-                    alt="TikTok"
-                    width="20"
-                    height="20"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </a>
-                <a href="https://discord.gg/CVur7k6wsE">
-                  <img
-                    src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg"
-                    alt="Discord"
-                    width="20"
-                    height="20"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
+      <section aria-labelledby="produk-jajan">
+        <h2 id="produk-jajan">Pilih jajanan</h2>
+        <div class="snack-grid" id="jajanGrid" aria-live="polite"></div>
+      </section>
 
-        <p class="profile-bio profile-bio-full profile-bio-inline">
-          Cemilan favorit buat nemenin live, mabar, atau scroll malam-malam 🎀
-        </p>
+      <p class="affiliate-note">
+        Beberapa tautan merupakan affiliate link. Harga yang kamu bayar tetap sama.
+      </p>
+    </main>
 
-        <ul class="links choice-list">
-          <li>
-            <a class="support choice-card donate-trigger" href="#">
-              <span class="live-pill is-offline" data-live-status aria-live="polite">Offline</span>
-              <span class="choice-title">Donate Live</span>
-              <span class="choice-hint" data-live-hint>Live mulai 22.00 WIB</span>
-            </a>
-          </li>
-        </ul>
-
-        <a
-          class="shop-card featured-snack"
-          href="https://s.shopee.co.id/50WnrQMwQy"
-          target="_blank"
-          rel="noopener noreferrer sponsored"
-        >
-          <div class="shop-card-image">
-            <picture>
-              <source srcset="/jajan/img/molreng.avif" type="image/avif" />
-              <source srcset="/jajan/img/molreng.webp" type="image/webp" />
-              <img
-                src="/jajan/img/molreng.png"
-                alt="Molreng"
-                width="800"
-                height="800"
-                loading="eager"
-                decoding="async"
-              />
-            </picture>
-          </div>
-          <div class="shop-card-content">
-            <div class="shop-card-info">
-              <span class="hero-caption">Lagi pengen</span>
-              <div class="modern-left">
-                <div class="modern-icon">
-                  <i class="ri-cake-3-line"></i>
-                </div>
-                <div class="modern-content">
-                  <span class="text">Molreng</span>
-                  <span class="sub">Gurih, pedas, dan cocok buat nemenin ngegame.</span>
-                </div>
-              </div>
-            </div>
-            <div class="modern-arrow">
-              <i class="ri-arrow-right-s-line"></i>
-            </div>
-          </div>
-        </a>
-
-        <div class="snack-guide-box">
-          <p class="section-title">Kenapa aku pilih ini?</p>
-          <div class="snack-guide-list">
-            <div class="snack-guide-item">
-              <div class="snack-guide-icon"><i class="ri-fire-line"></i></div>
-              <div>
-                <strong>Ngemil malam tetap aman</strong>
-                <span>Pilihan jajannya aku pilih yang enak buat nemenin live jam 10 malam sampai subuh.</span>
-              </div>
-            </div>
-            <div class="snack-guide-item">
-              <div class="snack-guide-icon"><i class="ri-heart-3-line"></i></div>
-              <div>
-                <strong>Yang benar-benar aku suka</strong>
-                <span>Bukan pajangan doang—ini jajanan yang vibe-nya cocok sama aku dan sering bikin pengen repeat order.</span>
-              </div>
-            </div>
-            <div class="snack-guide-item">
-              <div class="snack-guide-icon"><i class="ri-shopping-bag-3-line"></i></div>
-              <div>
-                <strong>Langsung klik, langsung checkout</strong>
-                <span>Semua kartu di bawah ini bisa langsung dibuka ke Shopee dengan affiliate link yang tetap aman.</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="affiliate-section">
-          <p class="section-title">Jajan Favorit</p>
-          <div class="affiliate-wrapper">
-            <button
-              class="affiliate-nav affiliate-prev"
-              id="jajanPrev"
-              type="button"
-              aria-label="Geser ke kiri"
-            >
-              <i class="ri-arrow-left-s-line"></i>
-            </button>
-            <button
-              class="affiliate-nav affiliate-next"
-              id="jajanNext"
-              type="button"
-              aria-label="Geser ke kanan"
-            >
-              <i class="ri-arrow-right-s-line"></i>
-            </button>
-            <div
-              class="affiliate-carousel"
-              id="jajanCarousel"
-              data-product-collection="jajanFavorites"
-            ></div>
-          </div>
-        </div>
-
-        <p class="jajan-footnote">
-          *Sebagian link di halaman ini merupakan affiliate link. Kalau kamu checkout lewat sini,
-          aku bisa dapat komisi kecil tanpa biaya tambahan buat kamu 💖
-        </p>
-      </div>
-    </div>
-
-    <script type="module" src="/assets/js/jajan.js?v=20260619-livefix3"></script>
+    <script type="module" src="/assets/js/jajan.js?v=20260619-jajansimple1"></script>
   </body>
 </html>
