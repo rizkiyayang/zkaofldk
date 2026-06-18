@@ -2,7 +2,7 @@ import crypto from "node:crypto";
 
 export const MIN_UAS_AMOUNT = 10000;
 
-const PAID_STATUSES = new Set(["capture", "settlement"]);
+const PAID_STATUSES = new Set(["capture", "settlement", "free"]);
 const FINAL_STATUSES = new Set(["cancel", "deny", "expire", "failure"]);
 
 export function json(data, status = 200) {
