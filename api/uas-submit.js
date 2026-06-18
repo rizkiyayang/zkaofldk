@@ -7,7 +7,6 @@ import {
   readJson,
   supabaseRequest,
 } from "../server/uas-core.mjs";
-import { recordAttemptEvents } from "../server/uas-overlay.mjs";
 
 async function fetchHandler(request) {
   if (request.method !== "POST") {
@@ -46,7 +45,7 @@ async function fetchHandler(request) {
       Math.round((now.getTime() - startedAt.getTime()) / 1000),
     );
 
-    const attemptRows = await supabaseRequest("uas_attempts", {
+    await supabaseRequest("uas_attempts", {
       method: "POST",
       body: {
         answer_detail: graded.detail,
@@ -62,13 +61,10 @@ async function fetchHandler(request) {
       },
       prefer: "return=representation",
     });
-    const attempt = attemptRows?.[0];
 
     await patchOrder(order.order_id, {
       submitted_at: now.toISOString(),
     });
-
-    await recordAttemptEvents(attempt);
 
     return json({
       durationSeconds,

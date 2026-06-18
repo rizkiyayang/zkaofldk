@@ -10,7 +10,6 @@ import {
   patchOrder,
   readJson,
 } from "../server/uas-core.mjs";
-import { recordPaymentEvent } from "../server/uas-overlay.mjs";
 
 async function fetchHandler(request) {
   if (request.method !== "POST") {
@@ -50,10 +49,6 @@ async function fetchHandler(request) {
       order = await patchOrder(orderId, {
         quiz_started_at: new Date().toISOString(),
       });
-    }
-
-    if (paid) {
-      await recordPaymentEvent(order);
     }
 
     return json({
